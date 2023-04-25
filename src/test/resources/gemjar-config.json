@@ -1,0 +1,14 @@
+{
+  "environment": "prod",
+  "projectName": "METHODGENERATOR",
+  "feature": "src/test/resources/features/",
+  "glueCode": "stepdefinition",
+  "reportName": "GradleTestReport",
+  "tagName": "@reg",
+  "prod": {
+
+    "browserName": "chrome",
+    "launchUrl": "C:\\Users\\ayush.garg\\Downloads\\MethodGenerator\\MethodGenerator-main\\src\\test\\resources\\data\\index.html",
+    "browserTimeout": 100
+  }
+}
