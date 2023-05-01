@@ -9,12 +9,13 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.concurrent.TimeUnit;
 import implementation.GoogleImplementation;
 import locators.Google;
+import implementation.UtilsImplementation;
 
 public class GoogleStepDefinition {
 
     private GoogleImplementation google = new GoogleImplementation();
 
-    @When("^For the Google page, User clears the FirstName element text$")
+    @When("^For the Google page, User clears text for FirstName input element$")
     public void userClearFirstName() {
         //The below function is for web element @FindBy(Google.firstName);
         google.clearFirstName();
@@ -26,24 +27,24 @@ public class GoogleStepDefinition {
         google.getTextFromFirstName();
     }
 
-    @When("^For the Google page, User enters \"(.*)\" as FirstName input$")
+    @When("^For the Google page, User enters \"(.*)\" as input for FirstName$")
     public void userEntersAsFirstName(String typeText) {
         google.typeTextIntoFirstName(typeText);
     }
 
-    @Then("^For the Google page, User verifies FirstName is visible$")
+    @Then("^For the Google page, User verifies FirstName input is visible$")
     public void verifyFirstNameIsDisplayed() {
         //The below function is for web element @FindBy(Google.firstName);
         google.verifyFirstNameIsDisplayed();
     }
 
-    @Then("^For the Google page, User verifies FirstName \"(.*)\" text$")
+    @Then("^For the Google page, User verifies \"(.*)\" is the text of FirstName input$")
     public void verifyFirstNameText(String typeText) {
         //The below function is for web element @FindBy(Google.firstName);
         google.verifyFirstNameText(typeText);
     }
 
-    @When("^For the Google page, User verify the given FirstName element is enabled$")
+    @When("^For the Google page, User verifies FirstName input is enabled$")
     public void userIsEnabledFirstName() {
         google.verifyFirstNameIsEnabled();
     }
@@ -54,32 +55,55 @@ public class GoogleStepDefinition {
         google.getAttributeFromFirstName(attributeValue);
     }
 
-    @Then("^For the Google page, User verifies the \"(.*)\" value for FirstName element$")
+    @Then("^For the Google page, User verifies \"(.*)\" is the value for FirstName$")
     public void userVerifyValueForFirstName(String valueOfElement) {
         //This function is for web element @FindBy(Google.firstName);
-        google.getValueFromFirstName(valueOfElement);
+        google.verifyValueFromFirstName(valueOfElement);
     }
 
-    @When("^For the Google page, User clicks on Password button$")
-    public void userClicksOnPassword() {
-        google.clickOnPassword();
+    @Then("^For the Google page, User verifies \"(.*)\" attribute for FirstName as \"(.*)\"$")
+    public void userVerifyAttributeForFirstName(String attributeName, String attributeValue) {
+        //This function is for web element @FindBy(Google.firstName);
+        google.verifyAttributeValueForFirstName(attributeName,attributeValue);
     }
 
-    @Then("^For the Google page, User is able to click Password element$")
-    public void verifyUserIsClickablePassword() {
-        google.elementIsClickablePassword();
+    @Then("^For the Google page, User verifies value for FirstName input element is cleared$")
+    public void verifyValueClearedForFirstName() {
+        google.verifyValueClearedForFirstName();
     }
 
-    @Then("^For the Google page, User verifies Password is visible$")
+    @When("^For the Google page, User clears text for Password input element$")
+    public void userClearPassword() {
+        //The below function is for web element @FindBy(Google.password);
+        google.clearPassword();
+    }
+
+    @When("^For the Google page, User gets the text of Password element$")
+    public void userGetTextPassword() {
+        //The below function is for web element @FindBy(Google.password);
+        google.getTextFromPassword();
+    }
+
+    @When("^For the Google page, User enters \"(.*)\" as input for Password$")
+    public void userEntersAsPassword(String typeText) {
+        google.typeTextIntoPassword(typeText);
+    }
+
+    @Then("^For the Google page, User verifies Password input is visible$")
     public void verifyPasswordIsDisplayed() {
         //The below function is for web element @FindBy(Google.password);
         google.verifyPasswordIsDisplayed();
     }
 
-    @Then("^For the Google page, User verifies Password \"(.*)\" text$")
+    @Then("^For the Google page, User verifies \"(.*)\" is the text of Password input$")
     public void verifyPasswordText(String typeText) {
         //The below function is for web element @FindBy(Google.password);
         google.verifyPasswordText(typeText);
+    }
+
+    @When("^For the Google page, User verifies Password input is enabled$")
+    public void userIsEnabledPassword() {
+        google.verifyPasswordIsEnabled();
     }
 
     @When("^For the Google page, User gets \"(.*)\" attribute of Password element$")
@@ -88,271 +112,481 @@ public class GoogleStepDefinition {
         google.getAttributeFromPassword(attributeValue);
     }
 
-    @Then("^For the Google page, User verifies the \"(.*)\" value for Password element$")
+    @Then("^For the Google page, User verifies \"(.*)\" is the value for Password$")
     public void userVerifyValueForPassword(String valueOfElement) {
         //This function is for web element @FindBy(Google.password);
-        google.getValueFromPassword(valueOfElement);
+        google.verifyValueFromPassword(valueOfElement);
     }
 
-    @When("^For the Google page, User clicks on ClickItem click$")
-    public void userClicksOnClickItem() {
-        google.clickOnClickItem();
+    @Then("^For the Google page, User verifies \"(.*)\" attribute for Password as \"(.*)\"$")
+    public void userVerifyAttributeForPassword(String attributeName, String attributeValue) {
+        //This function is for web element @FindBy(Google.password);
+        google.verifyAttributeValueForPassword(attributeName,attributeValue);
     }
 
-    @When("^For the Google page, User double click on ClickItem element$")
-    public void userDoubleCLickONClickItem() {
-        //The below function is for web element @FindBy(Google.clickItem);
-        google.doubleClickOnClickItem();
+    @Then("^For the Google page, User verifies value for Password input element is cleared$")
+    public void verifyValueClearedForPassword() {
+        google.verifyValueClearedForPassword();
     }
 
-    @When("^For the Google page, User gets the text of ClickItem element$")
-    public void userGetTextClickItem() {
-        //The below function is for web element @FindBy(Google.clickItem);
-        google.getTextFromClickItem();
+    @When("^For the Google page, User clears text for LastName input element$")
+    public void userClearLastName() {
+        //The below function is for web element @FindBy(Google.lastName);
+        google.clearLastName();
     }
 
-    @Then("^For the Google page, User is able to click ClickItem element$")
-    public void verifyUserIsClickableClickItem() {
-        google.elementIsClickableClickItem();
+    @When("^For the Google page, User gets the text of LastName element$")
+    public void userGetTextLastName() {
+        //The below function is for web element @FindBy(Google.lastName);
+        google.getTextFromLastName();
     }
 
-    @When("^For the Google page, User scroll and clicks on ClickItem element$")
-    public void userScrollClickOnClickItem() {
-        google.scrollClickClickItem();
+    @When("^For the Google page, User enters \"(.*)\" as input for LastName$")
+    public void userEntersAsLastName(String typeText) {
+        google.typeTextIntoLastName(typeText);
     }
 
-    @Then("^For the Google page, User verifies ClickItem \"(.*)\" text$")
-    public void verifyClickItemText(String typeText) {
-        //The below function is for web element @FindBy(Google.clickItem);
-        google.verifyClickItemText(typeText);
+    @Then("^For the Google page, User verifies LastName input is visible$")
+    public void verifyLastNameIsDisplayed() {
+        //The below function is for web element @FindBy(Google.lastName);
+        google.verifyLastNameIsDisplayed();
     }
 
-    @When("^For the Google page, User gets \"(.*)\" attribute of ClickItem element$")
-    public void userGetsAttributeClickItem(String attributeValue) {
-        //This function is for web element @FindBy(Google.clickItem);
-        google.getAttributeFromClickItem(attributeValue);
+    @Then("^For the Google page, User verifies \"(.*)\" is the text of LastName input$")
+    public void verifyLastNameText(String typeText) {
+        //The below function is for web element @FindBy(Google.lastName);
+        google.verifyLastNameText(typeText);
     }
 
-    @Then("^For the Google page, User verifies ClickItem is visible$")
-    public void verifyClickItemIsDisplayed() {
-        //The below function is for web element @FindBy(Google.clickItem);
-        google.verifyClickItemIsDisplayed();
+    @When("^For the Google page, User verifies LastName input is enabled$")
+    public void userIsEnabledLastName() {
+        google.verifyLastNameIsEnabled();
     }
 
-    @Then("^For the Google page, User is able to click DropdownItem element$")
-    public void verifyUserIsClickableDropdownItem() {
-        google.elementIsClickableDropdownItem();
+    @When("^For the Google page, User gets \"(.*)\" attribute of LastName element$")
+    public void userGetsAttributeLastName(String attributeValue) {
+        //This function is for web element @FindBy(Google.lastName);
+        google.getAttributeFromLastName(attributeValue);
     }
 
-    @When("^For the Google page, User gets the text of DropdownItem element$")
-    public void userGetTextDropdownItem() {
-        //The below function is for web element @FindBy(Google.dropdownItem);
-        google.getTextFromDropdownItem();
+    @Then("^For the Google page, User verifies \"(.*)\" is the value for LastName$")
+    public void userVerifyValueForLastName(String valueOfElement) {
+        //This function is for web element @FindBy(Google.lastName);
+        google.verifyValueFromLastName(valueOfElement);
     }
 
-    @When("^For the Google page, user selects \"(.*)\" from  DropdownItem dropdown$")
-    public void userSelectFromDropdownDropdownItem(String selectValue) {
-        google.selectDropdownItem(selectValue);
+    @Then("^For the Google page, User verifies \"(.*)\" attribute for LastName as \"(.*)\"$")
+    public void userVerifyAttributeForLastName(String attributeName, String attributeValue) {
+        //This function is for web element @FindBy(Google.lastName);
+        google.verifyAttributeValueForLastName(attributeName,attributeValue);
     }
 
-    @Then("^For the Google page, User verifies DropdownItem \"(.*)\" text$")
-    public void verifyDropdownItemText(String typeText) {
-        //The below function is for web element @FindBy(Google.dropdownItem);
-        google.verifyDropdownItemText(typeText);
+    @Then("^For the Google page, User verifies value for LastName input element is cleared$")
+    public void verifyValueClearedForLastName() {
+        google.verifyValueClearedForLastName();
     }
 
-    @Then("^For the Google page, User verifies DropdownItem is visible$")
-    public void verifyDropdownItemIsDisplayed() {
-        //The below function is for web element @FindBy(Google.dropdownItem);
-        google.verifyDropdownItemIsDisplayed();
+    @When("^For the Google page, User clears text for Heading input element$")
+    public void userClearHeading() {
+        //The below function is for web element @FindBy(Google.heading);
+        google.clearHeading();
     }
 
-    @When("^For the Google page, User gets \"(.*)\" attribute of DropdownItem element$")
-    public void userGetsAttributeDropdownItem(String attributeValue) {
-        //This function is for web element @FindBy(Google.dropdownItem);
-        google.getAttributeFromDropdownItem(attributeValue);
+    @When("^For the Google page, User gets the text of Heading element$")
+    public void userGetTextHeading() {
+        //The below function is for web element @FindBy(Google.heading);
+        google.getTextFromHeading();
     }
 
-    @Then("^For the Google page, User verifies the \"(.*)\" value for DropdownItem element$")
-    public void userVerifyValueForDropdownItem(String valueOfElement) {
-        //This function is for web element @FindBy(Google.dropdownItem);
-        google.getValueFromDropdownItem(valueOfElement);
+    @When("^For the Google page, User enters \"(.*)\" as input for Heading$")
+    public void userEntersAsHeading(String typeText) {
+        google.typeTextIntoHeading(typeText);
     }
 
-    @When("^For the Google page, User clicks on ImageItem image$")
-    public void userClicksOnImageItem() {
-        google.clickOnImageItem();
+    @Then("^For the Google page, User verifies Heading input is visible$")
+    public void verifyHeadingIsDisplayed() {
+        //The below function is for web element @FindBy(Google.heading);
+        google.verifyHeadingIsDisplayed();
     }
 
-    @Then("^For the Google page, User is able to click ImageItem element$")
-    public void verifyUserIsClickableImageItem() {
-        google.elementIsClickableImageItem();
+    @Then("^For the Google page, User verifies \"(.*)\" is the text of Heading input$")
+    public void verifyHeadingText(String typeText) {
+        //The below function is for web element @FindBy(Google.heading);
+        google.verifyHeadingText(typeText);
     }
 
-    @When("^For the Google page, User verify the given ImageItem element is enabled$")
-    public void userIsEnabledImageItem() {
-        google.verifyImageItemIsEnabled();
+    @When("^For the Google page, User verifies Heading input is enabled$")
+    public void userIsEnabledHeading() {
+        google.verifyHeadingIsEnabled();
     }
 
-    @When("^For the Google page, User uploads image having path \"(.*)\" for ImageItem image$")
-    public void userUploadImageImageItem(String filePath) {
-        google.uploadFileToImageItem(filePath);
+    @When("^For the Google page, User gets \"(.*)\" attribute of Heading element$")
+    public void userGetsAttributeHeading(String attributeValue) {
+        //This function is for web element @FindBy(Google.heading);
+        google.getAttributeFromHeading(attributeValue);
     }
 
-    @Then("^For the Google page, User verifies ImageItem is visible$")
-    public void verifyImageItemIsDisplayed() {
-        //The below function is for web element @FindBy(Google.imageItem);
-        google.verifyImageItemIsDisplayed();
+    @Then("^For the Google page, User verifies \"(.*)\" is the value for Heading$")
+    public void userVerifyValueForHeading(String valueOfElement) {
+        //This function is for web element @FindBy(Google.heading);
+        google.verifyValueFromHeading(valueOfElement);
     }
 
-    @Then("^For the Google page, User verifies ImageItem \"(.*)\" text$")
-    public void verifyImageItemText(String typeText) {
-        //The below function is for web element @FindBy(Google.imageItem);
-        google.verifyImageItemText(typeText);
+    @Then("^For the Google page, User verifies \"(.*)\" attribute for Heading as \"(.*)\"$")
+    public void userVerifyAttributeForHeading(String attributeName, String attributeValue) {
+        //This function is for web element @FindBy(Google.heading);
+        google.verifyAttributeValueForHeading(attributeName,attributeValue);
     }
 
-    @Then("^For the Google page, User verifies ImageItem is selected$")
-    public void verifyImageItemIsSelected() {
-        //The below function is for web element @FindBy(Google.imageItem);
-        google.verifyImageItemIsSelected();
+    @Then("^For the Google page, User verifies value for Heading input element is cleared$")
+    public void verifyValueClearedForHeading() {
+        google.verifyValueClearedForHeading();
     }
 
-    @When("^For the Google page, User gets \"(.*)\" attribute of ImageItem element$")
-    public void userGetsAttributeImageItem(String attributeValue) {
-        //This function is for web element @FindBy(Google.imageItem);
-        google.getAttributeFromImageItem(attributeValue);
+    @When("^For the Google page, User clears text for Birthday input element$")
+    public void userClearBirthday() {
+        //The below function is for web element @FindBy(Google.birthday);
+        google.clearBirthday();
     }
 
-    @Then("^For the Google page, User verifies the \"(.*)\" value for ImageItem element$")
-    public void userVerifyValueForImageItem(String valueOfElement) {
-        //This function is for web element @FindBy(Google.imageItem);
-        google.getValueFromImageItem(valueOfElement);
+    @When("^For the Google page, User gets the text of Birthday element$")
+    public void userGetTextBirthday() {
+        //The below function is for web element @FindBy(Google.birthday);
+        google.getTextFromBirthday();
     }
 
-    @When("^For the Google page, User clicks on AItem a$")
-    public void userClicksOnAItem() {
-        google.clickOnAItem();
+    @When("^For the Google page, User enters \"(.*)\" as input for Birthday$")
+    public void userEntersAsBirthday(String typeText) {
+        google.typeTextIntoBirthday(typeText);
     }
 
-    @Then("^For the Google page, User is able to click AItem element$")
-    public void verifyUserIsClickableAItem() {
-        google.elementIsClickableAItem();
+    @Then("^For the Google page, User verifies Birthday input is visible$")
+    public void verifyBirthdayIsDisplayed() {
+        //The below function is for web element @FindBy(Google.birthday);
+        google.verifyBirthdayIsDisplayed();
     }
 
-    @When("^For the Google page, User clicks on AItem and navigate back$")
-    public void userClicksOnAItemAndNavigateBack() {
-        google.clickOnAItemAndNavigateBack();
+    @Then("^For the Google page, User verifies \"(.*)\" is the text of Birthday input$")
+    public void verifyBirthdayText(String typeText) {
+        //The below function is for web element @FindBy(Google.birthday);
+        google.verifyBirthdayText(typeText);
     }
 
-    @Then("^For the Google page, User verifies AItem is visible$")
-    public void verifyAItemIsDisplayed() {
-        //The below function is for web element @FindBy(Google.aItem);
-        google.verifyAItemIsDisplayed();
+    @When("^For the Google page, User verifies Birthday input is enabled$")
+    public void userIsEnabledBirthday() {
+        google.verifyBirthdayIsEnabled();
     }
 
-    @Then("^For the Google page, User verifies AItem \"(.*)\" text$")
-    public void verifyAItemText(String typeText) {
-        //The below function is for web element @FindBy(Google.aItem);
-        google.verifyAItemText(typeText);
+    @When("^For the Google page, User gets \"(.*)\" attribute of Birthday element$")
+    public void userGetsAttributeBirthday(String attributeValue) {
+        //This function is for web element @FindBy(Google.birthday);
+        google.getAttributeFromBirthday(attributeValue);
     }
 
-    @When("^For the Google page, User clears the Serachbar element text$")
-    public void userClearSerachbar() {
-        //The below function is for web element @FindBy(Google.serachbar);
-        google.clearSerachbar();
+    @Then("^For the Google page, User verifies \"(.*)\" is the value for Birthday$")
+    public void userVerifyValueForBirthday(String valueOfElement) {
+        //This function is for web element @FindBy(Google.birthday);
+        google.verifyValueFromBirthday(valueOfElement);
     }
 
-    @When("^For the Google page, User gets the text of Serachbar element$")
-    public void userGetTextSerachbar() {
-        //The below function is for web element @FindBy(Google.serachbar);
-        google.getTextFromSerachbar();
+    @Then("^For the Google page, User verifies \"(.*)\" attribute for Birthday as \"(.*)\"$")
+    public void userVerifyAttributeForBirthday(String attributeName, String attributeValue) {
+        //This function is for web element @FindBy(Google.birthday);
+        google.verifyAttributeValueForBirthday(attributeName,attributeValue);
     }
 
-    @When("^For the Google page, User enters \"(.*)\" as Serachbar input$")
-    public void userEntersAsSerachbar(String typeText) {
-        google.typeTextIntoSerachbar(typeText);
+    @Then("^For the Google page, User verifies value for Birthday input element is cleared$")
+    public void verifyValueClearedForBirthday() {
+        google.verifyValueClearedForBirthday();
     }
 
-    @Then("^For the Google page, User verifies Serachbar is visible$")
-    public void verifySerachbarIsDisplayed() {
-        //The below function is for web element @FindBy(Google.serachbar);
-        google.verifySerachbarIsDisplayed();
+    @When("^For the Google page, User selects Css radio button$")
+    public void userSelectsCss() {
+        google.selectCss();
     }
 
-    @Then("^For the Google page, User verifies Serachbar \"(.*)\" text$")
-    public void verifySerachbarText(String typeText) {
-        //The below function is for web element @FindBy(Google.serachbar);
-        google.verifySerachbarText(typeText);
+    @Then("^For the Google page, User verifies Css is selected$")
+    public void verifyCssIsSelected() {
+        //The below function is for web element @FindBy(Google.css);
+        google.verifyCssIsSelected();
     }
 
-    @When("^For the Google page, User verify the given Serachbar element is enabled$")
-    public void userIsEnabledSerachbar() {
-        google.verifySerachbarIsEnabled();
+    @When("^For the Google page, User verifies Css radio button is enabled$")
+    public void userIsEnabledCss() {
+        google.verifyCssIsEnabled();
     }
 
-    @When("^For the Google page, User gets \"(.*)\" attribute of Serachbar element$")
-    public void userGetsAttributeSerachbar(String attributeValue) {
-        //This function is for web element @FindBy(Google.serachbar);
-        google.getAttributeFromSerachbar(attributeValue);
+    @Then("^For the Google page, User verifies Css radio button is visible$")
+    public void verifyCssIsDisplayed() {
+        //The below function is for web element @FindBy(Google.css);
+        google.verifyCssIsDisplayed();
     }
 
-    @Then("^For the Google page, User verifies the \"(.*)\" value for Serachbar element$")
-    public void userVerifyValueForSerachbar(String valueOfElement) {
-        //This function is for web element @FindBy(Google.serachbar);
-        google.getValueFromSerachbar(valueOfElement);
+    @Then("^For the Google page, User verifies \"(.*)\" is the text of Css radio button$")
+    public void verifyCssText(String typeText) {
+        //The below function is for web element @FindBy(Google.css);
+        google.verifyCssText(typeText);
     }
 
-    @When("^For the Google page, User clicks on SerachButton button$")
-    public void userClicksOnSerachButton() {
-        google.clickOnSerachButton();
+    @When("^For the Google page, User gets \"(.*)\" attribute of Css element$")
+    public void userGetsAttributeCss(String attributeValue) {
+        //This function is for web element @FindBy(Google.css);
+        google.getAttributeFromCss(attributeValue);
     }
 
-    @Then("^For the Google page, User is able to click SerachButton element$")
-    public void verifyUserIsClickableSerachButton() {
-        google.elementIsClickableSerachButton();
+    @Then("^For the Google page, User verifies \"(.*)\" is the value for Css$")
+    public void userVerifyValueForCss(String valueOfElement) {
+        //This function is for web element @FindBy(Google.css);
+        google.verifyValueFromCss(valueOfElement);
     }
 
-    @Then("^For the Google page, User verifies SerachButton is visible$")
-    public void verifySerachButtonIsDisplayed() {
-        //The below function is for web element @FindBy(Google.serachButton);
-        google.verifySerachButtonIsDisplayed();
+    @When("^For the Google page, User selects Javascript radio button$")
+    public void userSelectsJavascript() {
+        google.selectJavascript();
     }
 
-    @Then("^For the Google page, User verifies SerachButton \"(.*)\" text$")
-    public void verifySerachButtonText(String typeText) {
-        //The below function is for web element @FindBy(Google.serachButton);
-        google.verifySerachButtonText(typeText);
+    @Then("^For the Google page, User verifies Javascript is selected$")
+    public void verifyJavascriptIsSelected() {
+        //The below function is for web element @FindBy(Google.javascript);
+        google.verifyJavascriptIsSelected();
     }
 
-    @When("^For the Google page, User gets \"(.*)\" attribute of SerachButton element$")
-    public void userGetsAttributeSerachButton(String attributeValue) {
-        //This function is for web element @FindBy(Google.serachButton);
-        google.getAttributeFromSerachButton(attributeValue);
+    @When("^For the Google page, User verifies Javascript radio button is enabled$")
+    public void userIsEnabledJavascript() {
+        google.verifyJavascriptIsEnabled();
     }
 
-    @Then("^For the Google page, User verifies the \"(.*)\" value for SerachButton element$")
-    public void userVerifyValueForSerachButton(String valueOfElement) {
-        //This function is for web element @FindBy(Google.serachButton);
-        google.getValueFromSerachButton(valueOfElement);
+    @Then("^For the Google page, User verifies Javascript radio button is visible$")
+    public void verifyJavascriptIsDisplayed() {
+        //The below function is for web element @FindBy(Google.javascript);
+        google.verifyJavascriptIsDisplayed();
     }
 
-    @Given("^User navigates to \"(.*)\"$")
-    public void navigateTo(String url) {
-        google.navigateTo(url);
+    @Then("^For the Google page, User verifies \"(.*)\" is the text of Javascript radio button$")
+    public void verifyJavascriptText(String typeText) {
+        //The below function is for web element @FindBy(Google.javascript);
+        google.verifyJavascriptText(typeText);
     }
 
-    @When("^User Navigates Forward to Next Page$")
-    public void navigateForward() {
-        google.forwardNavigation();
+    @When("^For the Google page, User gets \"(.*)\" attribute of Javascript element$")
+    public void userGetsAttributeJavascript(String attributeValue) {
+        //This function is for web element @FindBy(Google.javascript);
+        google.getAttributeFromJavascript(attributeValue);
     }
 
-    @When("^User Navigates Back to Previous Page$")
-    public void navigateBack() {
-        google.backwardNavigation();
+    @Then("^For the Google page, User verifies \"(.*)\" is the value for Javascript$")
+    public void userVerifyValueForJavascript(String valueOfElement) {
+        //This function is for web element @FindBy(Google.javascript);
+        google.verifyValueFromJavascript(valueOfElement);
     }
 
-    @Given("^User is on homepage$")
-    public void openApplication() {
-        google.openApplication();
+    @When("^For the Google page, User selects Bike checkbox$")
+    public void userSelectsBike() {
+        google.selectBike();
+    }
+
+    @Then("^For the Google page, User is able to click Bike element$")
+    public void verifyUserIsClickableBike() {
+        google.elementIsClickableBike();
+    }
+
+    @Then("^For the Google page, User verifies Bike checkbox is visible$")
+    public void verifyBikeIsDisplayed() {
+        //The below function is for web element @FindBy(Google.Bike);
+        google.verifyBikeIsDisplayed();
+    }
+
+    @Then("^For the Google page, User verifies \"(.*)\" is the text of Bike checkbox$")
+    public void verifyBikeText(String typeText) {
+        //The below function is for web element @FindBy(Google.Bike);
+        google.verifyBikeText(typeText);
+    }
+
+    @When("^For the Google page, User gets \"(.*)\" attribute of Bike element$")
+    public void userGetsAttributeBike(String attributeValue) {
+        //This function is for web element @FindBy(Google.Bike);
+        google.getAttributeFromBike(attributeValue);
+    }
+
+    @Then("^For the Google page, User verifies \"(.*)\" is the value for Bike$")
+    public void userVerifyValueForBike(String valueOfElement) {
+        //This function is for web element @FindBy(Google.Bike);
+        google.verifyValueFromBike(valueOfElement);
+    }
+
+    @Then("^For the Google page, User verifies Bike checkbox is selected$")
+    public void verifyElementSelectedForBike() {
+        //The below function is for web element @FindBy(Google.Bike);
+        google.verifyElementSelectedForBike();
+    }
+
+    @Then("^For the Google page, User verifies Bike checkbox is not selected$")
+    public void verifyElementNotSelectedForBike() {
+        //The below function is for web element @FindBy(Google.Bike);
+        google.verifyElementNotSelectedForBike();
+    }
+
+    @When("^For the Google page, User selects Boat checkbox$")
+    public void userSelectsBoat() {
+        google.selectBoat();
+    }
+
+    @Then("^For the Google page, User is able to click Boat element$")
+    public void verifyUserIsClickableBoat() {
+        google.elementIsClickableBoat();
+    }
+
+    @Then("^For the Google page, User verifies Boat checkbox is visible$")
+    public void verifyBoatIsDisplayed() {
+        //The below function is for web element @FindBy(Google.Boat);
+        google.verifyBoatIsDisplayed();
+    }
+
+    @Then("^For the Google page, User verifies \"(.*)\" is the text of Boat checkbox$")
+    public void verifyBoatText(String typeText) {
+        //The below function is for web element @FindBy(Google.Boat);
+        google.verifyBoatText(typeText);
+    }
+
+    @When("^For the Google page, User gets \"(.*)\" attribute of Boat element$")
+    public void userGetsAttributeBoat(String attributeValue) {
+        //This function is for web element @FindBy(Google.Boat);
+        google.getAttributeFromBoat(attributeValue);
+    }
+
+    @Then("^For the Google page, User verifies \"(.*)\" is the value for Boat$")
+    public void userVerifyValueForBoat(String valueOfElement) {
+        //This function is for web element @FindBy(Google.Boat);
+        google.verifyValueFromBoat(valueOfElement);
+    }
+
+    @Then("^For the Google page, User verifies Boat checkbox is selected$")
+    public void verifyElementSelectedForBoat() {
+        //The below function is for web element @FindBy(Google.Boat);
+        google.verifyElementSelectedForBoat();
+    }
+
+    @Then("^For the Google page, User verifies Boat checkbox is not selected$")
+    public void verifyElementNotSelectedForBoat() {
+        //The below function is for web element @FindBy(Google.Boat);
+        google.verifyElementNotSelectedForBoat();
+    }
+
+    @Then("^For the Google page, User is able to click Car element$")
+    public void verifyUserIsClickableCar() {
+        google.elementIsClickableCar();
+    }
+
+    @When("^For the Google page, User verifies Car dropdown is enabled$")
+    public void userIsEnabledCar() {
+        google.verifyCarIsEnabled();
+    }
+
+    @When("^For the Google page, User gets the text of Car element$")
+    public void userGetTextCar() {
+        //The below function is for web element @FindBy(Google.car);
+        google.getTextFromCar();
+    }
+
+    @Then("^For the Google page, User verifies Car dropdown is visible$")
+    public void verifyCarIsDisplayed() {
+        //The below function is for web element @FindBy(Google.car);
+        google.verifyCarIsDisplayed();
+    }
+
+    @When("^For the Google page, User selects \"(.*)\" from  Car dropdown$")
+    public void userSelectFromDropdownCar(String selectValue) {
+        google.selectCar(selectValue);
+    }
+
+    @Then("^For the Google page, User verifies \"(.*)\" is the text of Car dropdown$")
+    public void verifyCarText(String typeText) {
+        //The below function is for web element @FindBy(Google.car);
+        google.verifyCarText(typeText);
+    }
+
+    @When("^For the Google page, User gets \"(.*)\" attribute of Car element$")
+    public void userGetsAttributeCar(String attributeValue) {
+        //This function is for web element @FindBy(Google.car);
+        google.getAttributeFromCar(attributeValue);
+    }
+
+    @Then("^For the Google page, User verifies \"(.*)\" is the value for Car$")
+    public void userVerifyValueForCar(String valueOfElement) {
+        //This function is for web element @FindBy(Google.car);
+        google.verifyValueFromCar(valueOfElement);
+    }
+
+    @When("^For the Google page, User clicks on Submit button$")
+    public void userClicksOnSubmit() {
+        google.clickOnSubmit();
+    }
+
+    @Then("^For the Google page, User is able to click Submit element$")
+    public void verifyUserIsClickableSubmit() {
+        google.elementIsClickableSubmit();
+    }
+
+    @Then("^For the Google page, User verifies Submit button is visible$")
+    public void verifySubmitIsDisplayed() {
+        //The below function is for web element @FindBy(Google.Submit);
+        google.verifySubmitIsDisplayed();
+    }
+
+    @Then("^For the Google page, User verifies \"(.*)\" is the text of Submit button$")
+    public void verifySubmitText(String typeText) {
+        //The below function is for web element @FindBy(Google.Submit);
+        google.verifySubmitText(typeText);
+    }
+
+    @When("^For the Google page, User gets \"(.*)\" attribute of Submit element$")
+    public void userGetsAttributeSubmit(String attributeValue) {
+        //This function is for web element @FindBy(Google.Submit);
+        google.getAttributeFromSubmit(attributeValue);
+    }
+
+    @Then("^For the Google page, User verifies \"(.*)\" is the value for Submit$")
+    public void userVerifyValueForSubmit(String valueOfElement) {
+        //This function is for web element @FindBy(Google.Submit);
+        google.verifyValueFromSubmit(valueOfElement);
+    }
+
+    @When("^For the Google page, User clicks on Html link$")
+    public void userClicksOnHtml() {
+        google.clickOnHtml();
+    }
+
+    @When("^For the Google page, User clicks on Html link and navigates back$")
+    public void userClicksOnHtmlAndNavigateBack() {
+        google.clickOnHtmlAndNavigateBack();
+    }
+
+    @Then("^For the Google page, User is able to click Html element$")
+    public void verifyUserIsClickableHtml() {
+        google.elementIsClickableHtml();
+    }
+
+    @Then("^For the Google page, User verifies Html link is visible$")
+    public void verifyHtmlIsDisplayed() {
+        //The below function is for web element @FindBy(Google.html);
+        google.verifyHtmlIsDisplayed();
+    }
+
+    @Then("^For the Google page, User verifies \"(.*)\" is the text of Html link$")
+    public void verifyHtmlText(String typeText) {
+        //The below function is for web element @FindBy(Google.html);
+        google.verifyHtmlText(typeText);
+    }
+
+    @When("^For the Google page, User gets \"(.*)\" attribute of Html element$")
+    public void userGetsAttributeHtml(String attributeValue) {
+        //This function is for web element @FindBy(Google.html);
+        google.getAttributeFromHtml(attributeValue);
+    }
+
+    @Then("^For the Google page, User verifies \"(.*)\" is the value for Html$")
+    public void userVerifyValueForHtml(String valueOfElement) {
+        //This function is for web element @FindBy(Google.html);
+        google.verifyValueFromHtml(valueOfElement);
     }
 }

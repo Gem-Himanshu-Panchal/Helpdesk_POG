@@ -14,10 +14,6 @@ import utils.UtilsStepDefinitionCodeGenerator;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
 
 public class CodeGeneratorRunner {
 
@@ -31,9 +27,6 @@ public class CodeGeneratorRunner {
             Settings.LOCATOR_FILE_NAME = args[i];
 
             try {
-//                Path implementations = FileSystems.getDefault().getPath( "C:\\Users\\ayush.garg\\Downloads\\MethodGenerator\\MethodGenerator-main\\src\\test\\java\\implementation\\GoogleImplementation.java");
-//                System.out.println(implementations.toAbsolutePath());
-//                Files.deleteIfExists(implementations);
                 Class aClass = classLoader.loadClass("locators" + "." + Settings.LOCATOR_FILE_NAME);
                 generatePageMethods(aClass.getDeclaredFields(), aClass);
                 Thread.sleep(2000);
@@ -44,14 +37,28 @@ public class CodeGeneratorRunner {
             } catch (SecurityException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            } catch (NoSuchFileException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+        }
+        try {
+            Class aClass = classLoader.loadClass("locators" + "." + Settings.LOCATOR_FILE_NAME);
+            generateGenericPageMethods();
+            Thread.sleep(2000);
+            generateGenericStepMethods();
+        } catch (ClassNotFoundException e) {
+            throw new ArithmeticException();
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -124,11 +131,22 @@ public class CodeGeneratorRunner {
                 UtilsMethodCodeGenerator.setLinkMethodsClear(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsValueVerification(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsAttributeValueVerification(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsVerifyClear(c,field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "button")) {
                 UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
                 UtilsMethodCodeGenerator.setMethodClickable(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsValueVerification(c, field);
+            }
+            if (StringUtils.equalsIgnoreCase(locatorType, "checkbox")) {
+                UtilsMethodCodeGenerator.setLinkMethodsSelect(c, field);// Radio and CheckBox and Normal Click Operation
+                UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
+                UtilsMethodCodeGenerator.setMethodClickable(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsIsSelected(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsIsNotSelected(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsValueVerification(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "click")) {
@@ -140,17 +158,19 @@ public class CodeGeneratorRunner {
                 UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "a")) {
+                UtilsMethodCodeGenerator.setLinkMethodsClickAndNavigateBack(c, field);// Radio and CheckBox and Normal Click Operation
                 UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
                 UtilsMethodCodeGenerator.setMethodClickable(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodsClickAndNavigateBack(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsValueVerification(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "dropdown")) {
                 UtilsMethodCodeGenerator.setLinkMethodsDropDown(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
                 UtilsMethodCodeGenerator.setMethodClickable(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsTypeGetter(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodsValueVerificationDropdown(c, field);
-
+                UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsValueVerification(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "image") || StringUtils.equalsIgnoreCase(locatorType, "file")) {
                 UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
@@ -161,17 +181,38 @@ public class CodeGeneratorRunner {
                 UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsValueVerification(c, field);
             }
+            if (StringUtils.equalsIgnoreCase(locatorType, "radio button")) {
+                UtilsMethodCodeGenerator.setLinkMethodsSelect(c, field);// Radio and CheckBox and Normal Click Operation
+                UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForIsSelected(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsValueVerification(c, field);
+            }
             if (!StringUtils.equalsIgnoreCase(field.getName(), "driver")) {
                 UtilsMethodCodeGenerator.setLinkMethodForVisibility(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
             }
         }
+        UtilsMethodCodeGenerator.savePageObjectsOnFileSystem(Settings.IMPLEMENTATION_PO_DIR,
+                aClass.getSimpleName() + "Implementation", c, false);
+
+    }
+
+    public static void generateGenericPageMethods() throws IOException {
+
+        CompilationUnit c = UtilsMethodCodeGenerator.createEnhancedCompilationUnit("implementation", "Method");
+        UtilsMethodCodeGenerator.setTypeDeclaration(c, "UtilsImplementation");
+
+        UtilsMethodCodeGenerator.setLinkMethodsGetUrl(c);
+        UtilsMethodCodeGenerator.setLinkMethodsVerifyUrl(c);
+        UtilsMethodCodeGenerator.setLinkMethodsGetTitle(c);
+        UtilsMethodCodeGenerator.setLinkMethodsVerifyTitle(c);
         UtilsMethodCodeGenerator.setLinkMethodsNavigateTo(c);
         UtilsMethodCodeGenerator.setLinkMethodsNavigateForward(c);
         UtilsMethodCodeGenerator.setLinkMethodsNavigateBack(c);
         UtilsMethodCodeGenerator.setLinkMethodsOpenHomePage(c);
         UtilsMethodCodeGenerator.savePageObjectsOnFileSystem(Settings.IMPLEMENTATION_PO_DIR,
-                aClass.getSimpleName() + "Implementation", c, false);
+                "UtilsImplementation", c, false);
 
     }
 
@@ -239,68 +280,105 @@ public class CodeGeneratorRunner {
             }
 
             if (StringUtils.equalsIgnoreCase(locatorType, "button")) {
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodForClick(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethod(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenClickable(c, field, aClass.getSimpleName());
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName());
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName(),locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, true, aClass.getSimpleName());
+            }
+            if (StringUtils.equalsIgnoreCase(locatorType, "checkbox")) {
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodForSelect(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenClickable(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, true, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionChecked(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionNotChecked(c, field, aClass.getSimpleName());
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "input")) {
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionClear(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionClear(c, field, aClass.getSimpleName(),locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionTextGetter(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethod(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName());
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName());
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenEnabled(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenEnabled(c, field, aClass.getSimpleName(),locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, true, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeVerification(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionVerifyClear(c,field,aClass.getSimpleName(),locatorType);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "click")) {
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodForClick(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
+                UtilsStepDefinitionCodeGenerator.setClickStepDefinitionMethod(c, field, locatorType,aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionDoubleCLick(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionTextGetter(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenClickable(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethod(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName(),locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false, aClass.getSimpleName());
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName(),locatorType);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "image")) {
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodForClick(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
+                UtilsStepDefinitionCodeGenerator.setClickStepDefinitionMethod(c, field, locatorType,aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenClickable(c, field, aClass.getSimpleName());
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenEnabled(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenEnabled(c, field, aClass.getSimpleName(),locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethod(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName());
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName(),locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenSelected(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, true, aClass.getSimpleName());
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "a")) {
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodForClick(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenClickable(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethod(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName());
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName());
-
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAndNavigateBack(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenClickable(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, true, aClass.getSimpleName());
             }
-            if (StringUtils.equalsIgnoreCase(locatorType, "dropdown")) {
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenClickable(c, field, aClass.getSimpleName());
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionTextGetter(c, field, aClass.getSimpleName());
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethod(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName());
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName());
+            if (StringUtils.equalsIgnoreCase(locatorType, "radio button")) {
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodForSelect(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenSelected(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenEnabled(c, field, aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName(),locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, true, aClass.getSimpleName());
             }
 
+            if (StringUtils.equalsIgnoreCase(locatorType, "dropdown")) {
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenClickable(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenEnabled(c, field, aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionTextGetter(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false,aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethod(c, field, locatorType,aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true,aClass.getSimpleName(),locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false,aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, true,aClass.getSimpleName());
+            }
+
         }
+        UtilsStepDefinitionCodeGenerator.savePageObjectsOnFileSystem(Settings.STEP_DEFINITION_PO_DIR,
+                aClass.getSimpleName() + "StepDefinition", c, true);
+    }
+
+    public static void generateGenericStepMethods() throws IOException {
+        CompilationUnit c = UtilsStepDefinitionCodeGenerator.createEnhancedCompilationUnit("stepdefinition", "StepDefinition");
+        UtilsStepDefinitionCodeGenerator.setTypeDeclaration(c,  "UtilsStepDefinition");
+
+        UtilsStepDefinitionCodeGenerator.setStepDefinitionVariable(c, "UtilsImplementation");
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetUrl(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionVerifyUrl(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetTitle(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionVerifyTitle(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionNavigateTo(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionNavigateForward(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionNavigateBack(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodGiven(c, "homePage");
         UtilsStepDefinitionCodeGenerator.savePageObjectsOnFileSystem(Settings.STEP_DEFINITION_PO_DIR,
-                aClass.getSimpleName() + "StepDefinition", c, true);
+                "UtilsStepDefinition", c, true);
     }
 }

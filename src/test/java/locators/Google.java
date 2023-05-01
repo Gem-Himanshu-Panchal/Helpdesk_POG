@@ -3,33 +3,43 @@ package locators;
 import annotation.LocatorType;
 import net.thucydides.core.pages.PageObject;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 public class Google extends PageObject {
 
-    @LocatorType(value = "input")
-    public static By firstName = By.xpath("//*[@id='fname']");
+    @LocatorType(value="input")
+    public static By firstName= By.xpath("//*[@id='fname']");
+    @LocatorType(value="input")
+    public static By password=By.id("password");
 
-    @LocatorType(value = "button")
-    public static By password = By.id("password");
+    @LocatorType(value="input")
+    public static By lastName=By.id("lname");
 
-    @LocatorType(value = "click")
-    public static By clickItem = By.id("password");
+    @LocatorType(value="input")
+    public static By heading=By.id("h1");
 
-    @LocatorType(value = "dropdown")
-    public static By dropdownItem = By.id("password");
+    @LocatorType(value="input")
+    public static By birthday=By.id("birthday");
 
-    @LocatorType(value = "image")
-    public static By imageItem = By.id("password");
+    @LocatorType(value="radio button")
+    public static By css=By.id("css");
 
-    @LocatorType(value = "a")
-    public static By aItem = By.id("password");
-    
+    @LocatorType(value="radio button")
+    public static By javascript=By.id("javascript");
 
-	@LocatorType(value = "input")
-	public static By serachbar= By.xpath("/html/body/div[5]/ul/li/span/svg");
+    @LocatorType(value="checkbox")
+    public static By Bike=By.id("vehicle1");
 
-	@LocatorType(value = "button")
-	public static By serachButton= By.xpath("/html/body/div[5]/ul/li/span/svg");
+    @LocatorType(value="checkbox")
+    public static By Boat=By.id("vehicle3");
+
+    @LocatorType(value="dropdown")
+    public static By car=By.id("cars");
+
+    @LocatorType(value="button")
+    public static By Submit=By.xpath("//input[@type='submit']");
+
+    @LocatorType(value="a")
+    public static By html=By.xpath("//a[contains(text(),'HTML')]");
+
+
 }

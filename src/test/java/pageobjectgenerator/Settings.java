@@ -19,7 +19,9 @@ public class Settings {
 	//public static final String URL = "http://www.google.com/";
 
 	//public static final String URL = "https://mymis.geminisolutions.com";
-	public static final String URL = "C:\\Users\\ayush.garg\\Downloads\\MethodGenerator\\MethodGenerator-main\\src\\test\\resources\\data\\index.html";
+	public static final String URL = "D:\\v1-pog\\POG\\src\\test\\resources\\data\\index.html";
+
+	public static final String TITLE = "Sample HTML Page";
 	//Used For Logging the steps
 	public static final Logger LOGGER= LoggerFactory.getLogger(Settings.class);
 	// Output Settings
@@ -43,12 +45,16 @@ public class Settings {
 
 	public static final String USER_CLICK_ANNOTATION ="User clicks on";
 	public static final String USER_NAVIGATE_FUNCTION ="AndNavigateBack";
-	public static final String USER_NAVIGATE_ANNOTATION ="and navigate back";
+	public static final String USER_NAVIGATE_ANNOTATION ="and navigates back";
 	public static final String USER_GETTEXT_FUNCTION ="userGetText";
 	public static final String USER_GET_ATTRIBUTE_FUNCTION ="userGetsAttribute";
 	public static final String USER_VERIFIES_VALUE="userVerifyValueFor";
-	public static final String USER_CLEAR_ANNOTATION ="User clears the";
+	public static final String USER_VERIFIES_CHECKED="verifyIsSelectedFor";
+	public static final String USER_VERIFIES_VALUE_ATTRIBUTE="userVerifyAttributeFor";
+	public static final String USER_CLEAR_ANNOTATION ="User clears";
+	public static final String USER_VERIFY_CLEAR_ANNOTATION ="User verifies";
 	public static final String USER_CLEAR_FUNCTION ="userClear";
+	public static final String USER_VERIFY_CLEAR_FUNCTION ="verifyValueClearedFor";
 	public static final String USER_GETTEXT_ANNOTATION ="User gets the text of";
 	public static final String USER_GET_ATTRIBUTE_ANNOTATION ="User gets " +"\\\"(.*)\\\""+ " attribute of ";
 	public static final String USER_INPUT_ANNOTATION ="User enters "+"\\\"(.*)\\\""+" as";
@@ -59,26 +65,35 @@ public class Settings {
 	public static final String USER_DOUBLE_CLICK_FUNCTION ="userDoubleCLickON";
 	public static final String USER_DOUBLE_CLICK_ANNOTATION ="User double click on";
 	public static final String USER_ENABLED_FUNCTION ="userIsEnabled";
-	public static final String USER_ENABLED_ANNOTATION ="User verify the given";
+	public static final String USER_ENABLED_ANNOTATION ="User verifies";
 	public static final String USER_IMAGE_FUNCTION ="userUploadImage";
 	public static final String USER_INPUT_FUNCTION ="userEntersAs";
 	public static final String USER_IMAGE_ANNOTATION ="User uploads image having path \\\"(.*)\\\" for";
 	public static final String USER_HOME_PAGE ="openApplication";
-	public static final String USER_SCROLL_CLICK_FUNCTION ="userScrollClickOn";
-	public static final String USER_SCROLL_CLICK_ANNOTATION ="User scroll and clicks on";
+	public static final String USER_SCROLL_CLICK_FUNCTION ="userScrollCLickOn";
+	public static final String USER_SCROLL_CLICK_ANNOTATION ="User scroll and clicks on ";
 
-	public static final String USER_HOME_PAGE_ANNOTATION ="^User is on homepage";
-	public static final String USER_SELECT_ANNOTATION="user selects \\\"(.*)\\\" from ";
+	public static final String USER_HOME_PAGE_ANNOTATION ="User is on homepage";
+	public static final String USER_SELECT_ANNOTATION="User selects \\\"(.*)\\\" from ";
 
-	public static final String USER_NAVIGATE_BACK ="^User Navigates Back to Previous Page";
+	public static final String USER_NAVIGATE_BACK ="User navigates Back to Previous Page";
 
-	public static final String USER_NAVIGATE_FORWARD ="^User Navigates Forward to Next Page";
+	public static final String USER_NAVIGATE_FORWARD ="User navigates Forward to Next Page";
 
-	public static final String USER_NAVIGATE_TO ="^User navigates to \\\"(.*)\\\"$";
+	public static final String USER_NAVIGATE_TO ="User navigates to \\\"(.*)\\\"$";
 
-	public static final String USER_VERIFY_URL ="^User verifies the current URL with \\\"(.*)\\\"$";
+	public static final String USER_VERIFY_URL ="User verifies the current URL with \\\"(.*)\\\"$";
 
-	public static final String USER_GET_URL ="^User gets current url of the page$";
+	public static final String USER_VERIFY_TITLE ="User verifies \\\"(.*)\\\" is the title of the page$";
+
+	public static final String USER_GET_URL ="User gets current url of the page";
+
+	public static final String USER_GET_TITLE ="User gets title of the page";
+
 	public static String BEFORE_FUNCTION="setDriverInitialisation";
+	public static final String USER_SELECTS_FUNCTION ="userSelects";
+	public static final String USER_SELECTS_ANNOTATION ="User selects";
+
+
 
 }
