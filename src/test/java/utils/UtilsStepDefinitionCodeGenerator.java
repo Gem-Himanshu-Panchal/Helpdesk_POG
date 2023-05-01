@@ -90,6 +90,7 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         if(classname.contains("Utils"))
             nameOfFile = "utils";
+        else if(classname.contains("UtilFunctions")) nameOfFile = "utilFunctions";
         v.setId(new VariableDeclaratorId(nameOfFile));
         v.setInit(new ObjectCreationExpr(null, new ClassOrInterfaceType(null, classname), null));
         FieldDeclaration f = ASTHelper.createFieldDeclaration(ModifierSet.PRIVATE,
@@ -163,6 +164,7 @@ public class UtilsStepDefinitionCodeGenerator {
             imports.add(new ImportDeclaration(new NameExpr("implementation" + "." + Settings.LOCATOR_FILE_NAME + "Implementation"), false, false));
             imports.add(new ImportDeclaration(new NameExpr("locators" + "." + Settings.LOCATOR_FILE_NAME), false, false));
             imports.add(new ImportDeclaration(new NameExpr("implementation" + "." + "UtilsImplementation"), false, false));
+            imports.add(new ImportDeclaration(new NameExpr("utils" + "." + "UtilFunctions"), false, false));
         }
 
         Settings.LOGGER.info("Imports added are:" + imports);
@@ -1463,5 +1465,152 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(method.toString());
         Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
+
+    public static void setLinkStepDefinitionPressEnter(CompilationUnit c) {
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+
+        List<Parameter> parameters = new LinkedList<>();
+        functionName = "pressEnter";
+        annotationType = "And";
+        annotationValue = "\"" +Settings.USER_PRESSES_ENTER + "\"";
+        textToEnter = "pressEnter";
+        blockToEnter = textToEnter + "(" + ")";
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+        method.setParameters(parameters);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+
+        method.setAnnotations(list_espr);
+
+        ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+
+    public static void setLinkStepDefinitionCopy(CompilationUnit c) {
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+
+        List<Parameter> parameters = new LinkedList<>();
+        functionName = "copy";
+        annotationType = "And";
+        annotationValue = "\"" +Settings.USER_COPY + "\"";
+        textToEnter = "copy";
+        blockToEnter = textToEnter + "(" + ")";
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+        method.setParameters(parameters);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+
+        method.setAnnotations(list_espr);
+
+        ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+    public static void setLinkStepDefinitionPaste(CompilationUnit c) {
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+
+        List<Parameter> parameters = new LinkedList<>();
+        functionName = "paste";
+        annotationType = "Then";
+        annotationValue = "\"" +Settings.USER_PASTE + "\"";
+        textToEnter = "paste";
+        blockToEnter = textToEnter + "(" + ")";
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+        method.setParameters(parameters);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+
+        method.setAnnotations(list_espr);
+
+        ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+    public static void setLinkStepDefinitionSelectAll(CompilationUnit c) {
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+
+        List<Parameter> parameters = new LinkedList<>();
+        functionName = "selectAll";
+        annotationType = "When";
+        annotationValue = "\"" +Settings.USER_PASTE + "\"";
+        textToEnter = "selectAll";
+        blockToEnter = textToEnter + "(" + ")";
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+        method.setParameters(parameters);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+
+        method.setAnnotations(list_espr);
+
+        ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+
 
 }

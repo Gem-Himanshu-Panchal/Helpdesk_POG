@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import implementation.GoogleImplementation;
 import locators.Google;
 import implementation.UtilsImplementation;
+import utils.UtilFunctions;
 
 public class GoogleStepDefinition {
 

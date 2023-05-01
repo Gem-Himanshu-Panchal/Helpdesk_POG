@@ -10,14 +10,37 @@ import java.util.concurrent.TimeUnit;
 import implementation.GoogleImplementation;
 import locators.Google;
 import implementation.UtilsImplementation;
+import utils.UtilFunctions;
 
 public class UtilsStepDefinition {
 
     private UtilsImplementation utils = new UtilsImplementation();
 
+    private UtilFunctions utilFunctions = new UtilFunctions();
+
     @Then("User gets current url of the page$")
     public void getUrl() {
         utils.getURL();
+    }
+
+    @And("User presses Enter key$")
+    public void pressEnter() {
+        utilFunctions.pressEnter();
+    }
+
+    @When("User performs Paste Action$")
+    public void selectAll() {
+        utilFunctions.selectAll();
+    }
+
+    @And("User performs Copy Action$")
+    public void copy() {
+        utilFunctions.copy();
+    }
+
+    @Then("User performs Paste Action$")
+    public void paste() {
+        utilFunctions.paste();
     }
 
     @And("User verifies the current URL with \"(.*)\"$")

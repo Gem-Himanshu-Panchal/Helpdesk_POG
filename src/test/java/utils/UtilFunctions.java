@@ -6,10 +6,7 @@ import net.serenitybdd.core.pages.SerenityActions;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.webdriver.SerenityWebdriverManager;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
@@ -132,39 +129,85 @@ public class UtilFunctions extends PageObject {
 //            LOGGER.info("Could not drag element: " + fromElement + " to: " + toElement);
         }
     }
+
     public void verifyTitle(String expectedTitle) {
         String title = getDriver().getTitle();
         if (!title.equals(expectedTitle)) {
             Assert.fail("Title of page does not match. Expected Title: " + expectedTitle + " Actual Title: " + title);
 //            LOG.info("Title of page does not match. Expected Title: " + expectedTitle + " Actual Title: " + title);
         }
-    }public void noOfTabs(String expectedTitle) {
+    }
+
+    public void noOfTabs(String expectedTitle) {
         ArrayList<String> tabs = new ArrayList<String>(getDriver().getWindowHandles());
 //        LOG.info("No of tabs: " + tabs.size());
     }
 
-    public void changeFocusOfElement(WebElementFacade elementFacade)
-    {
+    public void changeFocusOfElement(WebElementFacade elementFacade) {
         JavascriptExecutor executor = (JavascriptExecutor) getDriver();
         executor.executeScript("arguments[0].focus();", elementFacade);
     }
 
 
-    public void refreshPage()
-    {
+    public void refreshPage() {
         getDriver().navigate().refresh();
 //        LOG.info("Refresh Page");
     }
 
     public void sendInputToAlert(String inputText) {
-        try
-        {
+        try {
             getDriver().switchTo().alert().sendKeys(inputText);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Assert.fail("Could not enter text for alert");
 //            LOG.info("Could not enter text for alert");
+        }
+    }
+
+    public void pressEnter() {
+        try {
+            withAction().sendKeys(Keys.ENTER).build().perform();
+        } catch (Exception e) {
+            Assert.fail("Could not press enter");
+        }
+    }
+
+    public void isImage(WebElementFacade element) {
+        try {
+            Assert.assertEquals("img", element.getTagName());
+        } catch (Exception e) {
+            Assert.fail("Could not enter text for alert");
+        }
+    }
+
+    public void isImage(By locator) {
+        try {
+            Assert.assertEquals("img", $(locator).getTagName());
+        } catch (Exception e) {
+            Assert.fail("Could not enter text for alert");
+        }
+    }
+
+    public void selectAll() {
+        try {
+            withAction().keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).build().perform();
+        } catch (Exception e) {
+            Assert.fail("Could not perform select All operation");
+        }
+    }
+
+    public void copy() {
+        try {
+            withAction().keyDown(Keys.CONTROL).sendKeys("c").keyUp(Keys.CONTROL).build().perform();
+        } catch (Exception e) {
+            Assert.fail("Could not perform copy operation");
+        }
+    }
+
+    public void paste() {
+        try {
+            withAction().keyDown(Keys.CONTROL).sendKeys("v").keyUp(Keys.CONTROL).build().perform();
+        } catch (Exception e) {
+            Assert.fail("Could not perform paste operation");
         }
     }
 

@@ -370,7 +370,12 @@ public class CodeGeneratorRunner {
         UtilsStepDefinitionCodeGenerator.setTypeDeclaration(c,  "UtilsStepDefinition");
 
         UtilsStepDefinitionCodeGenerator.setStepDefinitionVariable(c, "UtilsImplementation");
+        UtilsStepDefinitionCodeGenerator.setStepDefinitionVariable(c, "UtilFunctions");
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetUrl(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionPressEnter(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSelectAll(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionCopy(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionPaste(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionVerifyUrl(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetTitle(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionVerifyTitle(c);

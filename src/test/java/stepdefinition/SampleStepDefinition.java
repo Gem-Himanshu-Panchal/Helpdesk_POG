@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import implementation.SampleImplementation;
 import locators.Sample;
 import implementation.UtilsImplementation;
+import utils.UtilFunctions;
 
 public class SampleStepDefinition {
 

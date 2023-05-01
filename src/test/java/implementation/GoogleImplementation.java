@@ -1,14 +1,7 @@
 package implementation;
 
-import com.gemini.generic.reporting.GemTestReporter;
-import com.gemini.generic.reporting.STATUS;
-import com.gemini.generic.ui.utils.DriverManager;
-import com.gemini.generic.ui.utils.DriverAction;
-import com.gemini.generic.utils.GemJarUtils;
-import org.openqa.selenium.chrome.ChromeOptions;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import com.gemini.generic.utils.GemJarGlobalVar;
+import net.serenitybdd.core.pages.WebElementFacade;
+import net.serenitybdd.core.pages.PageObject;
 import pageobjectgenerator.Settings;
 import net.serenitybdd.core.Serenity;
 import static org.junit.Assert.assertTrue;
@@ -24,1411 +17,1012 @@ import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriver;
 
-public class GoogleImplementation extends DriverAction {
+public class GoogleImplementation extends PageObject {
+
+    private WebDriver driver =getDriver();
 
     public void typeTextIntoFirstName(String typeText) {
         //The below function is for web element @FindBy(Google.firstName);
         try{
-			typeText(Google.firstName,typeText);
+			typeInto($(Google.firstName),typeText);
         	Settings.LOGGER.info("User enters "+typeText+" as value");
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Enter the text in firstName field","Unable to Enter Text in firstName field", STATUS.FAIL, takeSnapShot());
-        	Settings.LOGGER.info("User gets an exception: "+e);
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not enter " + typeText + " into FirstName");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
         };
     }
 
     public String getTextFromFirstName() {
         //The below function is for web element @FindBy(Google.firstName);
-        String text = new String();
+        String text = "";
         try{
-			text = getElementText(Google.firstName);
+			text = $(Google.firstName).getText();
+			Settings.LOGGER.info("User gets the text of firstName element");
         }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-        } 
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get text of FirstName");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
 		return text;
     }
 
     public void verifyFirstNameIsEnabled() {
         //The below function is for web element @FindBy(Google.firstName);
-        try{
-			getElement(Google.firstName).isEnabled();
-        	GemTestReporter.addTestStep("Verify firstName field is enabled","firstName field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("firstName field is enabled");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify firstName field is enabled","F field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("firstName field is not enabled");};
+        assertTrue("FirstName is not enabled", $(Google.firstName).isEnabled());
+        Settings.LOGGER.info("User verifies the given firstName element is enabled");
     }
 
     public void clearFirstName() {
         //The below function is for web element @FindBy(Google.firstName);
         try{
-			clearText(Google.firstName);
-        	GemTestReporter.addTestStep("Clear text for firstName field","Input for firstName field cleared successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("firstName field cleared successfully");}
+			$(Google.firstName).clear();
+        	Settings.LOGGER.info("User deletes the value for firstName element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Clear text for firstName field","firstNameUnable to clear text for firstName field", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to clear text for firstName field");};
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not clear FirstName");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        };
     }
 
     public String getAttributeFromFirstName(String attributeValue) {
         //This function is for web element @FindBy(Google.firstName);
-        String text = new String();
+        String valueOfAttribute = "";
         try{
-			text = getAttributeName(Google.firstName, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "firstName field","Successfully fetched " + attributeValue + " value for firstName", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for firstName");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "firstName field","Unable to get " + attributeValue + " value for firstName as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for firstName as attribute does not exist");};
+			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for firstName element");
+        	valueOfAttribute = $(Google.firstName).getAttribute(attributeValue);
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "firstName field","Unable to get " + attributeValue + " value for firstName as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
+		return valueOfAttribute;
     }
 
     public void verifyValueFromFirstName(String typeText) {
         //This function is for web element @FindBy(Google.firstName);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.firstName,"value");
-        	if(typeText.equals(text)){
-				GemTestReporter.addTestStep("Verify value of firstName matches " +typeText,"Value for firstName verified successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Value for firstName verified successfully" );	}
-			else{
-				GemTestReporter.addTestStep("Verify value of firstName matches " +typeText,"Unable to verify value for firstName. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify value for firstName. Actual: "+text+" Expected: "+typeText );	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value of firstName field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.firstName).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Google.firstName).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value: " + typeText + "for FirstName");
     }
 
     public String verifyAttributeValueForFirstName(String attributeName, String attributeValue) {
         //This function is for web element @FindBy(Google.firstName);
-        String text = new String();
         try{
-			text = getAttributeName(Google.firstName,attributeName);
-        	if(attributeValue.equals(text)){
-				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Successful", STATUS.PASS, takeSnapShot());
-        	}
-			else{
-				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Failed", STATUS.FAIL, takeSnapShot());
-        	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Get value of Value attribute for firstName field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			assertTrue(StringUtils.equalsIgnoreCase(attributeValue,$(Google.firstName).getAttribute(attributeName)));
+        }
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		return $(Google.firstName).getAttribute(attributeName);
     }
 
     public void verifyValueClearedForFirstName() {
         //This function is for web element @FindBy(Google.firstName);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.firstName,"value");
-        	if(text.equals("")){
-				GemTestReporter.addTestStep("Verify value cleared for firstName field","Verified input value for firstName is successfully cleared", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Verified input value for firstName is successfully cleared");}
-			else{
-				GemTestReporter.addTestStep("Verify value cleared for firstName field","Input value for firstName not cleared successfully ", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Input value for firstName not cleared successfully ");}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value gets cleared for firstName field","Unable to clear value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.firstName).getAttribute("value"), StringUtils.equalsIgnoreCase("", $(Google.firstName).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value is cleared for FirstName");
     }
 
     public void verifyFirstNameIsDisplayed() {
         //The below function is for web element @FindBy(Google.firstName);
-        try{
-			getElement(Google.firstName).isDisplayed();
-        	GemTestReporter.addTestStep("Verify firstName field is visible","firstName field is visible", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("firstName field is visible");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify firstName field is visible","firstName field is not visible", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("firstName field is not visible");};
+        assertTrue("FirstName is not visible", $(Google.firstName).isDisplayed());
+        Settings.LOGGER.info("User verifies firstName element is displayed");
     }
 
     public void verifyFirstNameText(String typeText) {
         //The below function is for web element @FindBy(Google.firstName);
         try{
-			if(getElementText(Google.firstName).equals(typeText)){;
-        		GemTestReporter.addTestStep("Verify text of firstName field is equal to " + typeText,"Text of firstName field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Text of firstName field is equal to " + typeText);}	
- else{
-				GemTestReporter.addTestStep("Verify text of firstName field is equal to " + typeText,"Text of firstName field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.firstName), STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Text of firstName field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.firstName));}	
-		}
+			assertTrue("Actual text: " + $(Google.firstName).getText(), StringUtils.equalsIgnoreCase(typeText,$(Google.firstName).getText()));
+        	Settings.LOGGER.info("User gets the text of firstName element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside firstName is equal to " + typeText,"Text inside firstName is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void typeTextIntoPassword(String typeText) {
         //The below function is for web element @FindBy(Google.password);
         try{
-			typeText(Google.password,typeText);
+			typeInto($(Google.password),typeText);
         	Settings.LOGGER.info("User enters "+typeText+" as value");
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Enter the text in password field","Unable to Enter Text in password field", STATUS.FAIL, takeSnapShot());
-        	Settings.LOGGER.info("User gets an exception: "+e);
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not enter " + typeText + " into Password");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
         };
     }
 
     public String getTextFromPassword() {
         //The below function is for web element @FindBy(Google.password);
-        String text = new String();
+        String text = "";
         try{
-			text = getElementText(Google.password);
+			text = $(Google.password).getText();
+			Settings.LOGGER.info("User gets the text of password element");
         }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-        } 
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get text of Password");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
 		return text;
     }
 
     public void verifyPasswordIsEnabled() {
         //The below function is for web element @FindBy(Google.password);
-        try{
-			getElement(Google.password).isEnabled();
-        	GemTestReporter.addTestStep("Verify password field is enabled","password field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("password field is enabled");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify password field is enabled","P field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("password field is not enabled");};
+        assertTrue("Password is not enabled", $(Google.password).isEnabled());
+        Settings.LOGGER.info("User verifies the given password element is enabled");
     }
 
     public void clearPassword() {
         //The below function is for web element @FindBy(Google.password);
         try{
-			clearText(Google.password);
-        	GemTestReporter.addTestStep("Clear text for password field","Input for password field cleared successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("password field cleared successfully");}
+			$(Google.password).clear();
+        	Settings.LOGGER.info("User deletes the value for password element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Clear text for password field","passwordUnable to clear text for password field", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to clear text for password field");};
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not clear Password");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        };
     }
 
     public String getAttributeFromPassword(String attributeValue) {
         //This function is for web element @FindBy(Google.password);
-        String text = new String();
+        String valueOfAttribute = "";
         try{
-			text = getAttributeName(Google.password, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "password field","Successfully fetched " + attributeValue + " value for password", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for password");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "password field","Unable to get " + attributeValue + " value for password as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for password as attribute does not exist");};
+			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for password element");
+        	valueOfAttribute = $(Google.password).getAttribute(attributeValue);
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "password field","Unable to get " + attributeValue + " value for password as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
+		return valueOfAttribute;
     }
 
     public void verifyValueFromPassword(String typeText) {
         //This function is for web element @FindBy(Google.password);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.password,"value");
-        	if(typeText.equals(text)){
-				GemTestReporter.addTestStep("Verify value of password matches " +typeText,"Value for password verified successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Value for password verified successfully" );	}
-			else{
-				GemTestReporter.addTestStep("Verify value of password matches " +typeText,"Unable to verify value for password. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify value for password. Actual: "+text+" Expected: "+typeText );	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value of password field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.password).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Google.password).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value: " + typeText + "for Password");
     }
 
     public String verifyAttributeValueForPassword(String attributeName, String attributeValue) {
         //This function is for web element @FindBy(Google.password);
-        String text = new String();
         try{
-			text = getAttributeName(Google.password,attributeName);
-        	if(attributeValue.equals(text)){
-				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Successful", STATUS.PASS, takeSnapShot());
-        	}
-			else{
-				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Failed", STATUS.FAIL, takeSnapShot());
-        	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Get value of Value attribute for password field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			assertTrue(StringUtils.equalsIgnoreCase(attributeValue,$(Google.password).getAttribute(attributeName)));
+        }
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		return $(Google.password).getAttribute(attributeName);
     }
 
     public void verifyValueClearedForPassword() {
         //This function is for web element @FindBy(Google.password);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.password,"value");
-        	if(text.equals("")){
-				GemTestReporter.addTestStep("Verify value cleared for password field","Verified input value for password is successfully cleared", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Verified input value for password is successfully cleared");}
-			else{
-				GemTestReporter.addTestStep("Verify value cleared for password field","Input value for password not cleared successfully ", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Input value for password not cleared successfully ");}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value gets cleared for password field","Unable to clear value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.password).getAttribute("value"), StringUtils.equalsIgnoreCase("", $(Google.password).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value is cleared for Password");
     }
 
     public void verifyPasswordIsDisplayed() {
         //The below function is for web element @FindBy(Google.password);
-        try{
-			getElement(Google.password).isDisplayed();
-        	GemTestReporter.addTestStep("Verify password field is visible","password field is visible", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("password field is visible");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify password field is visible","password field is not visible", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("password field is not visible");};
+        assertTrue("Password is not visible", $(Google.password).isDisplayed());
+        Settings.LOGGER.info("User verifies password element is displayed");
     }
 
     public void verifyPasswordText(String typeText) {
         //The below function is for web element @FindBy(Google.password);
         try{
-			if(getElementText(Google.password).equals(typeText)){;
-        		GemTestReporter.addTestStep("Verify text of password field is equal to " + typeText,"Text of password field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Text of password field is equal to " + typeText);}	
- else{
-				GemTestReporter.addTestStep("Verify text of password field is equal to " + typeText,"Text of password field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.password), STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Text of password field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.password));}	
-		}
+			assertTrue("Actual text: " + $(Google.password).getText(), StringUtils.equalsIgnoreCase(typeText,$(Google.password).getText()));
+        	Settings.LOGGER.info("User gets the text of password element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside password is equal to " + typeText,"Text inside password is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void typeTextIntoLastName(String typeText) {
         //The below function is for web element @FindBy(Google.lastName);
         try{
-			typeText(Google.lastName,typeText);
+			typeInto($(Google.lastName),typeText);
         	Settings.LOGGER.info("User enters "+typeText+" as value");
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Enter the text in lastName field","Unable to Enter Text in lastName field", STATUS.FAIL, takeSnapShot());
-        	Settings.LOGGER.info("User gets an exception: "+e);
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not enter " + typeText + " into LastName");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
         };
     }
 
     public String getTextFromLastName() {
         //The below function is for web element @FindBy(Google.lastName);
-        String text = new String();
+        String text = "";
         try{
-			text = getElementText(Google.lastName);
+			text = $(Google.lastName).getText();
+			Settings.LOGGER.info("User gets the text of lastName element");
         }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-        } 
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get text of LastName");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
 		return text;
     }
 
     public void verifyLastNameIsEnabled() {
         //The below function is for web element @FindBy(Google.lastName);
-        try{
-			getElement(Google.lastName).isEnabled();
-        	GemTestReporter.addTestStep("Verify lastName field is enabled","lastName field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("lastName field is enabled");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify lastName field is enabled","L field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("lastName field is not enabled");};
+        assertTrue("LastName is not enabled", $(Google.lastName).isEnabled());
+        Settings.LOGGER.info("User verifies the given lastName element is enabled");
     }
 
     public void clearLastName() {
         //The below function is for web element @FindBy(Google.lastName);
         try{
-			clearText(Google.lastName);
-        	GemTestReporter.addTestStep("Clear text for lastName field","Input for lastName field cleared successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("lastName field cleared successfully");}
+			$(Google.lastName).clear();
+        	Settings.LOGGER.info("User deletes the value for lastName element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Clear text for lastName field","lastNameUnable to clear text for lastName field", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to clear text for lastName field");};
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not clear LastName");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        };
     }
 
     public String getAttributeFromLastName(String attributeValue) {
         //This function is for web element @FindBy(Google.lastName);
-        String text = new String();
+        String valueOfAttribute = "";
         try{
-			text = getAttributeName(Google.lastName, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "lastName field","Successfully fetched " + attributeValue + " value for lastName", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for lastName");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "lastName field","Unable to get " + attributeValue + " value for lastName as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for lastName as attribute does not exist");};
+			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for lastName element");
+        	valueOfAttribute = $(Google.lastName).getAttribute(attributeValue);
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "lastName field","Unable to get " + attributeValue + " value for lastName as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
+		return valueOfAttribute;
     }
 
     public void verifyValueFromLastName(String typeText) {
         //This function is for web element @FindBy(Google.lastName);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.lastName,"value");
-        	if(typeText.equals(text)){
-				GemTestReporter.addTestStep("Verify value of lastName matches " +typeText,"Value for lastName verified successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Value for lastName verified successfully" );	}
-			else{
-				GemTestReporter.addTestStep("Verify value of lastName matches " +typeText,"Unable to verify value for lastName. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify value for lastName. Actual: "+text+" Expected: "+typeText );	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value of lastName field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.lastName).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Google.lastName).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value: " + typeText + "for LastName");
     }
 
     public String verifyAttributeValueForLastName(String attributeName, String attributeValue) {
         //This function is for web element @FindBy(Google.lastName);
-        String text = new String();
         try{
-			text = getAttributeName(Google.lastName,attributeName);
-        	if(attributeValue.equals(text)){
-				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Successful", STATUS.PASS, takeSnapShot());
-        	}
-			else{
-				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Failed", STATUS.FAIL, takeSnapShot());
-        	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Get value of Value attribute for lastName field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			assertTrue(StringUtils.equalsIgnoreCase(attributeValue,$(Google.lastName).getAttribute(attributeName)));
+        }
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		return $(Google.lastName).getAttribute(attributeName);
     }
 
     public void verifyValueClearedForLastName() {
         //This function is for web element @FindBy(Google.lastName);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.lastName,"value");
-        	if(text.equals("")){
-				GemTestReporter.addTestStep("Verify value cleared for lastName field","Verified input value for lastName is successfully cleared", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Verified input value for lastName is successfully cleared");}
-			else{
-				GemTestReporter.addTestStep("Verify value cleared for lastName field","Input value for lastName not cleared successfully ", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Input value for lastName not cleared successfully ");}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value gets cleared for lastName field","Unable to clear value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.lastName).getAttribute("value"), StringUtils.equalsIgnoreCase("", $(Google.lastName).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value is cleared for LastName");
     }
 
     public void verifyLastNameIsDisplayed() {
         //The below function is for web element @FindBy(Google.lastName);
-        try{
-			getElement(Google.lastName).isDisplayed();
-        	GemTestReporter.addTestStep("Verify lastName field is visible","lastName field is visible", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("lastName field is visible");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify lastName field is visible","lastName field is not visible", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("lastName field is not visible");};
+        assertTrue("LastName is not visible", $(Google.lastName).isDisplayed());
+        Settings.LOGGER.info("User verifies lastName element is displayed");
     }
 
     public void verifyLastNameText(String typeText) {
         //The below function is for web element @FindBy(Google.lastName);
         try{
-			if(getElementText(Google.lastName).equals(typeText)){;
-        		GemTestReporter.addTestStep("Verify text of lastName field is equal to " + typeText,"Text of lastName field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Text of lastName field is equal to " + typeText);}	
- else{
-				GemTestReporter.addTestStep("Verify text of lastName field is equal to " + typeText,"Text of lastName field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.lastName), STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Text of lastName field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.lastName));}	
-		}
+			assertTrue("Actual text: " + $(Google.lastName).getText(), StringUtils.equalsIgnoreCase(typeText,$(Google.lastName).getText()));
+        	Settings.LOGGER.info("User gets the text of lastName element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside lastName is equal to " + typeText,"Text inside lastName is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void typeTextIntoHeading(String typeText) {
         //The below function is for web element @FindBy(Google.heading);
         try{
-			typeText(Google.heading,typeText);
+			typeInto($(Google.heading),typeText);
         	Settings.LOGGER.info("User enters "+typeText+" as value");
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Enter the text in heading field","Unable to Enter Text in heading field", STATUS.FAIL, takeSnapShot());
-        	Settings.LOGGER.info("User gets an exception: "+e);
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not enter " + typeText + " into Heading");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
         };
     }
 
     public String getTextFromHeading() {
         //The below function is for web element @FindBy(Google.heading);
-        String text = new String();
+        String text = "";
         try{
-			text = getElementText(Google.heading);
+			text = $(Google.heading).getText();
+			Settings.LOGGER.info("User gets the text of heading element");
         }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-        } 
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get text of Heading");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
 		return text;
     }
 
     public void verifyHeadingIsEnabled() {
         //The below function is for web element @FindBy(Google.heading);
-        try{
-			getElement(Google.heading).isEnabled();
-        	GemTestReporter.addTestStep("Verify heading field is enabled","heading field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("heading field is enabled");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify heading field is enabled","H field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("heading field is not enabled");};
+        assertTrue("Heading is not enabled", $(Google.heading).isEnabled());
+        Settings.LOGGER.info("User verifies the given heading element is enabled");
     }
 
     public void clearHeading() {
         //The below function is for web element @FindBy(Google.heading);
         try{
-			clearText(Google.heading);
-        	GemTestReporter.addTestStep("Clear text for heading field","Input for heading field cleared successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("heading field cleared successfully");}
+			$(Google.heading).clear();
+        	Settings.LOGGER.info("User deletes the value for heading element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Clear text for heading field","headingUnable to clear text for heading field", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to clear text for heading field");};
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not clear Heading");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        };
     }
 
     public String getAttributeFromHeading(String attributeValue) {
         //This function is for web element @FindBy(Google.heading);
-        String text = new String();
+        String valueOfAttribute = "";
         try{
-			text = getAttributeName(Google.heading, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "heading field","Successfully fetched " + attributeValue + " value for heading", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for heading");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "heading field","Unable to get " + attributeValue + " value for heading as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for heading as attribute does not exist");};
+			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for heading element");
+        	valueOfAttribute = $(Google.heading).getAttribute(attributeValue);
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "heading field","Unable to get " + attributeValue + " value for heading as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
+		return valueOfAttribute;
     }
 
     public void verifyValueFromHeading(String typeText) {
         //This function is for web element @FindBy(Google.heading);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.heading,"value");
-        	if(typeText.equals(text)){
-				GemTestReporter.addTestStep("Verify value of heading matches " +typeText,"Value for heading verified successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Value for heading verified successfully" );	}
-			else{
-				GemTestReporter.addTestStep("Verify value of heading matches " +typeText,"Unable to verify value for heading. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify value for heading. Actual: "+text+" Expected: "+typeText );	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value of heading field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.heading).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Google.heading).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value: " + typeText + "for Heading");
     }
 
     public String verifyAttributeValueForHeading(String attributeName, String attributeValue) {
         //This function is for web element @FindBy(Google.heading);
-        String text = new String();
         try{
-			text = getAttributeName(Google.heading,attributeName);
-        	if(attributeValue.equals(text)){
-				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Successful", STATUS.PASS, takeSnapShot());
-        	}
-			else{
-				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Failed", STATUS.FAIL, takeSnapShot());
-        	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Get value of Value attribute for heading field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			assertTrue(StringUtils.equalsIgnoreCase(attributeValue,$(Google.heading).getAttribute(attributeName)));
+        }
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		return $(Google.heading).getAttribute(attributeName);
     }
 
     public void verifyValueClearedForHeading() {
         //This function is for web element @FindBy(Google.heading);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.heading,"value");
-        	if(text.equals("")){
-				GemTestReporter.addTestStep("Verify value cleared for heading field","Verified input value for heading is successfully cleared", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Verified input value for heading is successfully cleared");}
-			else{
-				GemTestReporter.addTestStep("Verify value cleared for heading field","Input value for heading not cleared successfully ", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Input value for heading not cleared successfully ");}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value gets cleared for heading field","Unable to clear value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.heading).getAttribute("value"), StringUtils.equalsIgnoreCase("", $(Google.heading).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value is cleared for Heading");
     }
 
     public void verifyHeadingIsDisplayed() {
         //The below function is for web element @FindBy(Google.heading);
-        try{
-			getElement(Google.heading).isDisplayed();
-        	GemTestReporter.addTestStep("Verify heading field is visible","heading field is visible", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("heading field is visible");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify heading field is visible","heading field is not visible", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("heading field is not visible");};
+        assertTrue("Heading is not visible", $(Google.heading).isDisplayed());
+        Settings.LOGGER.info("User verifies heading element is displayed");
     }
 
     public void verifyHeadingText(String typeText) {
         //The below function is for web element @FindBy(Google.heading);
         try{
-			if(getElementText(Google.heading).equals(typeText)){;
-        		GemTestReporter.addTestStep("Verify text of heading field is equal to " + typeText,"Text of heading field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Text of heading field is equal to " + typeText);}	
- else{
-				GemTestReporter.addTestStep("Verify text of heading field is equal to " + typeText,"Text of heading field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.heading), STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Text of heading field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.heading));}	
-		}
+			assertTrue("Actual text: " + $(Google.heading).getText(), StringUtils.equalsIgnoreCase(typeText,$(Google.heading).getText()));
+        	Settings.LOGGER.info("User gets the text of heading element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside heading is equal to " + typeText,"Text inside heading is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void typeTextIntoBirthday(String typeText) {
         //The below function is for web element @FindBy(Google.birthday);
         try{
-			typeText(Google.birthday,typeText);
+			typeInto($(Google.birthday),typeText);
         	Settings.LOGGER.info("User enters "+typeText+" as value");
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Enter the text in birthday field","Unable to Enter Text in birthday field", STATUS.FAIL, takeSnapShot());
-        	Settings.LOGGER.info("User gets an exception: "+e);
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not enter " + typeText + " into Birthday");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
         };
     }
 
     public String getTextFromBirthday() {
         //The below function is for web element @FindBy(Google.birthday);
-        String text = new String();
+        String text = "";
         try{
-			text = getElementText(Google.birthday);
+			text = $(Google.birthday).getText();
+			Settings.LOGGER.info("User gets the text of birthday element");
         }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-        } 
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get text of Birthday");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
 		return text;
     }
 
     public void verifyBirthdayIsEnabled() {
         //The below function is for web element @FindBy(Google.birthday);
-        try{
-			getElement(Google.birthday).isEnabled();
-        	GemTestReporter.addTestStep("Verify birthday field is enabled","birthday field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("birthday field is enabled");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify birthday field is enabled","B field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("birthday field is not enabled");};
+        assertTrue("Birthday is not enabled", $(Google.birthday).isEnabled());
+        Settings.LOGGER.info("User verifies the given birthday element is enabled");
     }
 
     public void clearBirthday() {
         //The below function is for web element @FindBy(Google.birthday);
         try{
-			clearText(Google.birthday);
-        	GemTestReporter.addTestStep("Clear text for birthday field","Input for birthday field cleared successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("birthday field cleared successfully");}
+			$(Google.birthday).clear();
+        	Settings.LOGGER.info("User deletes the value for birthday element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Clear text for birthday field","birthdayUnable to clear text for birthday field", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to clear text for birthday field");};
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not clear Birthday");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        };
     }
 
     public String getAttributeFromBirthday(String attributeValue) {
         //This function is for web element @FindBy(Google.birthday);
-        String text = new String();
+        String valueOfAttribute = "";
         try{
-			text = getAttributeName(Google.birthday, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "birthday field","Successfully fetched " + attributeValue + " value for birthday", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for birthday");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "birthday field","Unable to get " + attributeValue + " value for birthday as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for birthday as attribute does not exist");};
+			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for birthday element");
+        	valueOfAttribute = $(Google.birthday).getAttribute(attributeValue);
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "birthday field","Unable to get " + attributeValue + " value for birthday as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
+		return valueOfAttribute;
     }
 
     public void verifyValueFromBirthday(String typeText) {
         //This function is for web element @FindBy(Google.birthday);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.birthday,"value");
-        	if(typeText.equals(text)){
-				GemTestReporter.addTestStep("Verify value of birthday matches " +typeText,"Value for birthday verified successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Value for birthday verified successfully" );	}
-			else{
-				GemTestReporter.addTestStep("Verify value of birthday matches " +typeText,"Unable to verify value for birthday. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify value for birthday. Actual: "+text+" Expected: "+typeText );	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value of birthday field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.birthday).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Google.birthday).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value: " + typeText + "for Birthday");
     }
 
     public String verifyAttributeValueForBirthday(String attributeName, String attributeValue) {
         //This function is for web element @FindBy(Google.birthday);
-        String text = new String();
         try{
-			text = getAttributeName(Google.birthday,attributeName);
-        	if(attributeValue.equals(text)){
-				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Successful", STATUS.PASS, takeSnapShot());
-        	}
-			else{
-				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Failed", STATUS.FAIL, takeSnapShot());
-        	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Get value of Value attribute for birthday field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			assertTrue(StringUtils.equalsIgnoreCase(attributeValue,$(Google.birthday).getAttribute(attributeName)));
+        }
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		return $(Google.birthday).getAttribute(attributeName);
     }
 
     public void verifyValueClearedForBirthday() {
         //This function is for web element @FindBy(Google.birthday);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.birthday,"value");
-        	if(text.equals("")){
-				GemTestReporter.addTestStep("Verify value cleared for birthday field","Verified input value for birthday is successfully cleared", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Verified input value for birthday is successfully cleared");}
-			else{
-				GemTestReporter.addTestStep("Verify value cleared for birthday field","Input value for birthday not cleared successfully ", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Input value for birthday not cleared successfully ");}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value gets cleared for birthday field","Unable to clear value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.birthday).getAttribute("value"), StringUtils.equalsIgnoreCase("", $(Google.birthday).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value is cleared for Birthday");
     }
 
     public void verifyBirthdayIsDisplayed() {
         //The below function is for web element @FindBy(Google.birthday);
-        try{
-			getElement(Google.birthday).isDisplayed();
-        	GemTestReporter.addTestStep("Verify birthday field is visible","birthday field is visible", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("birthday field is visible");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify birthday field is visible","birthday field is not visible", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("birthday field is not visible");};
+        assertTrue("Birthday is not visible", $(Google.birthday).isDisplayed());
+        Settings.LOGGER.info("User verifies birthday element is displayed");
     }
 
     public void verifyBirthdayText(String typeText) {
         //The below function is for web element @FindBy(Google.birthday);
         try{
-			if(getElementText(Google.birthday).equals(typeText)){;
-        		GemTestReporter.addTestStep("Verify text of birthday field is equal to " + typeText,"Text of birthday field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Text of birthday field is equal to " + typeText);}	
- else{
-				GemTestReporter.addTestStep("Verify text of birthday field is equal to " + typeText,"Text of birthday field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.birthday), STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Text of birthday field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.birthday));}	
-		}
+			assertTrue("Actual text: " + $(Google.birthday).getText(), StringUtils.equalsIgnoreCase(typeText,$(Google.birthday).getText()));
+        	Settings.LOGGER.info("User gets the text of birthday element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside birthday is equal to " + typeText,"Text inside birthday is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void selectCss() {
         //The below function is for web element @FindBy(Google.css);
         try{
-			click(Google.css);
+			$(Google.css).click();
+        	Settings.LOGGER.info("User selects the css element");
         }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not select Css");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
         };
     }
 
     public void verifyCssIsEnabled() {
         //The below function is for web element @FindBy(Google.css);
-        try{
-			getElement(Google.css).isEnabled();
-        	GemTestReporter.addTestStep("Verify css field is enabled","css field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("css field is enabled");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify css field is enabled","C field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("css field is not enabled");};
+        assertTrue("Css is not enabled", $(Google.css).isEnabled());
+        Settings.LOGGER.info("User verifies the given css element is enabled");
     }
 
     public void verifyCssIsSelected() {
         //This function is for web element @FindBy(Google.css);
-        try{
-			getElement(Google.css).isSelected();
-        	Settings.LOGGER.info("User verifies css element is selected");
-        	GemTestReporter.addTestStep("Verify css element is selected","css is selected successfully", STATUS.PASS, takeSnapShot());
-        }
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify if css element is selected","Unable to select css element", STATUS.FAIL, takeSnapShot());
-        	Settings.LOGGER.info("User gets an exception: "+e);
-        };
+        assertTrue("Css is not selected", $(Google.css).isSelected());
+        Settings.LOGGER.info("User verifies css is selected");
     }
 
     public String getAttributeFromCss(String attributeValue) {
         //This function is for web element @FindBy(Google.css);
-        String text = new String();
+        String valueOfAttribute = "";
         try{
-			text = getAttributeName(Google.css, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "css field","Successfully fetched " + attributeValue + " value for css", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for css");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "css field","Unable to get " + attributeValue + " value for css as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for css as attribute does not exist");};
+			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for css element");
+        	valueOfAttribute = $(Google.css).getAttribute(attributeValue);
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "css field","Unable to get " + attributeValue + " value for css as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
+		return valueOfAttribute;
     }
 
     public void verifyValueFromCss(String typeText) {
         //This function is for web element @FindBy(Google.css);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.css,"value");
-        	if(typeText.equals(text)){
-				GemTestReporter.addTestStep("Verify value of css matches " +typeText,"Value for css verified successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Value for css verified successfully" );	}
-			else{
-				GemTestReporter.addTestStep("Verify value of css matches " +typeText,"Unable to verify value for css. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify value for css. Actual: "+text+" Expected: "+typeText );	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value of css field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.css).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Google.css).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value: " + typeText + "for Css");
     }
 
     public void verifyCssIsDisplayed() {
         //The below function is for web element @FindBy(Google.css);
-        try{
-			getElement(Google.css).isDisplayed();
-        	GemTestReporter.addTestStep("Verify css field is visible","css field is visible", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("css field is visible");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify css field is visible","css field is not visible", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("css field is not visible");};
+        assertTrue("Css is not visible", $(Google.css).isDisplayed());
+        Settings.LOGGER.info("User verifies css element is displayed");
     }
 
     public void verifyCssText(String typeText) {
         //The below function is for web element @FindBy(Google.css);
         try{
-			if(getElementText(Google.css).equals(typeText)){;
-        		GemTestReporter.addTestStep("Verify text of css field is equal to " + typeText,"Text of css field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Text of css field is equal to " + typeText);}	
- else{
-				GemTestReporter.addTestStep("Verify text of css field is equal to " + typeText,"Text of css field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.css), STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Text of css field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.css));}	
-		}
+			assertTrue("Actual text: " + $(Google.css).getText(), StringUtils.equalsIgnoreCase(typeText,$(Google.css).getText()));
+        	Settings.LOGGER.info("User gets the text of css element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside css is equal to " + typeText,"Text inside css is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void selectJavascript() {
         //The below function is for web element @FindBy(Google.javascript);
         try{
-			click(Google.javascript);
+			$(Google.javascript).click();
+        	Settings.LOGGER.info("User selects the javascript element");
         }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not select Javascript");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
         };
     }
 
     public void verifyJavascriptIsEnabled() {
         //The below function is for web element @FindBy(Google.javascript);
-        try{
-			getElement(Google.javascript).isEnabled();
-        	GemTestReporter.addTestStep("Verify javascript field is enabled","javascript field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("javascript field is enabled");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify javascript field is enabled","J field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("javascript field is not enabled");};
+        assertTrue("Javascript is not enabled", $(Google.javascript).isEnabled());
+        Settings.LOGGER.info("User verifies the given javascript element is enabled");
     }
 
     public void verifyJavascriptIsSelected() {
         //This function is for web element @FindBy(Google.javascript);
-        try{
-			getElement(Google.javascript).isSelected();
-        	Settings.LOGGER.info("User verifies javascript element is selected");
-        	GemTestReporter.addTestStep("Verify javascript element is selected","javascript is selected successfully", STATUS.PASS, takeSnapShot());
-        }
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify if javascript element is selected","Unable to select javascript element", STATUS.FAIL, takeSnapShot());
-        	Settings.LOGGER.info("User gets an exception: "+e);
-        };
+        assertTrue("Javascript is not selected", $(Google.javascript).isSelected());
+        Settings.LOGGER.info("User verifies javascript is selected");
     }
 
     public String getAttributeFromJavascript(String attributeValue) {
         //This function is for web element @FindBy(Google.javascript);
-        String text = new String();
+        String valueOfAttribute = "";
         try{
-			text = getAttributeName(Google.javascript, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "javascript field","Successfully fetched " + attributeValue + " value for javascript", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for javascript");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "javascript field","Unable to get " + attributeValue + " value for javascript as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for javascript as attribute does not exist");};
+			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for javascript element");
+        	valueOfAttribute = $(Google.javascript).getAttribute(attributeValue);
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "javascript field","Unable to get " + attributeValue + " value for javascript as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
+		return valueOfAttribute;
     }
 
     public void verifyValueFromJavascript(String typeText) {
         //This function is for web element @FindBy(Google.javascript);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.javascript,"value");
-        	if(typeText.equals(text)){
-				GemTestReporter.addTestStep("Verify value of javascript matches " +typeText,"Value for javascript verified successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Value for javascript verified successfully" );	}
-			else{
-				GemTestReporter.addTestStep("Verify value of javascript matches " +typeText,"Unable to verify value for javascript. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify value for javascript. Actual: "+text+" Expected: "+typeText );	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value of javascript field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.javascript).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Google.javascript).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value: " + typeText + "for Javascript");
     }
 
     public void verifyJavascriptIsDisplayed() {
         //The below function is for web element @FindBy(Google.javascript);
-        try{
-			getElement(Google.javascript).isDisplayed();
-        	GemTestReporter.addTestStep("Verify javascript field is visible","javascript field is visible", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("javascript field is visible");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify javascript field is visible","javascript field is not visible", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("javascript field is not visible");};
+        assertTrue("Javascript is not visible", $(Google.javascript).isDisplayed());
+        Settings.LOGGER.info("User verifies javascript element is displayed");
     }
 
     public void verifyJavascriptText(String typeText) {
         //The below function is for web element @FindBy(Google.javascript);
         try{
-			if(getElementText(Google.javascript).equals(typeText)){;
-        		GemTestReporter.addTestStep("Verify text of javascript field is equal to " + typeText,"Text of javascript field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Text of javascript field is equal to " + typeText);}	
- else{
-				GemTestReporter.addTestStep("Verify text of javascript field is equal to " + typeText,"Text of javascript field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.javascript), STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Text of javascript field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.javascript));}	
-		}
+			assertTrue("Actual text: " + $(Google.javascript).getText(), StringUtils.equalsIgnoreCase(typeText,$(Google.javascript).getText()));
+        	Settings.LOGGER.info("User gets the text of javascript element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside javascript is equal to " + typeText,"Text inside javascript is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void selectBike() {
         //The below function is for web element @FindBy(Google.Bike);
         try{
-			click(Google.Bike);
+			$(Google.Bike).click();
+        	Settings.LOGGER.info("User selects the Bike element");
         }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not select Bike");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
         };
     }
 
     public void clickOnBike() {
         //The below function is for web element @FindBy(Google.Bike);
         try{
-			click(Google.Bike);
-        	Settings.LOGGER.info("User clicks on Bike successfully");}
+			$(Google.Bike).click();
+        	Settings.LOGGER.info("User click on the Bike element");
+        }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-        	Settings.LOGGER.info("User is unable to click on Bike");};
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not click Bike");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        };
     }
 
     public void elementIsClickableBike() {
         //The below function is for web element @FindBy(Google.Bike);
-        try{
-			WebDriverWait wait = new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds((long) 10));
-        	WebElement element = wait.until(ExpectedConditions.elementToBeClickable(Google.Bike));
-        	GemTestReporter.addTestStep("Check if Bike is clickable","Bike is clickable", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Bike is clickable");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Check if Bike is clickable","Bike is not clickable", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Bike is not clickable");};
+        assertTrue("Bike is not clickable", $(Google.Bike).isClickable());
+        Settings.LOGGER.info("User verifies Bike is clickable");
     }
 
     public String getAttributeFromBike(String attributeValue) {
         //This function is for web element @FindBy(Google.Bike);
-        String text = new String();
+        String valueOfAttribute = "";
         try{
-			text = getAttributeName(Google.Bike, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Bike field","Successfully fetched " + attributeValue + " value for Bike", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for Bike");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Bike field","Unable to get " + attributeValue + " value for Bike as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for Bike as attribute does not exist");};
+			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for Bike element");
+        	valueOfAttribute = $(Google.Bike).getAttribute(attributeValue);
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Bike field","Unable to get " + attributeValue + " value for Bike as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
+		return valueOfAttribute;
     }
 
     public void verifyElementSelectedForBike() {
         //This function is for web element @FindBy(Google.Bike);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.Bike, "checked");
-        	if(text.length()>0){
-				GemTestReporter.addTestStep("Verify Bike checkbox is selected","Checkbox Bike selected Successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Checkbox Bike selected Successfully" );	};
-        }
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify Bike checkbox is selected","Unable to select Bike checkbox", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to select Bike checkbox" );	};
+        assertTrue("Bike is not selected", $(Google.Bike).isSelected());
+        Settings.LOGGER.info("User verifies if checkbox is selected");
     }
 
     public void verifyElementNotSelectedForBike() {
         //This function is for web element @FindBy(Google.Bike);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.Bike, "checked");
-        	if(text==null){
-				GemTestReporter.addTestStep("Verify Bike checkbox is not selected","Checkbox Bike is deselected Successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Checkbox Bike is deselected Successfully" );	}
-			 else {GemTestReporter.addTestStep("Verify Bike checkbox is not selected","Unable to deselect Bike checkbox", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to deselect Bike checkbox" );	};
-        }
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify Bike checkbox is not selected","Unable to deselect Bike checkbox", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to deselect Bike checkbox" );	};
+        assertFalse("Bike is selected", $(Google.Bike).isSelected());
+        Settings.LOGGER.info("User verifies if checkbox is not selected");
     }
 
     public void verifyValueFromBike(String typeText) {
         //This function is for web element @FindBy(Google.Bike);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.Bike,"value");
-        	if(typeText.equals(text)){
-				GemTestReporter.addTestStep("Verify value of Bike matches " +typeText,"Value for Bike verified successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Value for Bike verified successfully" );	}
-			else{
-				GemTestReporter.addTestStep("Verify value of Bike matches " +typeText,"Unable to verify value for Bike. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify value for Bike. Actual: "+text+" Expected: "+typeText );	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value of Bike field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.Bike).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Google.Bike).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value: " + typeText + "for Bike");
     }
 
     public void verifyBikeIsDisplayed() {
         //The below function is for web element @FindBy(Google.Bike);
-        try{
-			getElement(Google.Bike).isDisplayed();
-        	GemTestReporter.addTestStep("Verify Bike field is visible","Bike field is visible", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Bike field is visible");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify Bike field is visible","Bike field is not visible", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Bike field is not visible");};
+        assertTrue("Bike is not visible", $(Google.Bike).isDisplayed());
+        Settings.LOGGER.info("User verifies Bike element is displayed");
     }
 
     public void verifyBikeText(String typeText) {
         //The below function is for web element @FindBy(Google.Bike);
         try{
-			if(getElementText(Google.Bike).equals(typeText)){;
-        		GemTestReporter.addTestStep("Verify text of Bike field is equal to " + typeText,"Text of Bike field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Text of Bike field is equal to " + typeText);}	
- else{
-				GemTestReporter.addTestStep("Verify text of Bike field is equal to " + typeText,"Text of Bike field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.Bike), STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Text of Bike field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.Bike));}	
-		}
+			assertTrue("Actual text: " + $(Google.Bike).getText(), StringUtils.equalsIgnoreCase(typeText,$(Google.Bike).getText()));
+        	Settings.LOGGER.info("User gets the text of Bike element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside Bike is equal to " + typeText,"Text inside Bike is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void selectBoat() {
         //The below function is for web element @FindBy(Google.Boat);
         try{
-			click(Google.Boat);
+			$(Google.Boat).click();
+        	Settings.LOGGER.info("User selects the Boat element");
         }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not select Boat");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
         };
     }
 
     public void clickOnBoat() {
         //The below function is for web element @FindBy(Google.Boat);
         try{
-			click(Google.Boat);
-        	Settings.LOGGER.info("User clicks on Boat successfully");}
+			$(Google.Boat).click();
+        	Settings.LOGGER.info("User click on the Boat element");
+        }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-        	Settings.LOGGER.info("User is unable to click on Boat");};
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not click Boat");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        };
     }
 
     public void elementIsClickableBoat() {
         //The below function is for web element @FindBy(Google.Boat);
-        try{
-			WebDriverWait wait = new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds((long) 10));
-        	WebElement element = wait.until(ExpectedConditions.elementToBeClickable(Google.Boat));
-        	GemTestReporter.addTestStep("Check if Boat is clickable","Boat is clickable", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Boat is clickable");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Check if Boat is clickable","Boat is not clickable", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Boat is not clickable");};
+        assertTrue("Boat is not clickable", $(Google.Boat).isClickable());
+        Settings.LOGGER.info("User verifies Boat is clickable");
     }
 
     public String getAttributeFromBoat(String attributeValue) {
         //This function is for web element @FindBy(Google.Boat);
-        String text = new String();
+        String valueOfAttribute = "";
         try{
-			text = getAttributeName(Google.Boat, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Boat field","Successfully fetched " + attributeValue + " value for Boat", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for Boat");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Boat field","Unable to get " + attributeValue + " value for Boat as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for Boat as attribute does not exist");};
+			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for Boat element");
+        	valueOfAttribute = $(Google.Boat).getAttribute(attributeValue);
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Boat field","Unable to get " + attributeValue + " value for Boat as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
+		return valueOfAttribute;
     }
 
     public void verifyElementSelectedForBoat() {
         //This function is for web element @FindBy(Google.Boat);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.Boat, "checked");
-        	if(text.length()>0){
-				GemTestReporter.addTestStep("Verify Boat checkbox is selected","Checkbox Boat selected Successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Checkbox Boat selected Successfully" );	};
-        }
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify Boat checkbox is selected","Unable to select Boat checkbox", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to select Boat checkbox" );	};
+        assertTrue("Boat is not selected", $(Google.Boat).isSelected());
+        Settings.LOGGER.info("User verifies if checkbox is selected");
     }
 
     public void verifyElementNotSelectedForBoat() {
         //This function is for web element @FindBy(Google.Boat);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.Boat, "checked");
-        	if(text==null){
-				GemTestReporter.addTestStep("Verify Boat checkbox is not selected","Checkbox Boat is deselected Successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Checkbox Boat is deselected Successfully" );	}
-			 else {GemTestReporter.addTestStep("Verify Boat checkbox is not selected","Unable to deselect Boat checkbox", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to deselect Boat checkbox" );	};
-        }
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify Boat checkbox is not selected","Unable to deselect Boat checkbox", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to deselect Boat checkbox" );	};
+        assertFalse("Boat is selected", $(Google.Boat).isSelected());
+        Settings.LOGGER.info("User verifies if checkbox is not selected");
     }
 
     public void verifyValueFromBoat(String typeText) {
         //This function is for web element @FindBy(Google.Boat);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.Boat,"value");
-        	if(typeText.equals(text)){
-				GemTestReporter.addTestStep("Verify value of Boat matches " +typeText,"Value for Boat verified successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Value for Boat verified successfully" );	}
-			else{
-				GemTestReporter.addTestStep("Verify value of Boat matches " +typeText,"Unable to verify value for Boat. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify value for Boat. Actual: "+text+" Expected: "+typeText );	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value of Boat field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.Boat).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Google.Boat).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value: " + typeText + "for Boat");
     }
 
     public void verifyBoatIsDisplayed() {
         //The below function is for web element @FindBy(Google.Boat);
-        try{
-			getElement(Google.Boat).isDisplayed();
-        	GemTestReporter.addTestStep("Verify Boat field is visible","Boat field is visible", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Boat field is visible");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify Boat field is visible","Boat field is not visible", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Boat field is not visible");};
+        assertTrue("Boat is not visible", $(Google.Boat).isDisplayed());
+        Settings.LOGGER.info("User verifies Boat element is displayed");
     }
 
     public void verifyBoatText(String typeText) {
         //The below function is for web element @FindBy(Google.Boat);
         try{
-			if(getElementText(Google.Boat).equals(typeText)){;
-        		GemTestReporter.addTestStep("Verify text of Boat field is equal to " + typeText,"Text of Boat field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Text of Boat field is equal to " + typeText);}	
- else{
-				GemTestReporter.addTestStep("Verify text of Boat field is equal to " + typeText,"Text of Boat field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.Boat), STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Text of Boat field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.Boat));}	
-		}
+			assertTrue("Actual text: " + $(Google.Boat).getText(), StringUtils.equalsIgnoreCase(typeText,$(Google.Boat).getText()));
+        	Settings.LOGGER.info("User gets the text of Boat element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside Boat is equal to " + typeText,"Text inside Boat is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void selectCar(String typeText) {
         //The below function is for web element @FindBy(Google.car);
         try{
-			dropDown(Google.car,typeText);
+			$(Google.car).selectByVisibleText(typeText);
         	Settings.LOGGER.info("User is able to select " + typeText +" visible text in the dropdown");
         }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not select " + typeText);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
         };
     }
 
     public void verifyCarIsEnabled() {
         //The below function is for web element @FindBy(Google.car);
-        try{
-			getElement(Google.car).isEnabled();
-        	GemTestReporter.addTestStep("Verify car field is enabled","car field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("car field is enabled");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify car field is enabled","C field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("car field is not enabled");};
+        assertTrue("Car is not enabled", $(Google.car).isEnabled());
+        Settings.LOGGER.info("User verifies the given car element is enabled");
     }
 
     public void elementIsClickableCar() {
         //The below function is for web element @FindBy(Google.car);
-        try{
-			WebDriverWait wait = new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds((long) 10));
-        	WebElement element = wait.until(ExpectedConditions.elementToBeClickable(Google.car));
-        	GemTestReporter.addTestStep("Check if car is clickable","car is clickable", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("car is clickable");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Check if car is clickable","car is not clickable", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("car is not clickable");};
+        assertTrue("Car is not clickable", $(Google.car).isClickable());
+        Settings.LOGGER.info("User verifies car is clickable");
     }
 
     public String getTextFromCar() {
         //The below function is for web element @FindBy(Google.car);
-        String text = new String();
+        String text = "";
         try{
-			text = getElementText(Google.car);
+			text = $(Google.car).getText();
+			Settings.LOGGER.info("User gets the text of car element");
         }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-        } 
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get text of Car");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
 		return text;
     }
 
     public String getAttributeFromCar(String attributeValue) {
         //This function is for web element @FindBy(Google.car);
-        String text = new String();
+        String valueOfAttribute = "";
         try{
-			text = getAttributeName(Google.car, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "car field","Successfully fetched " + attributeValue + " value for car", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for car");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "car field","Unable to get " + attributeValue + " value for car as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for car as attribute does not exist");};
+			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for car element");
+        	valueOfAttribute = $(Google.car).getAttribute(attributeValue);
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "car field","Unable to get " + attributeValue + " value for car as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
+		return valueOfAttribute;
     }
 
     public void verifyValueFromCar(String typeText) {
         //This function is for web element @FindBy(Google.car);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.car,"value");
-        	if(typeText.equals(text)){
-				GemTestReporter.addTestStep("Verify value of car matches " +typeText,"Value for car verified successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Value for car verified successfully" );	}
-			else{
-				GemTestReporter.addTestStep("Verify value of car matches " +typeText,"Unable to verify value for car. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify value for car. Actual: "+text+" Expected: "+typeText );	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value of car field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.car).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Google.car).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value: " + typeText + "for Car");
     }
 
     public void verifyCarIsDisplayed() {
         //The below function is for web element @FindBy(Google.car);
-        try{
-			getElement(Google.car).isDisplayed();
-        	GemTestReporter.addTestStep("Verify car field is visible","car field is visible", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("car field is visible");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify car field is visible","car field is not visible", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("car field is not visible");};
+        assertTrue("Car is not visible", $(Google.car).isDisplayed());
+        Settings.LOGGER.info("User verifies car element is displayed");
     }
 
     public void verifyCarText(String typeText) {
         //The below function is for web element @FindBy(Google.car);
         try{
-			if(getElementText(Google.car).equals(typeText)){;
-        		GemTestReporter.addTestStep("Verify text of car field is equal to " + typeText,"Text of car field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Text of car field is equal to " + typeText);}	
- else{
-				GemTestReporter.addTestStep("Verify text of car field is equal to " + typeText,"Text of car field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.car), STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Text of car field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.car));}	
-		}
+			assertTrue("Actual text: " + $(Google.car).getText(), StringUtils.equalsIgnoreCase(typeText,$(Google.car).getText()));
+        	Settings.LOGGER.info("User gets the text of car element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside car is equal to " + typeText,"Text inside car is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void clickOnSubmit() {
         //The below function is for web element @FindBy(Google.Submit);
         try{
-			click(Google.Submit);
-        	Settings.LOGGER.info("User clicks on Submit successfully");}
+			$(Google.Submit).click();
+        	Settings.LOGGER.info("User click on the Submit element");
+        }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-        	Settings.LOGGER.info("User is unable to click on Submit");};
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not click Submit");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        };
     }
 
     public void elementIsClickableSubmit() {
         //The below function is for web element @FindBy(Google.Submit);
-        try{
-			WebDriverWait wait = new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds((long) 10));
-        	WebElement element = wait.until(ExpectedConditions.elementToBeClickable(Google.Submit));
-        	GemTestReporter.addTestStep("Check if Submit is clickable","Submit is clickable", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Submit is clickable");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Check if Submit is clickable","Submit is not clickable", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Submit is not clickable");};
+        assertTrue("Submit is not clickable", $(Google.Submit).isClickable());
+        Settings.LOGGER.info("User verifies Submit is clickable");
     }
 
     public String getAttributeFromSubmit(String attributeValue) {
         //This function is for web element @FindBy(Google.Submit);
-        String text = new String();
+        String valueOfAttribute = "";
         try{
-			text = getAttributeName(Google.Submit, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Submit field","Successfully fetched " + attributeValue + " value for Submit", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for Submit");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Submit field","Unable to get " + attributeValue + " value for Submit as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for Submit as attribute does not exist");};
+			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for Submit element");
+        	valueOfAttribute = $(Google.Submit).getAttribute(attributeValue);
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Submit field","Unable to get " + attributeValue + " value for Submit as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
+		return valueOfAttribute;
     }
 
     public void verifyValueFromSubmit(String typeText) {
         //This function is for web element @FindBy(Google.Submit);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.Submit,"value");
-        	if(typeText.equals(text)){
-				GemTestReporter.addTestStep("Verify value of Submit matches " +typeText,"Value for Submit verified successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Value for Submit verified successfully" );	}
-			else{
-				GemTestReporter.addTestStep("Verify value of Submit matches " +typeText,"Unable to verify value for Submit. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify value for Submit. Actual: "+text+" Expected: "+typeText );	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value of Submit field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.Submit).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Google.Submit).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value: " + typeText + "for Submit");
     }
 
     public void verifySubmitIsDisplayed() {
         //The below function is for web element @FindBy(Google.Submit);
-        try{
-			getElement(Google.Submit).isDisplayed();
-        	GemTestReporter.addTestStep("Verify Submit field is visible","Submit field is visible", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Submit field is visible");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify Submit field is visible","Submit field is not visible", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Submit field is not visible");};
+        assertTrue("Submit is not visible", $(Google.Submit).isDisplayed());
+        Settings.LOGGER.info("User verifies Submit element is displayed");
     }
 
     public void verifySubmitText(String typeText) {
         //The below function is for web element @FindBy(Google.Submit);
         try{
-			if(getElementText(Google.Submit).equals(typeText)){;
-        		GemTestReporter.addTestStep("Verify text of Submit field is equal to " + typeText,"Text of Submit field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Text of Submit field is equal to " + typeText);}	
- else{
-				GemTestReporter.addTestStep("Verify text of Submit field is equal to " + typeText,"Text of Submit field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.Submit), STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Text of Submit field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.Submit));}	
-		}
+			assertTrue("Actual text: " + $(Google.Submit).getText(), StringUtils.equalsIgnoreCase(typeText,$(Google.Submit).getText()));
+        	Settings.LOGGER.info("User gets the text of Submit element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside Submit is equal to " + typeText,"Text inside Submit is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void clickOnHtmlAndNavigateBack() {
         //This function is for web element @FindBy(Google.html);
+        Settings.LOGGER.info("User click on html element");
         try{
-			click(Google.html);
-        	navigateBack();
+			$(Google.html).click();
         }
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
-        };
+        }
+		getDriver().navigate().back();
+        Settings.LOGGER.info("User navigates back  to previous page");
     }
 
     public void clickOnHtml() {
         //The below function is for web element @FindBy(Google.html);
         try{
-			click(Google.html);
-        	Settings.LOGGER.info("User clicks on html successfully");}
+			$(Google.html).click();
+        	Settings.LOGGER.info("User click on the html element");
+        }
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-        	Settings.LOGGER.info("User is unable to click on html");};
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not click Html");
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        };
     }
 
     public void elementIsClickableHtml() {
         //The below function is for web element @FindBy(Google.html);
-        try{
-			WebDriverWait wait = new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds((long) 10));
-        	WebElement element = wait.until(ExpectedConditions.elementToBeClickable(Google.html));
-        	GemTestReporter.addTestStep("Check if html is clickable","html is clickable", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("html is clickable");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Check if html is clickable","html is not clickable", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("html is not clickable");};
+        assertTrue("Html is not clickable", $(Google.html).isClickable());
+        Settings.LOGGER.info("User verifies html is clickable");
     }
 
     public String getAttributeFromHtml(String attributeValue) {
         //This function is for web element @FindBy(Google.html);
-        String text = new String();
+        String valueOfAttribute = "";
         try{
-			text = getAttributeName(Google.html, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "html field","Successfully fetched " + attributeValue + " value for html", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for html");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "html field","Unable to get " + attributeValue + " value for html as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for html as attribute does not exist");};
+			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for html element");
+        	valueOfAttribute = $(Google.html).getAttribute(attributeValue);
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "html field","Unable to get " + attributeValue + " value for html as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        };
-        return text;
+			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
+        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
+        	Assert.fail(e.getMessage());
+        }
+		return valueOfAttribute;
     }
 
     public void verifyValueFromHtml(String typeText) {
         //This function is for web element @FindBy(Google.html);
-        String text = new String();
-        try{
-			text = getAttributeName(Google.html,"value");
-        	if(typeText.equals(text)){
-				GemTestReporter.addTestStep("Verify value of html matches " +typeText,"Value for html verified successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Value for html verified successfully" );	}
-			else{
-				GemTestReporter.addTestStep("Verify value of html matches " +typeText,"Unable to verify value for html. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify value for html. Actual: "+text+" Expected: "+typeText );	}
-		}
-		catch(Exception e){;
-        	GemTestReporter.addTestStep("Verify value of html field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
-        };
+        assertTrue("Actual value: " + $(Google.html).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Google.html).getAttribute("value")));
+        Settings.LOGGER.info("User verifies value: " + typeText + "for Html");
     }
 
     public void verifyHtmlIsDisplayed() {
         //The below function is for web element @FindBy(Google.html);
-        try{
-			getElement(Google.html).isDisplayed();
-        	GemTestReporter.addTestStep("Verify html field is visible","html field is visible", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("html field is visible");}
-		catch(Exception e){
-			GemTestReporter.addTestStep("Verify html field is visible","html field is not visible", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("html field is not visible");};
+        assertTrue("Html is not visible", $(Google.html).isDisplayed());
+        Settings.LOGGER.info("User verifies html element is displayed");
     }
 
     public void verifyHtmlText(String typeText) {
         //The below function is for web element @FindBy(Google.html);
         try{
-			if(getElementText(Google.html).equals(typeText)){;
-        		GemTestReporter.addTestStep("Verify text of html field is equal to " + typeText,"Text of html field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Text of html field is equal to " + typeText);}	
- else{
-				GemTestReporter.addTestStep("Verify text of html field is equal to " + typeText,"Text of html field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.html), STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Text of html field is not equal. Expected: "+typeText+" Actual: "+getElementText(Google.html));}	
-		}
+			assertTrue("Actual text: " + $(Google.html).getText(), StringUtils.equalsIgnoreCase(typeText,$(Google.html).getText()));
+        	Settings.LOGGER.info("User gets the text of html element");
+        }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside html is equal to " + typeText,"Text inside html is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 }

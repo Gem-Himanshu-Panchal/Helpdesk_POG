@@ -1,14 +1,7 @@
 package implementation;
 
-import com.gemini.generic.reporting.GemTestReporter;
-import com.gemini.generic.reporting.STATUS;
-import com.gemini.generic.ui.utils.DriverManager;
-import com.gemini.generic.ui.utils.DriverAction;
-import com.gemini.generic.utils.GemJarUtils;
-import org.openqa.selenium.chrome.ChromeOptions;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import com.gemini.generic.utils.GemJarGlobalVar;
+import net.serenitybdd.core.pages.WebElementFacade;
+import net.serenitybdd.core.pages.PageObject;
 import pageobjectgenerator.Settings;
 import net.serenitybdd.core.Serenity;
 import static org.junit.Assert.assertTrue;
@@ -24,28 +17,25 @@ import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriver;
 
-public class UtilsImplementation extends DriverAction {
+public class UtilsImplementation extends PageObject {
 
     public String getURL() {
         try{
-			String text = getCurrentURL();
+			String text = getDriver().getCurrentUrl();
+        	Settings.LOGGER.info("User successfully navigated Forward");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
         }
-		return getCurrentURL();
+		return getDriver().getCurrentUrl();
     }
 
     public void verifyURL(String typeText) {
         try{
-			String text = getCurrentURL();
-        	if(text.equals(typeText)) {
-				GemTestReporter.addTestStep("Verify if current URL matches <a href ='" +typeText+"'>"+typeText+"</a>","Validation Successfull", STATUS.PASS, takeSnapShot());
-        	}
-			else {
-			GemTestReporter.addTestStep("Verify if current URL matches <a href ='" +typeText+"'>"+typeText+"</a>","Validation Failed", STATUS.FAIL, takeSnapShot());
-        	}
-		}
+			String text = getDriver().getCurrentUrl();
+        	assertTrue(text.equals(typeText));
+        	Settings.LOGGER.info("User successfully navigated back");
+        } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
@@ -53,24 +43,21 @@ public class UtilsImplementation extends DriverAction {
 
     public String getTitle() {
         try{
-			String text = getTitle();
+			String text = getDriver().getTitle();
+        	Settings.LOGGER.info("User successfully navigated Forward");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
         }
-		return getCurrentURL();
+		return getDriver().getCurrentUrl();
     }
 
     public void verifyTitle(String typeText) {
         try{
-			String text = getTitle(getCurrentURL());
-        	if(text.equals(typeText)) {
-				GemTestReporter.addTestStep("Verify page title ","Page title verified successfully. Expected: '" +typeText+"' Actual: '" +text+"'", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Page title verified successfully. Expected: '" +typeText+"' Actual: '" +text+"'" );	}
-			else {
-			GemTestReporter.addTestStep("Verify page title ","Unable to verify page title. Expected: '" +typeText+"' Actual: '" +text+"'", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify page title. Expected: '" +typeText+"' Actual: '" +text+"'" );	}
-		}
+			String title = getDriver().getTitle();
+        	assertTrue("Actual title: " + title, title.equals(typeText));
+        	Settings.LOGGER.info("User successfully verifies title");
+        } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
@@ -78,7 +65,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void navigateTo(String url) {
         try{
-			DriverManager.getWebDriver().navigate().to(url);
+			getDriver().navigate().to(url);
+        	Settings.LOGGER.info("User successfully navigated Forward");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -87,7 +75,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void forwardNavigation() {
         try{
-			navigateForward();
+			getDriver().navigate().forward();
+        	Settings.LOGGER.info("User successfully navigated Forward");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -96,7 +85,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void backwardNavigation() {
         try{
-			navigateBack();
+			getDriver().navigate().back();
+        	Settings.LOGGER.info("User successfully navigated back");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -104,27 +94,7 @@ public class UtilsImplementation extends DriverAction {
     }
 
     public void openApplication() {
-        if (GemJarUtils.getGemJarConfigData("chromeOptions") != null && !GemJarUtils.getGemJarConfigData("chromeOptions").isEmpty()) {
-			ChromeOptions options = new ChromeOptions();
-        	options.addArguments("--remote-allow-origins=*");
-        	options.addArguments("--" + GemJarUtils.getGemJarConfigData("chromeOptions"));
-        	DriverManager.initializeChrome(options);
-        }
-		else{
-			if(GemJarUtils.getGemJarConfigData("browserName").equals("firefox")){
-				WebDriverManager.firefoxdriver().clearDriverCache().setup();
-        		DriverManager.setWebDriver(new FirefoxDriver());
-        	}
-			else{
-			ChromeOptions options = new ChromeOptions();
-        	options.addArguments("--remote-allow-origins=*");
-        	DriverManager.initializeChrome(options);
-        		}
-	}
-		maximizeBrowser();
-        launchUrl(GemJarUtils.getGemJarConfigData("launchUrl"));
-        setImplicitTimeOut(Long.parseLong(GemJarGlobalVar.implicitTime));
-        setPageLoadTimeOut(Long.parseLong(GemJarGlobalVar.pageTimeout));
-        setScriptTimeOut(Long.parseLong(GemJarGlobalVar.scriptTimeout));
+        getDriver().get(Settings.URL);
+        Settings.LOGGER.info("User launches the application");
     }
 }
