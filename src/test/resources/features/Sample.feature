@@ -1,3 +1,4 @@
+@reg
 Feature: Test
 
   Background:
@@ -8,7 +9,6 @@ Feature: Test
 #    Scenario: type
 #      When For the Sample page, User enters "password" as input for PasswordNEW
 
-  @reg
   Scenario: Verify value entered for Firstname
     When For the Sample page, User enters "Jasleen" as input for FirstName
     Then For the Sample page, User verifies "Jasleen" is the value for FirstName

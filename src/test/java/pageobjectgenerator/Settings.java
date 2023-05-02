@@ -88,6 +88,7 @@ public class Settings {
 	public static final String USER_PRESSES_ENTER ="User presses Enter key$";
 	public static final String USER_COPY ="User performs Copy Action$";
 	public static final String USER_PASTE ="User performs Paste Action$";
+	public static final String USER_SELECTALL ="User performs Select All Action$";
 
 	public static final String USER_GET_URL ="User gets current url of the page";
 

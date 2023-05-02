@@ -1585,7 +1585,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "selectAll";
         annotationType = "When";
-        annotationValue = "\"" +Settings.USER_PASTE + "\"";
+        annotationValue = "\"" +Settings.USER_SELECTALL + "\"";
         textToEnter = "selectAll";
         blockToEnter = textToEnter + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);

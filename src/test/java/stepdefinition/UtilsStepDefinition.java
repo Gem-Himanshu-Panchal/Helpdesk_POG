@@ -28,7 +28,7 @@ public class UtilsStepDefinition {
         utilFunctions.pressEnter();
     }
 
-    @When("User performs Paste Action$")
+    @When("User performs Select All Action$")
     public void selectAll() {
         utilFunctions.selectAll();
     }
