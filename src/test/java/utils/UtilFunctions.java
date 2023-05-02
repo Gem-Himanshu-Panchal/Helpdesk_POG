@@ -171,27 +171,6 @@ public class UtilFunctions extends PageObject {
         }
     }
 
-    public void typeAndEnter(By locator, String text) {
-        try{
-            typeText(locator,text);
-            Actions builder = new Actions(DriverManager.getWebDriver());
-            builder.keyDown(Keys.ENTER).perform();
-        }
-        catch(Exception e){
-            Settings.LOGGER.info("User gets an exception: "+e);
-        }
-    }
-
-    public void typeAndTab(By locator, String text) {
-        try {
-            typeText(locator, text);
-            Actions builder = new Actions(DriverManager.getWebDriver());
-            builder.keyDown(Keys.TAB).perform();
-        } catch (Exception e) {
-            Settings.LOGGER.info("User gets an exception: " + e);
-        }
-    }
-
     public static void getWindowFocus( String windowHandle ) {
         try {
             DriverManager.getWebDriver().switchTo().window(windowHandle);
@@ -216,46 +195,7 @@ public class UtilFunctions extends PageObject {
         return isElementDisabled;
     }
 
-    public void waitUntilElementDisappear(By locator,int timeout){
-        try{
-            $(locator).waitUntilDisabled().wait(timeout);
-          }catch(TimeoutException e){
-            Assert.fail("Time Out On : "+$(locator));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void waitUntilElementEnabled(By locator,int timeout){
-        try{
-            $(locator).waitUntilEnabled().wait(timeout);
-        }catch(TimeoutException e){
-            Assert.fail("Time Out On : "+$(locator));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void waitUntilElementNotVisible(By locator,int timeout){
-        try{
-            $(locator).waitUntilNotVisible().wait(timeout);
-        }catch(TimeoutException e){
-            Assert.fail("Time Out On : "+$(locator));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void waitUntilElementClickable(By locator,int timeout){
-        try{
-            $(locator).waitUntilClickable().wait(timeout);
-        }catch(TimeoutException e){
-            Assert.fail("Time Out On : "+$(locator));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public void pressEnter() {
+   public void pressEnter() {
         try {
             withAction().sendKeys(Keys.ENTER).build().perform();
         } catch (Exception e) {

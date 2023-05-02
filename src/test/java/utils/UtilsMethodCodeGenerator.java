@@ -184,7 +184,7 @@ public class UtilsMethodCodeGenerator {
             imports.add(new ImportDeclaration(new NameExpr("org.apache.commons.lang.StringUtils"), false, false));
             imports.add(new ImportDeclaration(new NameExpr("org.openqa.selenium.interactions.Actions"), false, false));
             imports.add(new ImportDeclaration(new NameExpr("org.openqa.selenium.WebDriver"), false, false));
-
+            imports.add(new ImportDeclaration(new NameExpr("org.openqa.selenium.Keys"), false, false));
         }
 
         Settings.LOGGER.info("Imports added are:" + imports);
@@ -647,6 +647,87 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+
+
+    public static void setLinkMethodsTypeAndEnter(CompilationUnit c, Field field) throws IOException {
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "typeTextAndEnterFor" + meaningFulName);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        List<Parameter> parameters = new LinkedList<>();
+        Settings.LOGGER.info(parameters.toString());
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "typeText"));
+        method.setParameters(parameters);
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+
+        //DriverAction.typetext() of Gemjar Framework to type the text into the input box
+
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\t" + "typeText(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + "," + "typeText" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("\t\t\t Actions action = new Actions(DriverManager.getWebDriver());"));
+            ASTHelper.addStmt(block, new NameExpr("\t\t\t action.sendKeys(Keys.ENTER);"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User enters " + '"' + "+" + "typeText" + "+" + '"' + " as value and presses enter\"" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "GemTestReporter.addTestStep(\"Enter the text in " + field.getName() + " field and press enter\",\"Unable to Enter Text in " + field.getName() + " field\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\t" + "typeInto(" + "$(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")" + "," + "typeText" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("Actions action = new Actions(DriverManager.getWebDriver());"));
+            ASTHelper.addStmt(block, new NameExpr("action.sendKeys(Keys.ENTER);"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User enters " + '"' + "+" + "typeText" + "+" + '"' + " as value and presses enter\"" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Serenity" + "." + "recordReportData().withTitle(\"Failure\").andContents(\"Could not enter \" + typeText + \" into " + meaningFulName + "\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e.getMessage()" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+            Settings.LOGGER.info(String.valueOf(new NameExpr(field.getName() + "Element" + "." + "type" + "(" + "typeText" + ")")));
+        }
+
+
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+
+    public static void setLinkMethodsTypeAndTab(CompilationUnit c, Field field) throws IOException {
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "typeTextAndTabFor" + meaningFulName);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        List<Parameter> parameters = new LinkedList<>();
+        Settings.LOGGER.info(parameters.toString());
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "typeText"));
+        method.setParameters(parameters);
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+
+        //DriverAction.typetext() of Gemjar Framework to type the text into the input box
+
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\t" + "typeText(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + "," + "typeText" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("Actions action = new Actions(DriverManager.getWebDriver());"));
+            ASTHelper.addStmt(block, new NameExpr("action.sendKeys(Keys.TAB);"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User enters " + '"' + "+" + "typeText" + "+" + '"' + " as value and presses Tab\"" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "GemTestReporter.addTestStep(\"Enter the text in " + field.getName() + " field and presses tab\",\"Unable to Enter Text in " + field.getName() + " field\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\t" + "typeInto(" + "$(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")" + "," + "typeText" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User enters " + '"' + "+" + "typeText" + "+" + '"' + " as value and presses Tab\"" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Serenity" + "." + "recordReportData().withTitle(\"Failure\").andContents(\"Could not enter \" + typeText + \" into " + meaningFulName + "\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e.getMessage()" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+            Settings.LOGGER.info(String.valueOf(new NameExpr(field.getName() + "Element" + "." + "type" + "(" + "typeText" + ")")));
+        }
+
+
         ASTHelper.addMember(c.getTypes().get(0), method);
         Settings.LOGGER.info(method.toString());
         Settings.LOGGER.info(c.getTypes().get(0).toString());

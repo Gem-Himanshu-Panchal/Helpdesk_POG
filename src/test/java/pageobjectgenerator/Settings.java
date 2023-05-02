@@ -47,6 +47,8 @@ public class Settings {
 	public static final String USER_NAVIGATE_FUNCTION ="AndNavigateBack";
 	public static final String USER_NAVIGATE_ANNOTATION ="and navigates back";
 	public static final String USER_GETTEXT_FUNCTION ="userGetText";
+	public static final String USER_TYPE_AND_ENTER_FUNCTION ="typeTextAndEnterFor";
+	public static final String USER_TYPE_AND_TAB_FUNCTION ="typeTextAndTabFor";
 	public static final String USER_GET_ATTRIBUTE_FUNCTION ="userGetsAttribute";
 	public static final String USER_VERIFIES_VALUE="userVerifyValueFor";
 	public static final String USER_VERIFIES_CHECKED="verifyIsSelectedFor";
@@ -58,6 +60,8 @@ public class Settings {
 	public static final String USER_GETTEXT_ANNOTATION ="User gets the text of";
 	public static final String USER_GET_ATTRIBUTE_ANNOTATION ="User gets " +"\\\"(.*)\\\""+ " attribute of ";
 	public static final String USER_INPUT_ANNOTATION ="User enters "+"\\\"(.*)\\\""+" as";
+	public static final String USER_TYPE_AND_ENTER_ANNOTATION ="User enters "+"\\\"(.*)\\\""+" as";
+	public static final String USER_TYPE_AND_TAB_ANNOTATION ="User enters "+"\\\"(.*)\\\""+" as";
 	public static final String USER_SELECT_FUNCTION ="userSelectFromDropdown";
 	public static final String USER_CLICK_FUNCTION ="userClicksOn";
 	public static final String USER_CLICKABLE_FUNCTION ="verifyUserIsClickable";
@@ -88,8 +92,8 @@ public class Settings {
 	public static final String USER_PRESSES_ENTER ="User presses Enter key$";
 	public static final String USER_COPY ="User performs Copy Action$";
 	public static final String USER_PASTE ="User performs Paste Action$";
-	public static final String USER_SELECT_ALL ="User selects all options$";
 	public static final String USER_WINDOW_FOCUS ="User shifts focus to \\\"(.*)\\\" window$";
+	public static final String USER_SELECT_ALL ="User performs Select All Action$";
 
 	public static final String USER_GET_URL ="User gets current url of the page";
 

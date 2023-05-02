@@ -701,6 +701,94 @@ public class UtilsStepDefinitionCodeGenerator {
 
     }
 
+    public static void setLinkStepDefinitionTypeTextAndEnter(CompilationUnit c, Field field, String className) {
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+        List<Parameter> parameters = new LinkedList<>();
+
+        functionName = Settings.USER_TYPE_AND_ENTER_FUNCTION + meaningFulName;
+        annotationValue = "\"" + pageName.replace("<page>", className) + Settings.USER_TYPE_AND_ENTER_ANNOTATION + " " + meaningFulName + " " + "element and presses enter" + "$" + "\""; //changed the step definition
+        blockToEnter = functionName + "(" + "typeText" + ")";
+        annotationType = "When";
+        Settings.LOGGER.info("Step created: " + annotationValue + "and function created: " + functionName);
+
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "typeText"));
+        method.setParameters(parameters);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+
+        method.setAnnotations(list_espr);
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        String firstLetter = Settings.LOCATOR_FILE_NAME.substring(0, 1).toLowerCase();
+        String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
+        ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+
+    }
+
+    public static void setLinkStepDefinitionTypeTextAndTab(CompilationUnit c, Field field, String className) {
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+        List<Parameter> parameters = new LinkedList<>();
+
+        functionName = Settings.USER_TYPE_AND_TAB_FUNCTION + meaningFulName;
+        annotationValue = "\"" + pageName.replace("<page>", className) + Settings.USER_TYPE_AND_TAB_ANNOTATION + " " + meaningFulName + " " + "element and presses tab" + "$" + "\""; //changed the step definition
+        blockToEnter = functionName + "(" + "typeText" + ")";
+        annotationType = "When";
+        Settings.LOGGER.info("Step created: " + annotationValue + "and function created: " + functionName);
+
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "typeText"));
+        method.setParameters(parameters);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+
+        method.setAnnotations(list_espr);
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        String firstLetter = Settings.LOCATOR_FILE_NAME.substring(0, 1).toLowerCase();
+        String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
+        ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+
+    }
+
     public static void setLinkStepDefinitionClear(CompilationUnit c, Field field, String className,String type)
     {
         if(type.equals("a"))

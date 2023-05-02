@@ -126,6 +126,8 @@ public class CodeGeneratorRunner {
 // All input functions are covered for Gemjar reporting
             if (StringUtils.contains(locatorType, "input")) {
                 UtilsMethodCodeGenerator.setLinkMethodsTypeSetter(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsTypeAndEnter(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsTypeAndTab(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsTypeGetter(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsClear(c, field);
@@ -300,6 +302,8 @@ public class CodeGeneratorRunner {
             if (StringUtils.equalsIgnoreCase(locatorType, "input")) {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionClear(c, field, aClass.getSimpleName(),locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionTextGetter(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionTypeTextAndEnter(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionTypeTextAndTab(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethod(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName(),locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName(),locatorType);
