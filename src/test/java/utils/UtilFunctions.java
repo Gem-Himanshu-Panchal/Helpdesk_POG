@@ -7,11 +7,17 @@ import net.serenitybdd.core.pages.SerenityActions;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.webdriver.SerenityWebdriverManager;
 import org.junit.Assert;
+import org.junit.rules.Timeout;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.FluentWait;
 import pageobjectgenerator.Settings;
 import java.io.File;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 import static com.gemini.generic.ui.utils.DriverAction.*;
 
 public class UtilFunctions extends PageObject {
@@ -131,37 +137,35 @@ public class UtilFunctions extends PageObject {
 //            LOGGER.info("Could not drag element: " + fromElement + " to: " + toElement);
         }
     }
+
     public void verifyTitle(String expectedTitle) {
         String title = getDriver().getTitle();
         if (!title.equals(expectedTitle)) {
             Assert.fail("Title of page does not match. Expected Title: " + expectedTitle + " Actual Title: " + title);
 //            LOG.info("Title of page does not match. Expected Title: " + expectedTitle + " Actual Title: " + title);
         }
-    }public void noOfTabs(String expectedTitle) {
+    }
+
+    public void noOfTabs(String expectedTitle) {
         ArrayList<String> tabs = new ArrayList<String>(getDriver().getWindowHandles());
 //        LOG.info("No of tabs: " + tabs.size());
     }
 
-    public void changeFocusOfElement(WebElementFacade elementFacade)
-    {
+    public void changeFocusOfElement(WebElementFacade elementFacade) {
         JavascriptExecutor executor = (JavascriptExecutor) getDriver();
         executor.executeScript("arguments[0].focus();", elementFacade);
     }
 
 
-    public void refreshPage()
-    {
+    public void refreshPage() {
         getDriver().navigate().refresh();
 //        LOG.info("Refresh Page");
     }
 
     public void sendInputToAlert(String inputText) {
-        try
-        {
+        try {
             getDriver().switchTo().alert().sendKeys(inputText);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Assert.fail("Could not enter text for alert");
 //            LOG.info("Could not enter text for alert");
         }
@@ -179,15 +183,123 @@ public class UtilFunctions extends PageObject {
     }
 
     public void typeAndTab(By locator, String text) {
-        try{
-            typeText(locator,text);
+        try {
+            typeText(locator, text);
             Actions builder = new Actions(DriverManager.getWebDriver());
             builder.keyDown(Keys.TAB).perform();
-        }
-        catch(Exception e){
-            Settings.LOGGER.info("User gets an exception: "+e);
+        } catch (Exception e) {
+            Settings.LOGGER.info("User gets an exception: " + e);
         }
     }
 
+    public static void getWindowFocus( String windowHandle ) {
+        try {
+            DriverManager.getWebDriver().switchTo().window(windowHandle);
+            JavascriptExecutor js = (JavascriptExecutor)DriverManager.getWebDriver();
+            js.executeScript( "window.focus();" );
+        }
+        catch (Exception e)
+        {
+            Settings.LOGGER.info("User gets an exception: " + e);
+        }
+    }
 
+    public boolean isDisabled(By locator) {
+        Boolean isElementDisabled = false;
+        try {
+            isElementDisabled = $(locator).getAttribute("disabled") != null;
+        }
+        catch (Exception e)
+        {
+            Settings.LOGGER.info("User gets an exception: " + e);
+        }
+        return isElementDisabled;
+    }
+
+    public void waitUntilElementDisappear(By locator,int timeout){
+        try{
+            $(locator).waitUntilDisabled().wait(timeout);
+          }catch(TimeoutException e){
+            Assert.fail("Time Out On : "+$(locator));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void waitUntilElementEnabled(By locator,int timeout){
+        try{
+            $(locator).waitUntilEnabled().wait(timeout);
+        }catch(TimeoutException e){
+            Assert.fail("Time Out On : "+$(locator));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void waitUntilElementNotVisible(By locator,int timeout){
+        try{
+            $(locator).waitUntilNotVisible().wait(timeout);
+        }catch(TimeoutException e){
+            Assert.fail("Time Out On : "+$(locator));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void waitUntilElementClickable(By locator,int timeout){
+        try{
+            $(locator).waitUntilClickable().wait(timeout);
+        }catch(TimeoutException e){
+            Assert.fail("Time Out On : "+$(locator));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void pressEnter() {
+        try {
+            withAction().sendKeys(Keys.ENTER).build().perform();
+        } catch (Exception e) {
+            Assert.fail("Could not press enter");
+        }
+    }
+
+    public void isImage(WebElementFacade element) {
+        try {
+            Assert.assertEquals("img", element.getTagName());
+        } catch (Exception e) {
+            Assert.fail("Could not enter text for alert");
+        }
+    }
+
+    public void isImage(By locator) {
+        try {
+            Assert.assertEquals("img", $(locator).getTagName());
+        } catch (Exception e) {
+            Assert.fail("Could not enter text for alert");
+        }
+    }
+
+    public void selectAll() {
+        try {
+            withAction().keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).build().perform();
+        } catch (Exception e) {
+            Assert.fail("Could not perform select All operation");
+        }
+    }
+
+    public void copy() {
+        try {
+            withAction().keyDown(Keys.CONTROL).sendKeys("c").keyUp(Keys.CONTROL).build().perform();
+        } catch (Exception e) {
+            Assert.fail("Could not perform copy operation");
+        }
+    }
+
+    public void paste() {
+        try {
+            withAction().keyDown(Keys.CONTROL).sendKeys("v").keyUp(Keys.CONTROL).build().perform();
+        } catch (Exception e) {
+            Assert.fail("Could not perform paste operation");
+        }
+    }
 }

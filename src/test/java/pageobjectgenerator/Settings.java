@@ -85,6 +85,11 @@ public class Settings {
 	public static final String USER_VERIFY_URL ="User verifies the current URL with \\\"(.*)\\\"$";
 
 	public static final String USER_VERIFY_TITLE ="User verifies \\\"(.*)\\\" is the title of the page$";
+	public static final String USER_PRESSES_ENTER ="User presses Enter key$";
+	public static final String USER_COPY ="User performs Copy Action$";
+	public static final String USER_PASTE ="User performs Paste Action$";
+	public static final String USER_SELECT_ALL ="User selects all options$";
+	public static final String USER_WINDOW_FOCUS ="User shifts focus to \\\"(.*)\\\" window$";
 
 	public static final String USER_GET_URL ="User gets current url of the page";
 

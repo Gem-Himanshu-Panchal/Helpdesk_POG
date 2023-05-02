@@ -368,9 +368,14 @@ public class CodeGeneratorRunner {
     public static void generateGenericStepMethods() throws IOException {
         CompilationUnit c = UtilsStepDefinitionCodeGenerator.createEnhancedCompilationUnit("stepdefinition", "StepDefinition");
         UtilsStepDefinitionCodeGenerator.setTypeDeclaration(c,  "UtilsStepDefinition");
-
         UtilsStepDefinitionCodeGenerator.setStepDefinitionVariable(c, "UtilsImplementation");
+        UtilsStepDefinitionCodeGenerator.setStepDefinitionVariable(c, "UtilFunctions");
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetUrl(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionPressEnter(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSelectAll(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionCopy(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionPaste(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetWindowFocus(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionVerifyUrl(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetTitle(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionVerifyTitle(c);
