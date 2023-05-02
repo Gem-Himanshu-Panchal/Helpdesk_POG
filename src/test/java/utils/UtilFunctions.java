@@ -1,19 +1,18 @@
 package utils;
 
+import com.gemini.generic.ui.utils.DriverManager;
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.SerenityActions;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.webdriver.SerenityWebdriverManager;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-
+import pageobjectgenerator.Settings;
 import java.io.File;
 import java.util.ArrayList;
+import static com.gemini.generic.ui.utils.DriverAction.*;
 
 public class UtilFunctions extends PageObject {
 
@@ -165,6 +164,28 @@ public class UtilFunctions extends PageObject {
         {
             Assert.fail("Could not enter text for alert");
 //            LOG.info("Could not enter text for alert");
+        }
+    }
+
+    public void typeAndEnter(By locator, String text) {
+        try{
+            typeText(locator,text);
+            Actions builder = new Actions(DriverManager.getWebDriver());
+            builder.keyDown(Keys.ENTER).perform();
+        }
+        catch(Exception e){
+            Settings.LOGGER.info("User gets an exception: "+e);
+        }
+    }
+
+    public void typeAndTab(By locator, String text) {
+        try{
+            typeText(locator,text);
+            Actions builder = new Actions(DriverManager.getWebDriver());
+            builder.keyDown(Keys.TAB).perform();
+        }
+        catch(Exception e){
+            Settings.LOGGER.info("User gets an exception: "+e);
         }
     }
 

@@ -5,10 +5,12 @@ import com.gemini.generic.reporting.STATUS;
 import com.gemini.generic.ui.utils.DriverManager;
 import com.gemini.generic.ui.utils.DriverAction;
 import com.gemini.generic.utils.GemJarUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import com.gemini.generic.utils.GemJarGlobalVar;
+import org.openqa.selenium.interactions.Action;
 import pageobjectgenerator.Settings;
 import net.serenitybdd.core.Serenity;
 import static org.junit.Assert.assertTrue;
@@ -17,15 +19,21 @@ import static org.junit.Assert.assertFalse;
 import locators.Google;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.sql.Driver;
 import java.time.Duration;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.JavascriptExecutor;
+
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.WebDriver;
 
 public class UtilsImplementation extends DriverAction {
 
+	//focus
+	//waitUntilNotVisible
+	//isDisabled
+	//waitUntilEnabled();
+	//waitUntilClickable();
+	//waitUntilDisabled();
     public String getURL() {
         try{
 			String text = getCurrentURL();
