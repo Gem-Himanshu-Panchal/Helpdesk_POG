@@ -171,7 +171,7 @@ public class UtilFunctions extends PageObject {
         }
     }
 
-    public static void getWindowFocus( String windowHandle ) {
+    public void getWindowFocus( String windowHandle ) {
         try {
             DriverManager.getWebDriver().switchTo().window(windowHandle);
             JavascriptExecutor js = (JavascriptExecutor)DriverManager.getWebDriver();
