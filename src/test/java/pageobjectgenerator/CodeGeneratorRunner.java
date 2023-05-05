@@ -221,6 +221,8 @@ public class CodeGeneratorRunner {
         UtilsMethodCodeGenerator.setLinkMethodsSwitchToFrame(c, true);
         UtilsMethodCodeGenerator.setLinkMethodsSwitchToFrame(c, false);
         UtilsMethodCodeGenerator.setLinkMethodsSwitchWindow(c);
+        UtilsMethodCodeGenerator.setLinkMethodsWait(c);
+        UtilsMethodCodeGenerator.setLinkMethodsClickAndHold(c);
         UtilsMethodCodeGenerator.setLinkMethodsQuit(c);
         UtilsMethodCodeGenerator.setLinkMethodsOpenHomePage(c);
         UtilsMethodCodeGenerator.savePageObjectsOnFileSystem(Settings.IMPLEMENTATION_PO_DIR,
@@ -299,7 +301,6 @@ public class CodeGeneratorRunner {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName(),locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, true, aClass.getSimpleName());
-
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "checkbox")) {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodForSelect(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
@@ -410,6 +411,8 @@ public class CodeGeneratorRunner {
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSwitchFrame(c, true);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSwitchFrame(c, false);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSwitchWindow(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionWait(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionClickAndHold(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionQuit(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodGiven(c, "homePage");
         UtilsStepDefinitionCodeGenerator.savePageObjectsOnFileSystem(Settings.STEP_DEFINITION_PO_DIR,

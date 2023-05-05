@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Google extends PageObject {
 
-    @LocatorType(value = "dropdown")
-    public static By searchInput = By.id("numbers");
+    @LocatorType(value = "button")
+    public static By submit = By.id("javascript");
 
 //    @LocatorType(value = "button")
 //    public static By searchButton = By.xpath("//*[@aria-label='Google Search']");

@@ -51,6 +51,7 @@ public class Settings {
 	public static final String USER_TYPE_AND_TAB_FUNCTION ="typeTextAndTabFor";
 	public static final String USER_GET_ATTRIBUTE_FUNCTION ="userGetsAttribute";
 	public static final String USER_VERIFIES_VALUE="userVerifyValueFor";
+	public static final String USER_CLICK_HOLD="userClicksAndHoldsElement";
 	public static final String USER_VERIFIES_CHECKED="verifyIsSelectedFor";
 	public static final String USER_VERIFIES_VALUE_ATTRIBUTE="userVerifyAttributeFor";
 	public static final String USER_CLEAR_ANNOTATION ="User clears";
@@ -90,6 +91,7 @@ public class Settings {
 	public static final String SWITCH_FRAME_STRING = "^User switches to \\\"(.*)\\\" frame";
 	public static final String SWITCH_FRAME_INT = "^User switches to (.*) frame";
 	public static final String SWITCH_WINDOW = "^User switches to \\\"(.*)\\\" window";
+	public static final String USER_WAITS = "^User waits for (.*) seconds";
 	public static final String USER_CLOSES_BROWSER ="^User closes browser";
 
 	public static final String USER_NAVIGATE_FORWARD ="^User navigates Forward to Next Page";
