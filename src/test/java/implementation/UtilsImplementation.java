@@ -1,13 +1,9 @@
 package implementation;
 
-import com.gemini.generic.reporting.GemTestReporter;
-import com.gemini.generic.reporting.STATUS;
-import com.gemini.generic.ui.utils.DriverAction;
-import com.gemini.generic.utils.GemJarUtils;
-import org.openqa.selenium.chrome.ChromeOptions;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import com.gemini.generic.utils.GemJarGlobalVar;
+import net.serenitybdd.core.pages.WebElementFacade;
+import net.serenitybdd.core.pages.PageObject;
+import org.apache.commons.io.FileUtils;
+import java.io.File;
 import com.gemini.generic.ui.utils.DriverManager;
 import pageobjectgenerator.Settings;
 import net.serenitybdd.core.Serenity;
@@ -28,29 +24,27 @@ import java.util.Objects;
 import org.openqa.selenium.*;
 import net.serenitybdd.core.pages.SerenityActions;
 import org.openqa.selenium.By;
+import utils.UtilsMethodCodeGenerator;
 
-public class UtilsImplementation extends DriverAction {
+public class UtilsImplementation extends PageObject {
 
     public String getURL() {
         try{
-			String text = getCurrentURL();
+			String text = getDriver().getCurrentUrl();
+        	Settings.LOGGER.info("User successfully navigated Forward");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
         }
-		return getCurrentURL();
+		return getDriver().getCurrentUrl();
     }
 
     public void verifyURL(String typeText) {
         try{
-			String text = getCurrentURL();
-        	if(text.equals(typeText)) {
-				GemTestReporter.addTestStep("Verify if current URL matches <a href ='" +typeText+"'>"+typeText+"</a>","Validation Successfull", STATUS.PASS, takeSnapShot());
-        	}
-			else {
-			GemTestReporter.addTestStep("Verify if current URL matches <a href ='" +typeText+"'>"+typeText+"</a>","Validation Failed", STATUS.FAIL, takeSnapShot());
-        	}
-		}
+			String text = getDriver().getCurrentUrl();
+        	assertTrue(text.equals(typeText));
+        	Settings.LOGGER.info("User successfully navigated back");
+        } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
@@ -58,24 +52,21 @@ public class UtilsImplementation extends DriverAction {
 
     public String getTitle() {
         try{
-			String text = getTitle();
+			String text = getDriver().getTitle();
+        	Settings.LOGGER.info("User successfully navigated Forward");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
         }
-		return getCurrentURL();
+		return getDriver().getCurrentUrl();
     }
 
     public void verifyTitle(String typeText) {
         try{
-			String text = getTitle(getCurrentURL());
-        	if(text.equals(typeText)) {
-				GemTestReporter.addTestStep("Verify page title ","Page title verified successfully. Expected: '" +typeText+"' Actual: '" +text+"'", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Page title verified successfully. Expected: '" +typeText+"' Actual: '" +text+"'" );	}
-			else {
-			GemTestReporter.addTestStep("Verify page title ","Unable to verify page title. Expected: '" +typeText+"' Actual: '" +text+"'", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to verify page title. Expected: '" +typeText+"' Actual: '" +text+"'" );	}
-		}
+			String title = getDriver().getTitle();
+        	assertTrue("Actual title: " + title, title.equals(typeText));
+        	Settings.LOGGER.info("User successfully verifies title");
+        } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
@@ -83,7 +74,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void navigateTo(String url) {
         try{
-			DriverManager.getWebDriver().navigate().to(url);
+			getDriver().navigate().to(url);
+        	Settings.LOGGER.info("User successfully navigated Forward");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -92,7 +84,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void forwardNavigation() {
         try{
-			navigateForward();
+			getDriver().navigate().forward();
+        	Settings.LOGGER.info("User successfully navigated Forward");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -101,7 +94,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void backwardNavigation() {
         try{
-			navigateBack();
+			getDriver().navigate().back();
+        	Settings.LOGGER.info("User successfully navigated back");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+ e);
@@ -110,7 +104,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void switchActiveElement() {
         try{
-			switchToActiveElement();
+			getDriver().switchTo().activeElement();
+        	Settings.LOGGER.info("User successfully switched to active element");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+ e);
@@ -119,7 +114,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void switchDefaultContent() {
         try{
-			switchToDefaultContent();
+			getDriver().switchTo().defaultContent();
+        	Settings.LOGGER.info("User successfully switched to default content");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -128,7 +124,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void switchParentFrame() {
         try{
-			switchToParentFrame();
+			getDriver().switchTo().parentFrame();
+        	Settings.LOGGER.info("User successfully switched to parent frame");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+ e);
@@ -137,7 +134,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void switchFrame(String nameOrId) {
         try{
-			switchToFrame(nameOrId);
+			getDriver().switchTo().frame(nameOrId);
+        	Settings.LOGGER.info("User successfully switched to frame");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+ e);
@@ -146,7 +144,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void switchFrame(int index) {
         try{
-			switchToFrame(index);
+			getDriver().switchTo().frame(index);
+        	Settings.LOGGER.info("User successfully switched to frame");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+ e);
@@ -155,7 +154,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void switchWindow(String nameOrHandle) {
         try{
-			DriverManager.getWebDriver().switchTo().window(nameOrHandle);
+			getDriver().switchTo().window(nameOrHandle);
+        	Settings.LOGGER.info("User successfully switched to window");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+ e);
@@ -164,7 +164,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void wait(int duration) {
         try{
-			DriverManager.getWebDriver().wait(duration);
+			waitABit(duration);
+        	Settings.LOGGER.info("User waits for " + duration + " seconds");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+ e);
@@ -173,7 +174,7 @@ public class UtilsImplementation extends DriverAction {
 
     public void clicksAndHold(By locator) {
         try{
-			new Actions(DriverManager.getWebDriver()).moveToElement((WebElement) locator).clickAndHold().build().perform();
+			new SerenityActions(getDriver()).moveToElement($(locator)).clickAndHold().build().perform();
         	Settings.LOGGER.info("User successfully clicks and holds " + locator + " element");
         } 
 		catch(Exception e){
@@ -183,7 +184,7 @@ public class UtilsImplementation extends DriverAction {
 
     public void tearDown() {
         try{
-			DriverManager.quitDriver();
+			getDriver().quit();
         	Settings.LOGGER.info("User successfully closed driver");
         } 
 		catch(Exception e){
@@ -192,73 +193,43 @@ public class UtilsImplementation extends DriverAction {
     }
 
     public void openApplication() {
-        if (GemJarUtils.getGemJarConfigData("chromeOptions") != null && !GemJarUtils.getGemJarConfigData("chromeOptions").isEmpty()) {
-			ChromeOptions options = new ChromeOptions();
-        	options.addArguments("--remote-allow-origins=*");
-        	options.addArguments("--" + GemJarUtils.getGemJarConfigData("chromeOptions"));
-        	DriverManager.initializeChrome(options);
-        }
-		else{
-			if(GemJarUtils.getGemJarConfigData("browserName").equals("firefox")){
-				WebDriverManager.firefoxdriver().clearDriverCache().setup();
-        		DriverManager.setWebDriver(new FirefoxDriver());
-        	}
-			else{
-			ChromeOptions options = new ChromeOptions();
-        	options.addArguments("--remote-allow-origins=*");
-        	DriverManager.initializeChrome(options);
-        		}
-	}
-		maximizeBrowser();
-        launchUrl(GemJarUtils.getGemJarConfigData("launchUrl"));
-        setImplicitTimeOut(Long.parseLong(GemJarGlobalVar.implicitTime));
-        setPageLoadTimeOut(Long.parseLong(GemJarGlobalVar.pageTimeout));
-        setScriptTimeOut(Long.parseLong(GemJarGlobalVar.scriptTimeout));
+        getDriver().get(Settings.URL);
+        Settings.LOGGER.info("User launches the application");
     }
 
     public void maximizeBrowserToDefault() {
         try{
-			STATUS status = maximizeToDefaultBrowserSize();
-        Boolean maximizeStatus = Objects.equals(status, "PASS");;
-        if(maximizeStatus) 	{
-			GemTestReporter.addTestStep("Verify Browser Maximized to Default Size ","Browser Maximization successful.", STATUS.PASS, takeSnapShot());;
-        			Settings.LOGGER.info("Verify Browser Maximized to Default Size ","Browser Maximization successful." );	}
-			else {
-			GemTestReporter.addTestStep("Verify Browser Maximized to Default Size ","Unable to maximize browser.", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Verify Browser Maximized to Default Size ","Unable to maximize browser.");	}
-		}
-		catch(Exception e){
+			getDriver().manage().window().maximize();
+        	Settings.LOGGER.info("Verify Browser Maximized to Default Size ","Browser Maximization successful.");	}
+			catch(Exception e){;
+        			Settings.LOGGER.info("Verify Browser Maximized to Default Size ","Unable to maximize browser.");
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void minimizeGivenBrowser() {
         try{
-			minimizeBrowser();
-        } 
-		catch(Exception e){
+			getDriver().manage().window().minimize();
+        			Settings.LOGGER.info("Verify Browser Maximized to Default Size ","Browser Maximization successful.");	}
+		catch(Exception e){;
+        			Settings.LOGGER.info("Verify Browser Maximized to Default Size ","Unable to maximize browser.");
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public Object browserSize() {
-        Object size = getBrowserSize();
+        Object size = getDriver().manage().window().getSize();
         Integer sizeOfBrowser = null;
-        if(size!=null){
-			GemTestReporter.addTestStep("Get Browser Size ","Browser Size fetched successfully.", STATUS.PASS, takeSnapShot());
+        if(size!=null);
         	sizeOfBrowser = Integer.valueOf(size.toString());
-		}
-		else
-		{
-			GemTestReporter.addTestStep("Get Browser Size ","Unable to fetch browser size.", STATUS.FAIL, takeSnapShot());
-        }
-		;
         return sizeOfBrowser;
     }
 
     public void setSizeOfBrowser(int width, int height) {
         try{
-			setBrowserSize(width,height);
+			Dimension newDimension = new Dimension(width, height);
+			getDriver().manage().window().setSize(newDimension)		;
+        	Settings.LOGGER.info("User successfully minimizes browser");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -267,7 +238,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void setPositionOfBrowser(int x, int y) {
         try{
-			setBrowserPosition(x,y);
+			getDriver().manage().window().setPosition(new Point(x,y));
+        	Settings.LOGGER.info("User successfully minimizes browser");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -275,57 +247,35 @@ public class UtilsImplementation extends DriverAction {
     }
 
     public Object browserPosition() {
-        Object position = getBrowserLocation();
+        Object position = getDriver().manage().window().getPosition();
         Integer positionOfBrowser = null;
-        if(position!=null){
-			GemTestReporter.addTestStep("Get Browser Position ","Browser Position fetched successfully.", STATUS.PASS, takeSnapShot());
+        if(position!=null)	;
         	positionOfBrowser = Integer.valueOf(position.toString());
-		}
-		else
-		{
-			GemTestReporter.addTestStep("Get Position Size ","Unable to fetch browser position.", STATUS.FAIL, takeSnapShot());
-        }
-		;
         return positionOfBrowser;
     }
 
     public Object windowHandle() {
-        String windowHandle = getWindowHandle().toString();
-        if(windowHandle!=null){
-			GemTestReporter.addTestStep("Get Window Handle ","Window Handle fetched successfully.", STATUS.PASS, takeSnapShot());
-        
-		}
-		else
-		{
-			GemTestReporter.addTestStep("Get Window Handle ","Unable to fetch Window Handle.", STATUS.FAIL, takeSnapShot());
+        String windowHandle = getDriver().getWindowHandle();
+        if(windowHandle==null){
+			Assert.fail("Unable to get window handle");
         }
 		;
         return windowHandle;
     }
 
     public String windowHandles() {
-        String windowHandles = getWindowHandles().toString();
-        if(windowHandles!=null){
-			GemTestReporter.addTestStep("Get Window Handles ","Window Handles fetched successfully.", STATUS.PASS, takeSnapShot());
-        
-		}
-		else
-		{
-			GemTestReporter.addTestStep("Get Window Handles ","Unable to fetch Window Handles.", STATUS.FAIL, takeSnapShot());
+        String windowHandles = getDriver().getWindowHandles().toString();
+        if(windowHandles==null){
+			Assert.fail("Unable to get window handles");
         }
 		;
         return windowHandles;
     }
 
     public String pageSource() {
-        String pageSource = getPageSource();
-        if(pageSource!=null){
-			GemTestReporter.addTestStep("Get Page Source ","Page Source fetched successfully.", STATUS.PASS, takeSnapShot());
-        
-		}
-		else
-		{
-			GemTestReporter.addTestStep("Get Page Source ","Unable to fetch Page Source.", STATUS.FAIL, takeSnapShot());
+        String pageSource = getDriver().getPageSource();
+        if(pageSource==null){
+			Assert.fail("Unable to get page source");
         }
 		;
         return pageSource;
@@ -333,7 +283,7 @@ public class UtilsImplementation extends DriverAction {
 
     public void closeTab() {
         try{
-			closeCurrentTab();
+			getDriver().close();
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -343,7 +293,7 @@ public class UtilsImplementation extends DriverAction {
 
     public void alertSwitch() {
         try{
-			switchToAlert();
+			getDriver().switchTo().alert();
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -353,7 +303,7 @@ public class UtilsImplementation extends DriverAction {
 
     public void alertAccept() {
         try{
-			acceptAlert();
+			getDriver().switchTo().alert().accept();
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -363,7 +313,7 @@ public class UtilsImplementation extends DriverAction {
 
     public void alertDismiss() {
         try{
-			dismissAlert();
+			getDriver().switchTo().alert().dismiss();
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -373,7 +323,7 @@ public class UtilsImplementation extends DriverAction {
 
     public void inputForAlert(String input) {
         try{
-			alertInput(input);
+			getDriver().switchTo().alert().sendKeys(input);
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -383,7 +333,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void scrollUp() {
         try{
-			scrollToTop();
+			JavascriptExecutor js = (JavascriptExecutor) DriverManager.getWebDriver();
+			js.executeScript("window.scrollTo(0, -document.body.scrollHeight)");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -393,7 +344,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void scrollDown() {
         try{
-			scrollToBottom();
+			 JavascriptExecutor js = (JavascriptExecutor) DriverManager.getWebDriver();
+			js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -403,7 +355,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void scrollPage(int x, int y) {
         try{
-			pageScroll(x,y);
+			JavascriptExecutor js = (JavascriptExecutor) DriverManager.getWebDriver();
+			js.executeScript("window.scrollBy("+x+","+y+")");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -413,7 +366,8 @@ public class UtilsImplementation extends DriverAction {
 
     public void elementScroll(int x, int y) {
         try{
-			scrollAnElementToSpecificPosition(x,y);
+			JavascriptExecutor js = (JavascriptExecutor) DriverManager.getWebDriver();
+			js.executeScript("window.scrollBy("+x+","+y+")");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -423,7 +377,7 @@ public class UtilsImplementation extends DriverAction {
 
     public void urlNavigation(String url) {
         try{
-			navigateToUrl(url);
+			getDriver().navigate().to(url);
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -433,7 +387,7 @@ public class UtilsImplementation extends DriverAction {
 
     public void refreshPage() {
         try{
-			refresh();
+			getDriver().navigate().refresh();
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -441,9 +395,12 @@ public class UtilsImplementation extends DriverAction {
 		;
     }
 
-    public void takeScreenshot() {
+    public void takeScreenshot(String filePath) {
         try{
-			takeSnapShot();
+			TakesScreenshot scrShot =((TakesScreenshot)getDriver());
+			File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
+			File DestFile=new File(filePath);
+			FileUtils.copyFile(SrcFile, DestFile);
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);

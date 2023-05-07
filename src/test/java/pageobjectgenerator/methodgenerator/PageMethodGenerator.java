@@ -102,6 +102,15 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
             }
+            if (StringUtils.contains(locatorType, "div") || StringUtils.contains(locatorType, "span")) {
+                UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsValueVerification(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsAttributeValueVerification(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsHoverOver(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
+            }
             if (StringUtils.equalsIgnoreCase(locatorType, "button")) {
                 UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
                 UtilsMethodCodeGenerator.setMethodClickable(c, field);
