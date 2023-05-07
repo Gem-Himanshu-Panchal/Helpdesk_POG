@@ -14,7 +14,7 @@ import net.serenitybdd.core.Serenity;
 import static org.junit.Assert.assertTrue;
 import org.junit.Assert;
 import static org.junit.Assert.assertFalse;
-import locators.Google;
+import locators.Sample;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -24,6 +24,8 @@ import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.Keys;
+import java.util.Objects;
+import org.openqa.selenium.*;
 
 public class UtilsImplementation extends DriverAction {
 
@@ -127,5 +129,240 @@ public class UtilsImplementation extends DriverAction {
         setImplicitTimeOut(Long.parseLong(GemJarGlobalVar.implicitTime));
         setPageLoadTimeOut(Long.parseLong(GemJarGlobalVar.pageTimeout));
         setScriptTimeOut(Long.parseLong(GemJarGlobalVar.scriptTimeout));
+    }
+
+    public void maximizeBrowserToDefault() {
+        try{
+			STATUS status = maximizeToDefaultBrowserSize();
+        Boolean maximizeStatus = Objects.equals(status, "PASS");;
+        if(maximizeStatus) 	{
+			GemTestReporter.addTestStep("Verify Browser Maximized to Default Size ","Browser Maximization successful.", STATUS.PASS, takeSnapShot());;
+        			Settings.LOGGER.info("Verify Browser Maximized to Default Size ","Browser Maximization successful." );	}
+			else {
+			GemTestReporter.addTestStep("Verify Browser Maximized to Default Size ","Unable to maximize browser.", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Verify Browser Maximized to Default Size ","Unable to maximize browser.");	}
+		}
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void minimizeGivenBrowser() {
+        try{
+			minimizeBrowser();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public Object browserSize() {
+        Object size = getBrowserSize();
+        Integer sizeOfBrowser = null;
+        if(size!=null){
+			GemTestReporter.addTestStep("Get Browser Size ","Browser Size fetched successfully.", STATUS.PASS, takeSnapShot());
+        	sizeOfBrowser = Integer.valueOf(size.toString());
+		}
+		else
+		{
+			GemTestReporter.addTestStep("Get Browser Size ","Unable to fetch browser size.", STATUS.FAIL, takeSnapShot());
+        }
+		;
+        return sizeOfBrowser;
+    }
+
+    public void setSizeOfBrowser(int width, int height) {
+        try{
+			setBrowserSize(width,height);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void setPositionOfBrowser(int x, int y) {
+        try{
+			setBrowserPosition(x,y);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public Object browserPosition() {
+        Object position = getBrowserLocation();
+        Integer positionOfBrowser = null;
+        if(position!=null){
+			GemTestReporter.addTestStep("Get Browser Position ","Browser Position fetched successfully.", STATUS.PASS, takeSnapShot());
+        	positionOfBrowser = Integer.valueOf(position.toString());
+		}
+		else
+		{
+			GemTestReporter.addTestStep("Get Position Size ","Unable to fetch browser position.", STATUS.FAIL, takeSnapShot());
+        }
+		;
+        return positionOfBrowser;
+    }
+
+    public Object windowHandle() {
+        String windowHandle = getWindowHandle().toString();
+        if(windowHandle!=null){
+			GemTestReporter.addTestStep("Get Window Handle ","Window Handle fetched successfully.", STATUS.PASS, takeSnapShot());
+        
+		}
+		else
+		{
+			GemTestReporter.addTestStep("Get Window Handle ","Unable to fetch Window Handle.", STATUS.FAIL, takeSnapShot());
+        }
+		;
+        return windowHandle;
+    }
+
+    public String windowHandles() {
+        String windowHandles = getWindowHandles().toString();
+        if(windowHandles!=null){
+			GemTestReporter.addTestStep("Get Window Handles ","Window Handles fetched successfully.", STATUS.PASS, takeSnapShot());
+        
+		}
+		else
+		{
+			GemTestReporter.addTestStep("Get Window Handles ","Unable to fetch Window Handles.", STATUS.FAIL, takeSnapShot());
+        }
+		;
+        return windowHandles;
+    }
+
+    public String pageSource() {
+        String pageSource = getPageSource();
+        if(pageSource!=null){
+			GemTestReporter.addTestStep("Get Page Source ","Page Source fetched successfully.", STATUS.PASS, takeSnapShot());
+        
+		}
+		else
+		{
+			GemTestReporter.addTestStep("Get Page Source ","Unable to fetch Page Source.", STATUS.FAIL, takeSnapShot());
+        }
+		;
+        return pageSource;
+    }
+
+    public String closeTab() {
+        try{
+			closeCurrentTab();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		return getCurrentURL();
+    }
+
+    public void alertSwitch() {
+        try{
+			switchToAlert();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		;
+    }
+
+    public void alertAccept() {
+        try{
+			acceptAlert();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		;
+    }
+
+    public void alertDismiss() {
+        try{
+			dismissAlert();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		;
+    }
+
+    public void inputForAlert(String input) {
+        try{
+			alertInput(input);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		;
+    }
+
+    public void scrollUp() {
+        try{
+			scrollToTop();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		;
+    }
+
+    public void scrollDown() {
+        try{
+			scrollToBottom();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		;
+    }
+
+    public void scrollPage(int x, int y) {
+        try{
+			pageScroll(x,y);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		;
+    }
+
+    public void elementScroll(int x, int y) {
+        try{
+			scrollAnElementToSpecificPosition(x,y);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		;
+    }
+
+    public void urlNavigation(String url) {
+        try{
+			navigateToUrl(url);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		;
+    }
+
+    public void refreshPage() {
+        try{
+			refresh();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		;
+    }
+
+    public void takeScreenshot() {
+        try{
+			takeSnapShot();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        }
+		;
     }
 }

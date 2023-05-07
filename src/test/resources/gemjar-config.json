@@ -13,7 +13,7 @@
   "jewelEntryUrl": "https://apis.gemecosystem.com/enter-point",
   "prod": {
     "browserName": "chrome",
-    "launchUrl": "https://www.google.com/",
+    "launchUrl": "https://geminisolutions.com/",
     "browserTimeout": 100
   }
 }

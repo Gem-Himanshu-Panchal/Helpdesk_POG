@@ -24,6 +24,8 @@ import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.Keys;
+import java.util.Objects;
+import org.openqa.selenium.*;
 
 public class SampleImplementation extends DriverAction {
 
@@ -166,6 +168,42 @@ public class SampleImplementation extends DriverAction {
 		}
 		catch(Exception e){;
         	GemTestReporter.addTestStep("Verify value gets cleared for firstName field","Unable to clear value", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void hoverOverFirstName(String labelText) {
+        //This function is for web element @FindBy(Sample.firstName);
+        try{
+			hoverOver(Sample.firstName,labelText);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void verifyFirstNameExists() {
+        //This function is for web element @FindBy(Sample.firstName);
+        try{
+			if(isExist(Sample.firstName)){;
+        		GemTestReporter.addTestStep("Verify element firstName is present on Screen","firstName element is present on Screen", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("firstName is present on Screen");}	
+			 else{
+				GemTestReporter.addTestStep("Verify element firstName is present on Screen","firstName element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("firstName element is not present on Screen");}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify element firstName is present on Screen","firstName element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void scrollToFirstNameElement() {
+        //This function is for web element @FindBy(Sample.firstName);
+        try{
+			scrollIntoView(Sample.firstName);
+        	GemTestReporter.addTestStep("Scroll to firstName element","Successful able to scroll to firstName element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to firstName element");			
+}			catch(Exception e){;
+        			GemTestReporter.addTestStep("Scroll to firstName element","Unable to scroll to firstName element", STATUS.FAIL, takeSnapShot());
         };
     }
 
@@ -337,6 +375,42 @@ public class SampleImplementation extends DriverAction {
         };
     }
 
+    public void hoverOverPassword(String labelText) {
+        //This function is for web element @FindBy(Sample.password);
+        try{
+			hoverOver(Sample.password,labelText);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void verifyPasswordExists() {
+        //This function is for web element @FindBy(Sample.password);
+        try{
+			if(isExist(Sample.password)){;
+        		GemTestReporter.addTestStep("Verify element password is present on Screen","password element is present on Screen", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("password is present on Screen");}	
+			 else{
+				GemTestReporter.addTestStep("Verify element password is present on Screen","password element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("password element is not present on Screen");}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify element password is present on Screen","password element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void scrollToPasswordElement() {
+        //This function is for web element @FindBy(Sample.password);
+        try{
+			scrollIntoView(Sample.password);
+        	GemTestReporter.addTestStep("Scroll to password element","Successful able to scroll to password element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to password element");			
+}			catch(Exception e){;
+        			GemTestReporter.addTestStep("Scroll to password element","Unable to scroll to password element", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
     public void verifyPasswordIsDisplayed() {
         //The below function is for web element @FindBy(Sample.password);
         try{
@@ -502,6 +576,42 @@ public class SampleImplementation extends DriverAction {
 		}
 		catch(Exception e){;
         	GemTestReporter.addTestStep("Verify value gets cleared for lastName field","Unable to clear value", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void hoverOverLastName(String labelText) {
+        //This function is for web element @FindBy(Sample.lastName);
+        try{
+			hoverOver(Sample.lastName,labelText);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void verifyLastNameExists() {
+        //This function is for web element @FindBy(Sample.lastName);
+        try{
+			if(isExist(Sample.lastName)){;
+        		GemTestReporter.addTestStep("Verify element lastName is present on Screen","lastName element is present on Screen", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("lastName is present on Screen");}	
+			 else{
+				GemTestReporter.addTestStep("Verify element lastName is present on Screen","lastName element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("lastName element is not present on Screen");}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify element lastName is present on Screen","lastName element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void scrollToLastNameElement() {
+        //This function is for web element @FindBy(Sample.lastName);
+        try{
+			scrollIntoView(Sample.lastName);
+        	GemTestReporter.addTestStep("Scroll to lastName element","Successful able to scroll to lastName element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to lastName element");			
+}			catch(Exception e){;
+        			GemTestReporter.addTestStep("Scroll to lastName element","Unable to scroll to lastName element", STATUS.FAIL, takeSnapShot());
         };
     }
 
@@ -673,6 +783,42 @@ public class SampleImplementation extends DriverAction {
         };
     }
 
+    public void hoverOverHeading(String labelText) {
+        //This function is for web element @FindBy(Sample.heading);
+        try{
+			hoverOver(Sample.heading,labelText);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void verifyHeadingExists() {
+        //This function is for web element @FindBy(Sample.heading);
+        try{
+			if(isExist(Sample.heading)){;
+        		GemTestReporter.addTestStep("Verify element heading is present on Screen","heading element is present on Screen", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("heading is present on Screen");}	
+			 else{
+				GemTestReporter.addTestStep("Verify element heading is present on Screen","heading element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("heading element is not present on Screen");}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify element heading is present on Screen","heading element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void scrollToHeadingElement() {
+        //This function is for web element @FindBy(Sample.heading);
+        try{
+			scrollIntoView(Sample.heading);
+        	GemTestReporter.addTestStep("Scroll to heading element","Successful able to scroll to heading element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to heading element");			
+}			catch(Exception e){;
+        			GemTestReporter.addTestStep("Scroll to heading element","Unable to scroll to heading element", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
     public void verifyHeadingIsDisplayed() {
         //The below function is for web element @FindBy(Sample.heading);
         try{
@@ -841,6 +987,42 @@ public class SampleImplementation extends DriverAction {
         };
     }
 
+    public void hoverOverBirthday(String labelText) {
+        //This function is for web element @FindBy(Sample.birthday);
+        try{
+			hoverOver(Sample.birthday,labelText);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void verifyBirthdayExists() {
+        //This function is for web element @FindBy(Sample.birthday);
+        try{
+			if(isExist(Sample.birthday)){;
+        		GemTestReporter.addTestStep("Verify element birthday is present on Screen","birthday element is present on Screen", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("birthday is present on Screen");}	
+			 else{
+				GemTestReporter.addTestStep("Verify element birthday is present on Screen","birthday element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("birthday element is not present on Screen");}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify element birthday is present on Screen","birthday element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void scrollToBirthdayElement() {
+        //This function is for web element @FindBy(Sample.birthday);
+        try{
+			scrollIntoView(Sample.birthday);
+        	GemTestReporter.addTestStep("Scroll to birthday element","Successful able to scroll to birthday element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to birthday element");			
+}			catch(Exception e){;
+        			GemTestReporter.addTestStep("Scroll to birthday element","Unable to scroll to birthday element", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
     public void verifyBirthdayIsDisplayed() {
         //The below function is for web element @FindBy(Sample.birthday);
         try{
@@ -934,6 +1116,42 @@ public class SampleImplementation extends DriverAction {
         };
     }
 
+    public void hoverOverCss(String labelText) {
+        //This function is for web element @FindBy(Sample.css);
+        try{
+			hoverOver(Sample.css,labelText);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void verifyCssExists() {
+        //This function is for web element @FindBy(Sample.css);
+        try{
+			if(isExist(Sample.css)){;
+        		GemTestReporter.addTestStep("Verify element css is present on Screen","css element is present on Screen", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("css is present on Screen");}	
+			 else{
+				GemTestReporter.addTestStep("Verify element css is present on Screen","css element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("css element is not present on Screen");}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify element css is present on Screen","css element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void scrollToCssElement() {
+        //This function is for web element @FindBy(Sample.css);
+        try{
+			scrollIntoView(Sample.css);
+        	GemTestReporter.addTestStep("Scroll to css element","Successful able to scroll to css element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to css element");			
+}			catch(Exception e){;
+        			GemTestReporter.addTestStep("Scroll to css element","Unable to scroll to css element", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
     public void verifyCssIsDisplayed() {
         //The below function is for web element @FindBy(Sample.css);
         try{
@@ -1024,6 +1242,42 @@ public class SampleImplementation extends DriverAction {
 		}
 		catch(Exception e){;
         	GemTestReporter.addTestStep("Verify value of javascript field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void hoverOverJavascript(String labelText) {
+        //This function is for web element @FindBy(Sample.javascript);
+        try{
+			hoverOver(Sample.javascript,labelText);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void verifyJavascriptExists() {
+        //This function is for web element @FindBy(Sample.javascript);
+        try{
+			if(isExist(Sample.javascript)){;
+        		GemTestReporter.addTestStep("Verify element javascript is present on Screen","javascript element is present on Screen", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("javascript is present on Screen");}	
+			 else{
+				GemTestReporter.addTestStep("Verify element javascript is present on Screen","javascript element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("javascript element is not present on Screen");}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify element javascript is present on Screen","javascript element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void scrollToJavascriptElement() {
+        //This function is for web element @FindBy(Sample.javascript);
+        try{
+			scrollIntoView(Sample.javascript);
+        	GemTestReporter.addTestStep("Scroll to javascript element","Successful able to scroll to javascript element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to javascript element");			
+}			catch(Exception e){;
+        			GemTestReporter.addTestStep("Scroll to javascript element","Unable to scroll to javascript element", STATUS.FAIL, takeSnapShot());
         };
     }
 
@@ -1148,6 +1402,32 @@ public class SampleImplementation extends DriverAction {
         };
     }
 
+    public void verifyBikeExists() {
+        //This function is for web element @FindBy(Sample.Bike);
+        try{
+			if(isExist(Sample.Bike)){;
+        		GemTestReporter.addTestStep("Verify element Bike is present on Screen","Bike element is present on Screen", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("Bike is present on Screen");}	
+			 else{
+				GemTestReporter.addTestStep("Verify element Bike is present on Screen","Bike element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Bike element is not present on Screen");}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify element Bike is present on Screen","Bike element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void scrollToBikeElement() {
+        //This function is for web element @FindBy(Sample.Bike);
+        try{
+			scrollIntoView(Sample.Bike);
+        	GemTestReporter.addTestStep("Scroll to Bike element","Successful able to scroll to Bike element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to Bike element");			
+}			catch(Exception e){;
+        			GemTestReporter.addTestStep("Scroll to Bike element","Unable to scroll to Bike element", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
     public void verifyBikeIsDisplayed() {
         //The below function is for web element @FindBy(Sample.Bike);
         try{
@@ -1269,6 +1549,32 @@ public class SampleImplementation extends DriverAction {
         };
     }
 
+    public void verifyBoatExists() {
+        //This function is for web element @FindBy(Sample.Boat);
+        try{
+			if(isExist(Sample.Boat)){;
+        		GemTestReporter.addTestStep("Verify element Boat is present on Screen","Boat element is present on Screen", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("Boat is present on Screen");}	
+			 else{
+				GemTestReporter.addTestStep("Verify element Boat is present on Screen","Boat element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Boat element is not present on Screen");}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify element Boat is present on Screen","Boat element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void scrollToBoatElement() {
+        //This function is for web element @FindBy(Sample.Boat);
+        try{
+			scrollIntoView(Sample.Boat);
+        	GemTestReporter.addTestStep("Scroll to Boat element","Successful able to scroll to Boat element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to Boat element");			
+}			catch(Exception e){;
+        			GemTestReporter.addTestStep("Scroll to Boat element","Unable to scroll to Boat element", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
     public void verifyBoatIsDisplayed() {
         //The below function is for web element @FindBy(Sample.Boat);
         try{
@@ -1374,6 +1680,42 @@ public class SampleImplementation extends DriverAction {
         };
     }
 
+    public void hoverOverCar(String labelText) {
+        //This function is for web element @FindBy(Sample.car);
+        try{
+			hoverOver(Sample.car,labelText);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void verifyCarExists() {
+        //This function is for web element @FindBy(Sample.car);
+        try{
+			if(isExist(Sample.car)){;
+        		GemTestReporter.addTestStep("Verify element car is present on Screen","car element is present on Screen", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("car is present on Screen");}	
+			 else{
+				GemTestReporter.addTestStep("Verify element car is present on Screen","car element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("car element is not present on Screen");}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify element car is present on Screen","car element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void scrollToCarElement() {
+        //This function is for web element @FindBy(Sample.car);
+        try{
+			scrollIntoView(Sample.car);
+        	GemTestReporter.addTestStep("Scroll to car element","Successful able to scroll to car element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to car element");			
+}			catch(Exception e){;
+        			GemTestReporter.addTestStep("Scroll to car element","Unable to scroll to car element", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
     public void verifyCarIsDisplayed() {
         //The below function is for web element @FindBy(Sample.car);
         try{
@@ -1452,6 +1794,42 @@ public class SampleImplementation extends DriverAction {
 		}
 		catch(Exception e){;
         	GemTestReporter.addTestStep("Verify value of Submit field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void hoverOverSubmit(String labelText) {
+        //This function is for web element @FindBy(Sample.Submit);
+        try{
+			hoverOver(Sample.Submit,labelText);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void verifySubmitExists() {
+        //This function is for web element @FindBy(Sample.Submit);
+        try{
+			if(isExist(Sample.Submit)){;
+        		GemTestReporter.addTestStep("Verify element Submit is present on Screen","Submit element is present on Screen", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("Submit is present on Screen");}	
+			 else{
+				GemTestReporter.addTestStep("Verify element Submit is present on Screen","Submit element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Submit element is not present on Screen");}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify element Submit is present on Screen","Submit element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void scrollToSubmitElement() {
+        //This function is for web element @FindBy(Sample.Submit);
+        try{
+			scrollIntoView(Sample.Submit);
+        	GemTestReporter.addTestStep("Scroll to Submit element","Successful able to scroll to Submit element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to Submit element");			
+}			catch(Exception e){;
+        			GemTestReporter.addTestStep("Scroll to Submit element","Unable to scroll to Submit element", STATUS.FAIL, takeSnapShot());
         };
     }
 
@@ -1544,6 +1922,42 @@ public class SampleImplementation extends DriverAction {
 		}
 		catch(Exception e){;
         	GemTestReporter.addTestStep("Verify value of html field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void hoverOverHtml(String labelText) {
+        //This function is for web element @FindBy(Sample.html);
+        try{
+			hoverOver(Sample.html,labelText);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void verifyHtmlExists() {
+        //This function is for web element @FindBy(Sample.html);
+        try{
+			if(isExist(Sample.html)){;
+        		GemTestReporter.addTestStep("Verify element html is present on Screen","html element is present on Screen", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("html is present on Screen");}	
+			 else{
+				GemTestReporter.addTestStep("Verify element html is present on Screen","html element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("html element is not present on Screen");}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify element html is present on Screen","html element is not present on Screen", STATUS.FAIL, takeSnapShot());
+        };
+    }
+
+    public void scrollToHtmlElement() {
+        //This function is for web element @FindBy(Sample.html);
+        try{
+			scrollIntoView(Sample.html);
+        	GemTestReporter.addTestStep("Scroll to html element","Successful able to scroll to html element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to html element");			
+}			catch(Exception e){;
+        			GemTestReporter.addTestStep("Scroll to html element","Unable to scroll to html element", STATUS.FAIL, takeSnapShot());
         };
     }
 

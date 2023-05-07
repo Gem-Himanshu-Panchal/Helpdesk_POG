@@ -1,5 +1,7 @@
 package utils;
 
+import com.gemini.generic.reporting.GemTestReporter;
+import com.gemini.generic.reporting.STATUS;
 import com.gemini.generic.ui.utils.DriverManager;
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.pages.PageObject;
@@ -16,6 +18,7 @@ import pageobjectgenerator.Settings;
 import java.io.File;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static com.gemini.generic.ui.utils.DriverAction.*;
@@ -171,14 +174,12 @@ public class UtilFunctions extends PageObject {
         }
     }
 
-    public static void getWindowFocus( String windowHandle ) {
+    public static void getWindowFocus(String windowHandle) {
         try {
             DriverManager.getWebDriver().switchTo().window(windowHandle);
-            JavascriptExecutor js = (JavascriptExecutor)DriverManager.getWebDriver();
-            js.executeScript( "window.focus();" );
-        }
-        catch (Exception e)
-        {
+            JavascriptExecutor js = (JavascriptExecutor) DriverManager.getWebDriver();
+            js.executeScript("window.focus();");
+        } catch (Exception e) {
             Settings.LOGGER.info("User gets an exception: " + e);
         }
     }
@@ -187,15 +188,13 @@ public class UtilFunctions extends PageObject {
         Boolean isElementDisabled = false;
         try {
             isElementDisabled = $(locator).getAttribute("disabled") != null;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Settings.LOGGER.info("User gets an exception: " + e);
         }
         return isElementDisabled;
     }
 
-   public void pressEnter() {
+    public void pressEnter() {
         try {
             withAction().sendKeys(Keys.ENTER).build().perform();
         } catch (Exception e) {
@@ -242,4 +241,86 @@ public class UtilFunctions extends PageObject {
             Assert.fail("Could not perform paste operation");
         }
     }
+
+    public void closeTabAndSwitch(String window) {
+        try {
+            DriverManager.closeDriver();
+            DriverManager.getWebDriver().switchTo().window(window);
+            GemTestReporter.addTestStep("Close tab and switch to window", "Tab closed successfully and user is able to switch to another window", STATUS.PASS);
+        } catch (Exception e) {
+            GemTestReporter.addTestStep("Close tab and switch to window", "Unable to close tab", STATUS.FAIL);
+            Settings.LOGGER.info("User gets an exception: " + e);
+        }
+    }
+
+    public void addCookie(String url, String key, String value) {
+        WebDriver driver = DriverManager.getWebDriver();
+        try {
+            driver.get(url);
+            // Adds the cookie into current browser context
+            driver.manage().addCookie(new Cookie(key, value));
+            GemTestReporter.addTestStep("Add cookie", "Cookie added successfully", STATUS.PASS);
+            driver.quit();
+        } catch (Exception e) {
+            GemTestReporter.addTestStep("Add cookie", "User is unable to add cookie", STATUS.FAIL);
+            Settings.LOGGER.info("User gets an exception: " + e);
+        }
+    }
+
+    public Object getCookieNamed(String url, String key) {
+        WebDriver driver = DriverManager.getWebDriver();
+        try {
+            driver.get(url);
+            Cookie cookie = driver.manage().getCookieNamed(key);
+            GemTestReporter.addTestStep("Get cookie for: key "+key, "User is able to get cookie for: key "+key, STATUS.FAIL);
+            Settings.LOGGER.info("User gets cookies associated with: URL" + url);
+            driver.quit();
+            return cookie;
+        } catch (Exception e) {
+            GemTestReporter.addTestStep("Get cookie", "User is unable to get cookie", STATUS.FAIL);
+            Settings.LOGGER.info("User gets an exception: " + e);
+            return null;
+        }
+    }
+
+    public Object getAllCookies(String url) {
+        WebDriver driver = DriverManager.getWebDriver();
+        try {
+            driver.get(url);
+            // Get All available cookies
+            Set<Cookie> cookies = driver.manage().getCookies();
+            GemTestReporter.addTestStep("Get all cookies", "User is able to get all cookie", STATUS.FAIL);
+            Settings.LOGGER.info("User gets all cookies associated with: " + url);
+            driver.quit();
+            return cookies;
+        } catch (Exception e) {
+            GemTestReporter.addTestStep("Get all cookies", "User is unable to get all cookie", STATUS.FAIL);
+            Settings.LOGGER.info("User gets an exception: " + e);
+            return null;
+        }
+    }
+
+    public void deleteCookie(String url,String key) {
+        WebDriver driver = DriverManager.getWebDriver();
+        try {
+            driver.get(url);
+            // delete a cookie with name 'test1'
+            driver.manage().deleteCookieNamed(key);
+        } catch (Exception e) {
+            GemTestReporter.addTestStep("Get all cookies", "User is unable to get all cookie", STATUS.FAIL);
+            Settings.LOGGER.info("User gets an exception: " + e);
+        }
+    }
+
+    public void deleteAllCookies(String url) {
+            WebDriver driver = DriverManager.getWebDriver();
+            try {
+                driver.get(url);
+                // deletes all cookies
+                driver.manage().deleteAllCookies();
+            } catch (Exception e) {
+                GemTestReporter.addTestStep("Get all cookies", "User is unable to get all cookie", STATUS.FAIL);
+                Settings.LOGGER.info("User gets an exception: " + e);
+            }
+        }
 }

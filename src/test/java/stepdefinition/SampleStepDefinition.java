@@ -11,6 +11,7 @@ import implementation.SampleImplementation;
 import locators.Sample;
 import implementation.UtilsImplementation;
 import utils.UtilFunctions;
+import org.openqa.selenium.*;
 
 public class SampleStepDefinition {
 
@@ -85,6 +86,24 @@ public class SampleStepDefinition {
         sample.verifyValueClearedForFirstName();
     }
 
+    @Then("^For the Sample page, User hovers over FirstName and checks \"(.*)\" label$")
+    public void hoverOverFirstName(String label) {
+        //The below function is for web element @FindBy(Sample.firstName);
+        sample.hoverOverFirstName(label);
+    }
+
+    @Then("^For the Sample page, User verifies FirstName is present on screen$")
+    public void verifyFirstNameExists() {
+        //The below function is for web element @FindBy(Sample.firstName);
+        sample.verifyFirstNameExists();
+    }
+
+    @Then("^For the Sample page, User scrolls to FirstName element$")
+    public void scrollToFirstNameElement() {
+        //The below function is for web element @FindBy(Sample.firstName);
+        sample.scrollToFirstNameElement();
+    }
+
     @When("^For the Sample page, User clears text for Password input element$")
     public void userClearPassword() {
         //The below function is for web element @FindBy(Sample.password);
@@ -152,6 +171,24 @@ public class SampleStepDefinition {
     @Then("^For the Sample page, User verifies value for Password input element is cleared$")
     public void verifyValueClearedForPassword() {
         sample.verifyValueClearedForPassword();
+    }
+
+    @Then("^For the Sample page, User hovers over Password and checks \"(.*)\" label$")
+    public void hoverOverPassword(String label) {
+        //The below function is for web element @FindBy(Sample.password);
+        sample.hoverOverPassword(label);
+    }
+
+    @Then("^For the Sample page, User verifies Password is present on screen$")
+    public void verifyPasswordExists() {
+        //The below function is for web element @FindBy(Sample.password);
+        sample.verifyPasswordExists();
+    }
+
+    @Then("^For the Sample page, User scrolls to Password element$")
+    public void scrollToPasswordElement() {
+        //The below function is for web element @FindBy(Sample.password);
+        sample.scrollToPasswordElement();
     }
 
     @When("^For the Sample page, User clears text for LastName input element$")
@@ -223,6 +260,24 @@ public class SampleStepDefinition {
         sample.verifyValueClearedForLastName();
     }
 
+    @Then("^For the Sample page, User hovers over LastName and checks \"(.*)\" label$")
+    public void hoverOverLastName(String label) {
+        //The below function is for web element @FindBy(Sample.lastName);
+        sample.hoverOverLastName(label);
+    }
+
+    @Then("^For the Sample page, User verifies LastName is present on screen$")
+    public void verifyLastNameExists() {
+        //The below function is for web element @FindBy(Sample.lastName);
+        sample.verifyLastNameExists();
+    }
+
+    @Then("^For the Sample page, User scrolls to LastName element$")
+    public void scrollToLastNameElement() {
+        //The below function is for web element @FindBy(Sample.lastName);
+        sample.scrollToLastNameElement();
+    }
+
     @When("^For the Sample page, User clears text for Heading input element$")
     public void userClearHeading() {
         //The below function is for web element @FindBy(Sample.heading);
@@ -290,6 +345,24 @@ public class SampleStepDefinition {
     @Then("^For the Sample page, User verifies value for Heading input element is cleared$")
     public void verifyValueClearedForHeading() {
         sample.verifyValueClearedForHeading();
+    }
+
+    @Then("^For the Sample page, User hovers over Heading and checks \"(.*)\" label$")
+    public void hoverOverHeading(String label) {
+        //The below function is for web element @FindBy(Sample.heading);
+        sample.hoverOverHeading(label);
+    }
+
+    @Then("^For the Sample page, User verifies Heading is present on screen$")
+    public void verifyHeadingExists() {
+        //The below function is for web element @FindBy(Sample.heading);
+        sample.verifyHeadingExists();
+    }
+
+    @Then("^For the Sample page, User scrolls to Heading element$")
+    public void scrollToHeadingElement() {
+        //The below function is for web element @FindBy(Sample.heading);
+        sample.scrollToHeadingElement();
     }
 
     @When("^For the Sample page, User clears text for Birthday input element$")
@@ -361,6 +434,24 @@ public class SampleStepDefinition {
         sample.verifyValueClearedForBirthday();
     }
 
+    @Then("^For the Sample page, User hovers over Birthday and checks \"(.*)\" label$")
+    public void hoverOverBirthday(String label) {
+        //The below function is for web element @FindBy(Sample.birthday);
+        sample.hoverOverBirthday(label);
+    }
+
+    @Then("^For the Sample page, User verifies Birthday is present on screen$")
+    public void verifyBirthdayExists() {
+        //The below function is for web element @FindBy(Sample.birthday);
+        sample.verifyBirthdayExists();
+    }
+
+    @Then("^For the Sample page, User scrolls to Birthday element$")
+    public void scrollToBirthdayElement() {
+        //The below function is for web element @FindBy(Sample.birthday);
+        sample.scrollToBirthdayElement();
+    }
+
     @When("^For the Sample page, User selects Css radio button$")
     public void userSelectsCss() {
         sample.selectCss();
@@ -401,6 +492,24 @@ public class SampleStepDefinition {
         sample.verifyValueFromCss(valueOfElement);
     }
 
+    @Then("^For the Sample page, User hovers over Css and checks \"(.*)\" label$")
+    public void hoverOverCss(String label) {
+        //The below function is for web element @FindBy(Sample.css);
+        sample.hoverOverCss(label);
+    }
+
+    @Then("^For the Sample page, User verifies Css is present on screen$")
+    public void verifyCssExists() {
+        //The below function is for web element @FindBy(Sample.css);
+        sample.verifyCssExists();
+    }
+
+    @Then("^For the Sample page, User scrolls to Css element$")
+    public void scrollToCssElement() {
+        //The below function is for web element @FindBy(Sample.css);
+        sample.scrollToCssElement();
+    }
+
     @When("^For the Sample page, User selects Javascript radio button$")
     public void userSelectsJavascript() {
         sample.selectJavascript();
@@ -439,6 +548,24 @@ public class SampleStepDefinition {
     public void userVerifyValueForJavascript(String valueOfElement) {
         //This function is for web element @FindBy(Sample.javascript);
         sample.verifyValueFromJavascript(valueOfElement);
+    }
+
+    @Then("^For the Sample page, User hovers over Javascript and checks \"(.*)\" label$")
+    public void hoverOverJavascript(String label) {
+        //The below function is for web element @FindBy(Sample.javascript);
+        sample.hoverOverJavascript(label);
+    }
+
+    @Then("^For the Sample page, User verifies Javascript is present on screen$")
+    public void verifyJavascriptExists() {
+        //The below function is for web element @FindBy(Sample.javascript);
+        sample.verifyJavascriptExists();
+    }
+
+    @Then("^For the Sample page, User scrolls to Javascript element$")
+    public void scrollToJavascriptElement() {
+        //The below function is for web element @FindBy(Sample.javascript);
+        sample.scrollToJavascriptElement();
     }
 
     @When("^For the Sample page, User selects Bike checkbox$")
@@ -487,6 +614,18 @@ public class SampleStepDefinition {
         sample.verifyElementNotSelectedForBike();
     }
 
+    @Then("^For the Sample page, User verifies Bike is present on screen$")
+    public void verifyBikeExists() {
+        //The below function is for web element @FindBy(Sample.Bike);
+        sample.verifyBikeExists();
+    }
+
+    @Then("^For the Sample page, User scrolls to Bike element$")
+    public void scrollToBikeElement() {
+        //The below function is for web element @FindBy(Sample.Bike);
+        sample.scrollToBikeElement();
+    }
+
     @When("^For the Sample page, User selects Boat checkbox$")
     public void userSelectsBoat() {
         sample.selectBoat();
@@ -531,6 +670,18 @@ public class SampleStepDefinition {
     public void verifyElementNotSelectedForBoat() {
         //The below function is for web element @FindBy(Sample.Boat);
         sample.verifyElementNotSelectedForBoat();
+    }
+
+    @Then("^For the Sample page, User verifies Boat is present on screen$")
+    public void verifyBoatExists() {
+        //The below function is for web element @FindBy(Sample.Boat);
+        sample.verifyBoatExists();
+    }
+
+    @Then("^For the Sample page, User scrolls to Boat element$")
+    public void scrollToBoatElement() {
+        //The below function is for web element @FindBy(Sample.Boat);
+        sample.scrollToBoatElement();
     }
 
     @Then("^For the Sample page, User is able to click Car element$")
@@ -578,6 +729,24 @@ public class SampleStepDefinition {
         sample.verifyValueFromCar(valueOfElement);
     }
 
+    @Then("^For the Sample page, User hovers over Car and checks \"(.*)\" label$")
+    public void hoverOverCar(String label) {
+        //The below function is for web element @FindBy(Sample.car);
+        sample.hoverOverCar(label);
+    }
+
+    @Then("^For the Sample page, User verifies Car is present on screen$")
+    public void verifyCarExists() {
+        //The below function is for web element @FindBy(Sample.car);
+        sample.verifyCarExists();
+    }
+
+    @Then("^For the Sample page, User scrolls to Car element$")
+    public void scrollToCarElement() {
+        //The below function is for web element @FindBy(Sample.car);
+        sample.scrollToCarElement();
+    }
+
     @When("^For the Sample page, User clicks on Submit button$")
     public void userClicksOnSubmit() {
         sample.clickOnSubmit();
@@ -610,6 +779,24 @@ public class SampleStepDefinition {
     public void userVerifyValueForSubmit(String valueOfElement) {
         //This function is for web element @FindBy(Sample.Submit);
         sample.verifyValueFromSubmit(valueOfElement);
+    }
+
+    @Then("^For the Sample page, User hovers over Submit and checks \"(.*)\" label$")
+    public void hoverOverSubmit(String label) {
+        //The below function is for web element @FindBy(Sample.Submit);
+        sample.hoverOverSubmit(label);
+    }
+
+    @Then("^For the Sample page, User verifies Submit is present on screen$")
+    public void verifySubmitExists() {
+        //The below function is for web element @FindBy(Sample.Submit);
+        sample.verifySubmitExists();
+    }
+
+    @Then("^For the Sample page, User scrolls to Submit element$")
+    public void scrollToSubmitElement() {
+        //The below function is for web element @FindBy(Sample.Submit);
+        sample.scrollToSubmitElement();
     }
 
     @When("^For the Sample page, User clicks on Html link$")
@@ -649,5 +836,23 @@ public class SampleStepDefinition {
     public void userVerifyValueForHtml(String valueOfElement) {
         //This function is for web element @FindBy(Sample.html);
         sample.verifyValueFromHtml(valueOfElement);
+    }
+
+    @Then("^For the Sample page, User hovers over Html and checks \"(.*)\" label$")
+    public void hoverOverHtml(String label) {
+        //The below function is for web element @FindBy(Sample.html);
+        sample.hoverOverHtml(label);
+    }
+
+    @Then("^For the Sample page, User verifies Html is present on screen$")
+    public void verifyHtmlExists() {
+        //The below function is for web element @FindBy(Sample.html);
+        sample.verifyHtmlExists();
+    }
+
+    @Then("^For the Sample page, User scrolls to Html element$")
+    public void scrollToHtmlElement() {
+        //The below function is for web element @FindBy(Sample.html);
+        sample.scrollToHtmlElement();
     }
 }
