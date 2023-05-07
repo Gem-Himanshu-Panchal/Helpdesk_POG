@@ -14,7 +14,12 @@
         <a href="https://www.w3schools.com/python/default.asp">Python</a>
       </nav>
 
-    <h1>Sample HTML page</h1>
+    <h1 onclick="changeColor" id="heading">Sample HTML page</h1>
+    <div id="parentDiv">
+        <p>12</p>
+        <p>14</p>
+        <p>13</p>
+    </div>
     <p class="paragraph">This is a sample for testing Method Generator.</p>
 
     <form action ="submit.html">
@@ -56,11 +61,25 @@
             <option value="mercedes">Mercedes</option>
             <option value="audi">Audi</option>
         </select>
+
+        <label for="numbers">Choose a number:</label>
+
+        <select name="numbers" id="numbers" multiple>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
         <br>
         <input type="submit" value="Submit">
 
     </form>
 
+    <script>
+        function changeColor() {
+        document.getElementById('heading').style.color = 'red';
+        }
+    </script>
 </body>
 
 </html>

@@ -2,13 +2,13 @@ package implementation;
 
 import com.gemini.generic.reporting.GemTestReporter;
 import com.gemini.generic.reporting.STATUS;
-import com.gemini.generic.ui.utils.DriverManager;
 import com.gemini.generic.ui.utils.DriverAction;
 import com.gemini.generic.utils.GemJarUtils;
 import org.openqa.selenium.chrome.ChromeOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import com.gemini.generic.utils.GemJarGlobalVar;
+import com.gemini.generic.ui.utils.DriverManager;
 import pageobjectgenerator.Settings;
 import net.serenitybdd.core.Serenity;
 import static org.junit.Assert.assertTrue;
@@ -26,6 +26,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.Keys;
 import java.util.Objects;
 import org.openqa.selenium.*;
+import net.serenitybdd.core.pages.SerenityActions;
+import org.openqa.selenium.By;
 
 public class UtilsImplementation extends DriverAction {
 
@@ -100,6 +102,89 @@ public class UtilsImplementation extends DriverAction {
     public void backwardNavigation() {
         try{
 			navigateBack();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+ e);
+        };
+    }
+
+    public void switchActiveElement() {
+        try{
+			switchToActiveElement();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+ e);
+        };
+    }
+
+    public void switchDefaultContent() {
+        try{
+			switchToDefaultContent();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
+    public void switchParentFrame() {
+        try{
+			switchToParentFrame();
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+ e);
+        };
+    }
+
+    public void switchFrame(String nameOrId) {
+        try{
+			switchToFrame(nameOrId);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+ e);
+        };
+    }
+
+    public void switchFrame(int index) {
+        try{
+			switchToFrame(index);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+ e);
+        };
+    }
+
+    public void switchWindow(String nameOrHandle) {
+        try{
+			DriverManager.getWebDriver().switchTo().window(nameOrHandle);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+ e);
+        };
+    }
+
+    public void wait(int duration) {
+        try{
+			DriverManager.getWebDriver().wait(duration);
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+ e);
+        };
+    }
+
+    public void clicksAndHold(By locator) {
+        try{
+			new Actions(DriverManager.getWebDriver()).moveToElement((WebElement) locator).clickAndHold().build().perform();
+        	Settings.LOGGER.info("User successfully clicks and holds " + locator + " element");
+        } 
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+ e);
+        };
+    }
+
+    public void tearDown() {
+        try{
+			DriverManager.quitDriver();
+        	Settings.LOGGER.info("User successfully closed driver");
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
@@ -246,14 +331,14 @@ public class UtilsImplementation extends DriverAction {
         return pageSource;
     }
 
-    public String closeTab() {
+    public void closeTab() {
         try{
 			closeCurrentTab();
         } 
 		catch(Exception e){
 			Settings.LOGGER.info("User gets an exception: "+e);
         }
-		return getCurrentURL();
+		;
     }
 
     public void alertSwitch() {

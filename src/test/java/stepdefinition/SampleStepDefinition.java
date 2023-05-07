@@ -5,6 +5,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 import java.util.concurrent.TimeUnit;
 import implementation.SampleImplementation;
@@ -104,6 +105,11 @@ public class SampleStepDefinition {
         sample.scrollToFirstNameElement();
     }
 
+    @Then("^For the Sample page, User verifies \"(.*)\" is present in FirstName element$")
+    public void userVerifiesTextContainsInFirstName(String typeText) {
+        sample.verifyFirstNameContainsText(typeText);
+    }
+
     @When("^For the Sample page, User clears text for Password input element$")
     public void userClearPassword() {
         //The below function is for web element @FindBy(Sample.password);
@@ -189,6 +195,11 @@ public class SampleStepDefinition {
     public void scrollToPasswordElement() {
         //The below function is for web element @FindBy(Sample.password);
         sample.scrollToPasswordElement();
+    }
+
+    @Then("^For the Sample page, User verifies \"(.*)\" is present in Password element$")
+    public void userVerifiesTextContainsInPassword(String typeText) {
+        sample.verifyPasswordContainsText(typeText);
     }
 
     @When("^For the Sample page, User clears text for LastName input element$")
@@ -278,6 +289,11 @@ public class SampleStepDefinition {
         sample.scrollToLastNameElement();
     }
 
+    @Then("^For the Sample page, User verifies \"(.*)\" is present in LastName element$")
+    public void userVerifiesTextContainsInLastName(String typeText) {
+        sample.verifyLastNameContainsText(typeText);
+    }
+
     @When("^For the Sample page, User clears text for Heading input element$")
     public void userClearHeading() {
         //The below function is for web element @FindBy(Sample.heading);
@@ -363,6 +379,11 @@ public class SampleStepDefinition {
     public void scrollToHeadingElement() {
         //The below function is for web element @FindBy(Sample.heading);
         sample.scrollToHeadingElement();
+    }
+
+    @Then("^For the Sample page, User verifies \"(.*)\" is present in Heading element$")
+    public void userVerifiesTextContainsInHeading(String typeText) {
+        sample.verifyHeadingContainsText(typeText);
     }
 
     @When("^For the Sample page, User clears text for Birthday input element$")
@@ -452,6 +473,11 @@ public class SampleStepDefinition {
         sample.scrollToBirthdayElement();
     }
 
+    @Then("^For the Sample page, User verifies \"(.*)\" is present in Birthday element$")
+    public void userVerifiesTextContainsInBirthday(String typeText) {
+        sample.verifyBirthdayContainsText(typeText);
+    }
+
     @When("^For the Sample page, User selects Css radio button$")
     public void userSelectsCss() {
         sample.selectCss();
@@ -508,6 +534,11 @@ public class SampleStepDefinition {
     public void scrollToCssElement() {
         //The below function is for web element @FindBy(Sample.css);
         sample.scrollToCssElement();
+    }
+
+    @Then("^For the Sample page, User verifies \"(.*)\" is present in Css element$")
+    public void userVerifiesTextContainsInCss(String typeText) {
+        sample.verifyCssContainsText(typeText);
     }
 
     @When("^For the Sample page, User selects Javascript radio button$")
@@ -568,6 +599,11 @@ public class SampleStepDefinition {
         sample.scrollToJavascriptElement();
     }
 
+    @Then("^For the Sample page, User verifies \"(.*)\" is present in Javascript element$")
+    public void userVerifiesTextContainsInJavascript(String typeText) {
+        sample.verifyJavascriptContainsText(typeText);
+    }
+
     @When("^For the Sample page, User selects Bike checkbox$")
     public void userSelectsBike() {
         sample.selectBike();
@@ -624,6 +660,11 @@ public class SampleStepDefinition {
     public void scrollToBikeElement() {
         //The below function is for web element @FindBy(Sample.Bike);
         sample.scrollToBikeElement();
+    }
+
+    @Then("^For the Sample page, User verifies \"(.*)\" is present in Bike element$")
+    public void userVerifiesTextContainsInBike(String typeText) {
+        sample.verifyBikeContainsText(typeText);
     }
 
     @When("^For the Sample page, User selects Boat checkbox$")
@@ -684,6 +725,11 @@ public class SampleStepDefinition {
         sample.scrollToBoatElement();
     }
 
+    @Then("^For the Sample page, User verifies \"(.*)\" is present in Boat element$")
+    public void userVerifiesTextContainsInBoat(String typeText) {
+        sample.verifyBoatContainsText(typeText);
+    }
+
     @Then("^For the Sample page, User is able to click Car element$")
     public void verifyUserIsClickableCar() {
         sample.elementIsClickableCar();
@@ -706,9 +752,14 @@ public class SampleStepDefinition {
         sample.verifyCarIsDisplayed();
     }
 
-    @When("^For the Sample page, User selects \"(.*)\" from  Car dropdown$")
+    @When("^For the Sample page, User selects \"(.*)\" from Car dropdown$")
     public void userSelectFromDropdownCar(String selectValue) {
         sample.selectCar(selectValue);
+    }
+
+    @When("^For the Sample page, User deselects \"(.*)\" from Car dropdown$")
+    public void userDeselectFromDropdownCar(String deselectValue) {
+        sample.deselectCar(deselectValue);
     }
 
     @Then("^For the Sample page, User verifies \"(.*)\" is the text of Car dropdown$")
@@ -747,6 +798,11 @@ public class SampleStepDefinition {
         sample.scrollToCarElement();
     }
 
+    @Then("^For the Sample page, User verifies \"(.*)\" is present in Car element$")
+    public void userVerifiesTextContainsInCar(String typeText) {
+        sample.verifyCarContainsText(typeText);
+    }
+
     @When("^For the Sample page, User clicks on Submit button$")
     public void userClicksOnSubmit() {
         sample.clickOnSubmit();
@@ -755,6 +811,11 @@ public class SampleStepDefinition {
     @Then("^For the Sample page, User is able to click Submit element$")
     public void verifyUserIsClickableSubmit() {
         sample.elementIsClickableSubmit();
+    }
+
+    @Then("^For the Sample page, User verifies \"(.*)\" is present in Submit element$")
+    public void userVerifiesTextContainsInSubmit(String typeText) {
+        sample.verifySubmitContainsText(typeText);
     }
 
     @Then("^For the Sample page, User verifies Submit button is visible$")
@@ -854,5 +915,10 @@ public class SampleStepDefinition {
     public void scrollToHtmlElement() {
         //The below function is for web element @FindBy(Sample.html);
         sample.scrollToHtmlElement();
+    }
+
+    @Then("^For the Sample page, User verifies \"(.*)\" is present in Html element$")
+    public void userVerifiesTextContainsInHtml(String typeText) {
+        sample.verifyHtmlContainsText(typeText);
     }
 }

@@ -2,13 +2,13 @@ package implementation;
 
 import com.gemini.generic.reporting.GemTestReporter;
 import com.gemini.generic.reporting.STATUS;
-import com.gemini.generic.ui.utils.DriverManager;
 import com.gemini.generic.ui.utils.DriverAction;
 import com.gemini.generic.utils.GemJarUtils;
 import org.openqa.selenium.chrome.ChromeOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import com.gemini.generic.utils.GemJarGlobalVar;
+import com.gemini.generic.ui.utils.DriverManager;
 import pageobjectgenerator.Settings;
 import net.serenitybdd.core.Serenity;
 import static org.junit.Assert.assertTrue;
@@ -26,6 +26,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.Keys;
 import java.util.Objects;
 import org.openqa.selenium.*;
+import net.serenitybdd.core.pages.SerenityActions;
+import org.openqa.selenium.By;
 
 public class SampleImplementation extends DriverAction {
 
@@ -45,8 +47,8 @@ public class SampleImplementation extends DriverAction {
         //The below function is for web element @FindBy(Sample.firstName);
         try{
 			typeText(Sample.firstName,typeText);
-        			 Actions action = new Actions(DriverManager.getWebDriver());;
-        			 action.sendKeys(Keys.ENTER);;
+        	 Actions action = new Actions(DriverManager.getWebDriver());;
+        	 action.sendKeys(Keys.ENTER);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses enter");
         }
 		catch(Exception e){
@@ -59,8 +61,8 @@ public class SampleImplementation extends DriverAction {
         //The below function is for web element @FindBy(Sample.firstName);
         try{
 			typeText(Sample.firstName,typeText);
-        Actions action = new Actions(DriverManager.getWebDriver());;
-        action.sendKeys(Keys.TAB);;
+        	Actions action = new Actions(DriverManager.getWebDriver());;
+        	action.sendKeys(Keys.TAB);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses Tab");
         }
 		catch(Exception e){
@@ -86,10 +88,10 @@ public class SampleImplementation extends DriverAction {
         try{
 			getElement(Sample.firstName).isEnabled();
         	GemTestReporter.addTestStep("Verify firstName field is enabled","firstName field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("firstName field is enabled");}
+        	Settings.LOGGER.info("firstName field is enabled");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify firstName field is enabled","F field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("firstName field is not enabled");};
+        	Settings.LOGGER.info("firstName field is not enabled");};
     }
 
     public void clearFirstName() {
@@ -97,10 +99,10 @@ public class SampleImplementation extends DriverAction {
         try{
 			clearText(Sample.firstName);
         	GemTestReporter.addTestStep("Clear text for firstName field","Input for firstName field cleared successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("firstName field cleared successfully");}
+        	Settings.LOGGER.info("firstName field cleared successfully");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Clear text for firstName field","firstNameUnable to clear text for firstName field", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to clear text for firstName field");};
+        	Settings.LOGGER.info("Unable to clear text for firstName field");};
     }
 
     public String getAttributeFromFirstName(String attributeValue) {
@@ -108,10 +110,16 @@ public class SampleImplementation extends DriverAction {
         String text = new String();
         try{
 			text = getAttributeName(Sample.firstName, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "firstName field","Successfully fetched " + attributeValue + " value for firstName", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for firstName");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "firstName field","Unable to get " + attributeValue + " value for firstName as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for firstName as attribute does not exist");};
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "firstName field","Successfully fetched " + attributeValue + " value for firstName", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for firstName");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "firstName field","Unable to get " + attributeValue + " value for firstName as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for firstName as attribute does not exist");
+			};
         }
 		catch(Exception e){
 			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "firstName field","Unable to get " + attributeValue + " value for firstName as attribute does not exist", STATUS.FAIL, takeSnapShot());
@@ -201,8 +209,8 @@ public class SampleImplementation extends DriverAction {
         try{
 			scrollIntoView(Sample.firstName);
         	GemTestReporter.addTestStep("Scroll to firstName element","Successful able to scroll to firstName element", STATUS.PASS, takeSnapShot());
-        	Settings.LOGGER.info("Successful able to scroll to firstName element");			
-}			catch(Exception e){;
+        	Settings.LOGGER.info("Successful able to scroll to firstName element");
+			}			catch(Exception e){;
         			GemTestReporter.addTestStep("Scroll to firstName element","Unable to scroll to firstName element", STATUS.FAIL, takeSnapShot());
         };
     }
@@ -216,6 +224,22 @@ public class SampleImplementation extends DriverAction {
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify firstName field is visible","firstName field is not visible", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("firstName field is not visible");};
+    }
+
+    public void verifyFirstNameContainsText(String typeText) {
+        //The below function is for web element @FindBy(Sample.firstName);
+        try{
+			if(getElementText(Sample.firstName).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify firstName field contains " + typeText,"Text of firstName field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of firstName field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify firstName field contains " + typeText,"Text" + typeText + "is not present in firstName field. Expected: "+typeText+" Actual: "+ getElementText(Sample.firstName), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of firstName field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.firstName));}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside firstName is equal to " + typeText,"Text inside firstName is not equal", STATUS.FAIL, takeSnapShot());
+        };
     }
 
     public void verifyFirstNameText(String typeText) {
@@ -249,8 +273,8 @@ public class SampleImplementation extends DriverAction {
         //The below function is for web element @FindBy(Sample.password);
         try{
 			typeText(Sample.password,typeText);
-        			 Actions action = new Actions(DriverManager.getWebDriver());;
-        			 action.sendKeys(Keys.ENTER);;
+        	 Actions action = new Actions(DriverManager.getWebDriver());;
+        	 action.sendKeys(Keys.ENTER);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses enter");
         }
 		catch(Exception e){
@@ -263,8 +287,8 @@ public class SampleImplementation extends DriverAction {
         //The below function is for web element @FindBy(Sample.password);
         try{
 			typeText(Sample.password,typeText);
-        Actions action = new Actions(DriverManager.getWebDriver());;
-        action.sendKeys(Keys.TAB);;
+        	Actions action = new Actions(DriverManager.getWebDriver());;
+        	action.sendKeys(Keys.TAB);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses Tab");
         }
 		catch(Exception e){
@@ -290,10 +314,10 @@ public class SampleImplementation extends DriverAction {
         try{
 			getElement(Sample.password).isEnabled();
         	GemTestReporter.addTestStep("Verify password field is enabled","password field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("password field is enabled");}
+        	Settings.LOGGER.info("password field is enabled");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify password field is enabled","P field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("password field is not enabled");};
+        	Settings.LOGGER.info("password field is not enabled");};
     }
 
     public void clearPassword() {
@@ -301,10 +325,10 @@ public class SampleImplementation extends DriverAction {
         try{
 			clearText(Sample.password);
         	GemTestReporter.addTestStep("Clear text for password field","Input for password field cleared successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("password field cleared successfully");}
+        	Settings.LOGGER.info("password field cleared successfully");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Clear text for password field","passwordUnable to clear text for password field", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to clear text for password field");};
+        	Settings.LOGGER.info("Unable to clear text for password field");};
     }
 
     public String getAttributeFromPassword(String attributeValue) {
@@ -312,10 +336,16 @@ public class SampleImplementation extends DriverAction {
         String text = new String();
         try{
 			text = getAttributeName(Sample.password, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "password field","Successfully fetched " + attributeValue + " value for password", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for password");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "password field","Unable to get " + attributeValue + " value for password as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for password as attribute does not exist");};
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "password field","Successfully fetched " + attributeValue + " value for password", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for password");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "password field","Unable to get " + attributeValue + " value for password as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for password as attribute does not exist");
+			};
         }
 		catch(Exception e){
 			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "password field","Unable to get " + attributeValue + " value for password as attribute does not exist", STATUS.FAIL, takeSnapShot());
@@ -405,8 +435,8 @@ public class SampleImplementation extends DriverAction {
         try{
 			scrollIntoView(Sample.password);
         	GemTestReporter.addTestStep("Scroll to password element","Successful able to scroll to password element", STATUS.PASS, takeSnapShot());
-        	Settings.LOGGER.info("Successful able to scroll to password element");			
-}			catch(Exception e){;
+        	Settings.LOGGER.info("Successful able to scroll to password element");
+			}			catch(Exception e){;
         			GemTestReporter.addTestStep("Scroll to password element","Unable to scroll to password element", STATUS.FAIL, takeSnapShot());
         };
     }
@@ -420,6 +450,22 @@ public class SampleImplementation extends DriverAction {
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify password field is visible","password field is not visible", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("password field is not visible");};
+    }
+
+    public void verifyPasswordContainsText(String typeText) {
+        //The below function is for web element @FindBy(Sample.password);
+        try{
+			if(getElementText(Sample.password).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify password field contains " + typeText,"Text of password field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of password field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify password field contains " + typeText,"Text" + typeText + "is not present in password field. Expected: "+typeText+" Actual: "+ getElementText(Sample.password), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of password field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.password));}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside password is equal to " + typeText,"Text inside password is not equal", STATUS.FAIL, takeSnapShot());
+        };
     }
 
     public void verifyPasswordText(String typeText) {
@@ -453,8 +499,8 @@ public class SampleImplementation extends DriverAction {
         //The below function is for web element @FindBy(Sample.lastName);
         try{
 			typeText(Sample.lastName,typeText);
-        			 Actions action = new Actions(DriverManager.getWebDriver());;
-        			 action.sendKeys(Keys.ENTER);;
+        	 Actions action = new Actions(DriverManager.getWebDriver());;
+        	 action.sendKeys(Keys.ENTER);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses enter");
         }
 		catch(Exception e){
@@ -467,8 +513,8 @@ public class SampleImplementation extends DriverAction {
         //The below function is for web element @FindBy(Sample.lastName);
         try{
 			typeText(Sample.lastName,typeText);
-        Actions action = new Actions(DriverManager.getWebDriver());;
-        action.sendKeys(Keys.TAB);;
+        	Actions action = new Actions(DriverManager.getWebDriver());;
+        	action.sendKeys(Keys.TAB);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses Tab");
         }
 		catch(Exception e){
@@ -494,10 +540,10 @@ public class SampleImplementation extends DriverAction {
         try{
 			getElement(Sample.lastName).isEnabled();
         	GemTestReporter.addTestStep("Verify lastName field is enabled","lastName field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("lastName field is enabled");}
+        	Settings.LOGGER.info("lastName field is enabled");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify lastName field is enabled","L field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("lastName field is not enabled");};
+        	Settings.LOGGER.info("lastName field is not enabled");};
     }
 
     public void clearLastName() {
@@ -505,10 +551,10 @@ public class SampleImplementation extends DriverAction {
         try{
 			clearText(Sample.lastName);
         	GemTestReporter.addTestStep("Clear text for lastName field","Input for lastName field cleared successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("lastName field cleared successfully");}
+        	Settings.LOGGER.info("lastName field cleared successfully");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Clear text for lastName field","lastNameUnable to clear text for lastName field", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to clear text for lastName field");};
+        	Settings.LOGGER.info("Unable to clear text for lastName field");};
     }
 
     public String getAttributeFromLastName(String attributeValue) {
@@ -516,10 +562,16 @@ public class SampleImplementation extends DriverAction {
         String text = new String();
         try{
 			text = getAttributeName(Sample.lastName, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "lastName field","Successfully fetched " + attributeValue + " value for lastName", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for lastName");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "lastName field","Unable to get " + attributeValue + " value for lastName as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for lastName as attribute does not exist");};
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "lastName field","Successfully fetched " + attributeValue + " value for lastName", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for lastName");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "lastName field","Unable to get " + attributeValue + " value for lastName as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for lastName as attribute does not exist");
+			};
         }
 		catch(Exception e){
 			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "lastName field","Unable to get " + attributeValue + " value for lastName as attribute does not exist", STATUS.FAIL, takeSnapShot());
@@ -609,8 +661,8 @@ public class SampleImplementation extends DriverAction {
         try{
 			scrollIntoView(Sample.lastName);
         	GemTestReporter.addTestStep("Scroll to lastName element","Successful able to scroll to lastName element", STATUS.PASS, takeSnapShot());
-        	Settings.LOGGER.info("Successful able to scroll to lastName element");			
-}			catch(Exception e){;
+        	Settings.LOGGER.info("Successful able to scroll to lastName element");
+			}			catch(Exception e){;
         			GemTestReporter.addTestStep("Scroll to lastName element","Unable to scroll to lastName element", STATUS.FAIL, takeSnapShot());
         };
     }
@@ -624,6 +676,22 @@ public class SampleImplementation extends DriverAction {
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify lastName field is visible","lastName field is not visible", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("lastName field is not visible");};
+    }
+
+    public void verifyLastNameContainsText(String typeText) {
+        //The below function is for web element @FindBy(Sample.lastName);
+        try{
+			if(getElementText(Sample.lastName).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify lastName field contains " + typeText,"Text of lastName field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of lastName field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify lastName field contains " + typeText,"Text" + typeText + "is not present in lastName field. Expected: "+typeText+" Actual: "+ getElementText(Sample.lastName), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of lastName field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.lastName));}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside lastName is equal to " + typeText,"Text inside lastName is not equal", STATUS.FAIL, takeSnapShot());
+        };
     }
 
     public void verifyLastNameText(String typeText) {
@@ -657,8 +725,8 @@ public class SampleImplementation extends DriverAction {
         //The below function is for web element @FindBy(Sample.heading);
         try{
 			typeText(Sample.heading,typeText);
-        			 Actions action = new Actions(DriverManager.getWebDriver());;
-        			 action.sendKeys(Keys.ENTER);;
+        	 Actions action = new Actions(DriverManager.getWebDriver());;
+        	 action.sendKeys(Keys.ENTER);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses enter");
         }
 		catch(Exception e){
@@ -671,8 +739,8 @@ public class SampleImplementation extends DriverAction {
         //The below function is for web element @FindBy(Sample.heading);
         try{
 			typeText(Sample.heading,typeText);
-        Actions action = new Actions(DriverManager.getWebDriver());;
-        action.sendKeys(Keys.TAB);;
+        	Actions action = new Actions(DriverManager.getWebDriver());;
+        	action.sendKeys(Keys.TAB);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses Tab");
         }
 		catch(Exception e){
@@ -698,10 +766,10 @@ public class SampleImplementation extends DriverAction {
         try{
 			getElement(Sample.heading).isEnabled();
         	GemTestReporter.addTestStep("Verify heading field is enabled","heading field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("heading field is enabled");}
+        	Settings.LOGGER.info("heading field is enabled");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify heading field is enabled","H field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("heading field is not enabled");};
+        	Settings.LOGGER.info("heading field is not enabled");};
     }
 
     public void clearHeading() {
@@ -709,10 +777,10 @@ public class SampleImplementation extends DriverAction {
         try{
 			clearText(Sample.heading);
         	GemTestReporter.addTestStep("Clear text for heading field","Input for heading field cleared successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("heading field cleared successfully");}
+        	Settings.LOGGER.info("heading field cleared successfully");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Clear text for heading field","headingUnable to clear text for heading field", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to clear text for heading field");};
+        	Settings.LOGGER.info("Unable to clear text for heading field");};
     }
 
     public String getAttributeFromHeading(String attributeValue) {
@@ -720,10 +788,16 @@ public class SampleImplementation extends DriverAction {
         String text = new String();
         try{
 			text = getAttributeName(Sample.heading, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "heading field","Successfully fetched " + attributeValue + " value for heading", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for heading");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "heading field","Unable to get " + attributeValue + " value for heading as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for heading as attribute does not exist");};
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "heading field","Successfully fetched " + attributeValue + " value for heading", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for heading");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "heading field","Unable to get " + attributeValue + " value for heading as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for heading as attribute does not exist");
+			};
         }
 		catch(Exception e){
 			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "heading field","Unable to get " + attributeValue + " value for heading as attribute does not exist", STATUS.FAIL, takeSnapShot());
@@ -813,8 +887,8 @@ public class SampleImplementation extends DriverAction {
         try{
 			scrollIntoView(Sample.heading);
         	GemTestReporter.addTestStep("Scroll to heading element","Successful able to scroll to heading element", STATUS.PASS, takeSnapShot());
-        	Settings.LOGGER.info("Successful able to scroll to heading element");			
-}			catch(Exception e){;
+        	Settings.LOGGER.info("Successful able to scroll to heading element");
+			}			catch(Exception e){;
         			GemTestReporter.addTestStep("Scroll to heading element","Unable to scroll to heading element", STATUS.FAIL, takeSnapShot());
         };
     }
@@ -828,6 +902,22 @@ public class SampleImplementation extends DriverAction {
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify heading field is visible","heading field is not visible", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("heading field is not visible");};
+    }
+
+    public void verifyHeadingContainsText(String typeText) {
+        //The below function is for web element @FindBy(Sample.heading);
+        try{
+			if(getElementText(Sample.heading).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify heading field contains " + typeText,"Text of heading field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of heading field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify heading field contains " + typeText,"Text" + typeText + "is not present in heading field. Expected: "+typeText+" Actual: "+ getElementText(Sample.heading), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of heading field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.heading));}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside heading is equal to " + typeText,"Text inside heading is not equal", STATUS.FAIL, takeSnapShot());
+        };
     }
 
     public void verifyHeadingText(String typeText) {
@@ -861,8 +951,8 @@ public class SampleImplementation extends DriverAction {
         //The below function is for web element @FindBy(Sample.birthday);
         try{
 			typeText(Sample.birthday,typeText);
-        			 Actions action = new Actions(DriverManager.getWebDriver());;
-        			 action.sendKeys(Keys.ENTER);;
+        	 Actions action = new Actions(DriverManager.getWebDriver());;
+        	 action.sendKeys(Keys.ENTER);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses enter");
         }
 		catch(Exception e){
@@ -875,8 +965,8 @@ public class SampleImplementation extends DriverAction {
         //The below function is for web element @FindBy(Sample.birthday);
         try{
 			typeText(Sample.birthday,typeText);
-        Actions action = new Actions(DriverManager.getWebDriver());;
-        action.sendKeys(Keys.TAB);;
+        	Actions action = new Actions(DriverManager.getWebDriver());;
+        	action.sendKeys(Keys.TAB);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses Tab");
         }
 		catch(Exception e){
@@ -902,10 +992,10 @@ public class SampleImplementation extends DriverAction {
         try{
 			getElement(Sample.birthday).isEnabled();
         	GemTestReporter.addTestStep("Verify birthday field is enabled","birthday field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("birthday field is enabled");}
+        	Settings.LOGGER.info("birthday field is enabled");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify birthday field is enabled","B field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("birthday field is not enabled");};
+        	Settings.LOGGER.info("birthday field is not enabled");};
     }
 
     public void clearBirthday() {
@@ -913,10 +1003,10 @@ public class SampleImplementation extends DriverAction {
         try{
 			clearText(Sample.birthday);
         	GemTestReporter.addTestStep("Clear text for birthday field","Input for birthday field cleared successfully", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("birthday field cleared successfully");}
+        	Settings.LOGGER.info("birthday field cleared successfully");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Clear text for birthday field","birthdayUnable to clear text for birthday field", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to clear text for birthday field");};
+        	Settings.LOGGER.info("Unable to clear text for birthday field");};
     }
 
     public String getAttributeFromBirthday(String attributeValue) {
@@ -924,10 +1014,16 @@ public class SampleImplementation extends DriverAction {
         String text = new String();
         try{
 			text = getAttributeName(Sample.birthday, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "birthday field","Successfully fetched " + attributeValue + " value for birthday", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for birthday");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "birthday field","Unable to get " + attributeValue + " value for birthday as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for birthday as attribute does not exist");};
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "birthday field","Successfully fetched " + attributeValue + " value for birthday", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for birthday");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "birthday field","Unable to get " + attributeValue + " value for birthday as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for birthday as attribute does not exist");
+			};
         }
 		catch(Exception e){
 			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "birthday field","Unable to get " + attributeValue + " value for birthday as attribute does not exist", STATUS.FAIL, takeSnapShot());
@@ -1017,8 +1113,8 @@ public class SampleImplementation extends DriverAction {
         try{
 			scrollIntoView(Sample.birthday);
         	GemTestReporter.addTestStep("Scroll to birthday element","Successful able to scroll to birthday element", STATUS.PASS, takeSnapShot());
-        	Settings.LOGGER.info("Successful able to scroll to birthday element");			
-}			catch(Exception e){;
+        	Settings.LOGGER.info("Successful able to scroll to birthday element");
+			}			catch(Exception e){;
         			GemTestReporter.addTestStep("Scroll to birthday element","Unable to scroll to birthday element", STATUS.FAIL, takeSnapShot());
         };
     }
@@ -1032,6 +1128,22 @@ public class SampleImplementation extends DriverAction {
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify birthday field is visible","birthday field is not visible", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("birthday field is not visible");};
+    }
+
+    public void verifyBirthdayContainsText(String typeText) {
+        //The below function is for web element @FindBy(Sample.birthday);
+        try{
+			if(getElementText(Sample.birthday).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify birthday field contains " + typeText,"Text of birthday field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of birthday field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify birthday field contains " + typeText,"Text" + typeText + "is not present in birthday field. Expected: "+typeText+" Actual: "+ getElementText(Sample.birthday), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of birthday field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.birthday));}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside birthday is equal to " + typeText,"Text inside birthday is not equal", STATUS.FAIL, takeSnapShot());
+        };
     }
 
     public void verifyBirthdayText(String typeText) {
@@ -1064,10 +1176,10 @@ public class SampleImplementation extends DriverAction {
         try{
 			getElement(Sample.css).isEnabled();
         	GemTestReporter.addTestStep("Verify css field is enabled","css field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("css field is enabled");}
+        	Settings.LOGGER.info("css field is enabled");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify css field is enabled","C field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("css field is not enabled");};
+        	Settings.LOGGER.info("css field is not enabled");};
     }
 
     public void verifyCssIsSelected() {
@@ -1088,10 +1200,16 @@ public class SampleImplementation extends DriverAction {
         String text = new String();
         try{
 			text = getAttributeName(Sample.css, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "css field","Successfully fetched " + attributeValue + " value for css", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for css");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "css field","Unable to get " + attributeValue + " value for css as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for css as attribute does not exist");};
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "css field","Successfully fetched " + attributeValue + " value for css", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for css");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "css field","Unable to get " + attributeValue + " value for css as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for css as attribute does not exist");
+			};
         }
 		catch(Exception e){
 			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "css field","Unable to get " + attributeValue + " value for css as attribute does not exist", STATUS.FAIL, takeSnapShot());
@@ -1146,8 +1264,8 @@ public class SampleImplementation extends DriverAction {
         try{
 			scrollIntoView(Sample.css);
         	GemTestReporter.addTestStep("Scroll to css element","Successful able to scroll to css element", STATUS.PASS, takeSnapShot());
-        	Settings.LOGGER.info("Successful able to scroll to css element");			
-}			catch(Exception e){;
+        	Settings.LOGGER.info("Successful able to scroll to css element");
+			}			catch(Exception e){;
         			GemTestReporter.addTestStep("Scroll to css element","Unable to scroll to css element", STATUS.FAIL, takeSnapShot());
         };
     }
@@ -1161,6 +1279,22 @@ public class SampleImplementation extends DriverAction {
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify css field is visible","css field is not visible", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("css field is not visible");};
+    }
+
+    public void verifyCssContainsText(String typeText) {
+        //The below function is for web element @FindBy(Sample.css);
+        try{
+			if(getElementText(Sample.css).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify css field contains " + typeText,"Text of css field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of css field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify css field contains " + typeText,"Text" + typeText + "is not present in css field. Expected: "+typeText+" Actual: "+ getElementText(Sample.css), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of css field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.css));}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside css is equal to " + typeText,"Text inside css is not equal", STATUS.FAIL, takeSnapShot());
+        };
     }
 
     public void verifyCssText(String typeText) {
@@ -1193,10 +1327,10 @@ public class SampleImplementation extends DriverAction {
         try{
 			getElement(Sample.javascript).isEnabled();
         	GemTestReporter.addTestStep("Verify javascript field is enabled","javascript field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("javascript field is enabled");}
+        	Settings.LOGGER.info("javascript field is enabled");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify javascript field is enabled","J field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("javascript field is not enabled");};
+        	Settings.LOGGER.info("javascript field is not enabled");};
     }
 
     public void verifyJavascriptIsSelected() {
@@ -1217,10 +1351,16 @@ public class SampleImplementation extends DriverAction {
         String text = new String();
         try{
 			text = getAttributeName(Sample.javascript, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "javascript field","Successfully fetched " + attributeValue + " value for javascript", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for javascript");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "javascript field","Unable to get " + attributeValue + " value for javascript as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for javascript as attribute does not exist");};
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "javascript field","Successfully fetched " + attributeValue + " value for javascript", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for javascript");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "javascript field","Unable to get " + attributeValue + " value for javascript as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for javascript as attribute does not exist");
+			};
         }
 		catch(Exception e){
 			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "javascript field","Unable to get " + attributeValue + " value for javascript as attribute does not exist", STATUS.FAIL, takeSnapShot());
@@ -1275,8 +1415,8 @@ public class SampleImplementation extends DriverAction {
         try{
 			scrollIntoView(Sample.javascript);
         	GemTestReporter.addTestStep("Scroll to javascript element","Successful able to scroll to javascript element", STATUS.PASS, takeSnapShot());
-        	Settings.LOGGER.info("Successful able to scroll to javascript element");			
-}			catch(Exception e){;
+        	Settings.LOGGER.info("Successful able to scroll to javascript element");
+			}			catch(Exception e){;
         			GemTestReporter.addTestStep("Scroll to javascript element","Unable to scroll to javascript element", STATUS.FAIL, takeSnapShot());
         };
     }
@@ -1290,6 +1430,22 @@ public class SampleImplementation extends DriverAction {
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify javascript field is visible","javascript field is not visible", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("javascript field is not visible");};
+    }
+
+    public void verifyJavascriptContainsText(String typeText) {
+        //The below function is for web element @FindBy(Sample.javascript);
+        try{
+			if(getElementText(Sample.javascript).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify javascript field contains " + typeText,"Text of javascript field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of javascript field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify javascript field contains " + typeText,"Text" + typeText + "is not present in javascript field. Expected: "+typeText+" Actual: "+ getElementText(Sample.javascript), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of javascript field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.javascript));}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside javascript is equal to " + typeText,"Text inside javascript is not equal", STATUS.FAIL, takeSnapShot());
+        };
     }
 
     public void verifyJavascriptText(String typeText) {
@@ -1344,10 +1500,16 @@ public class SampleImplementation extends DriverAction {
         String text = new String();
         try{
 			text = getAttributeName(Sample.Bike, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Bike field","Successfully fetched " + attributeValue + " value for Bike", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for Bike");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Bike field","Unable to get " + attributeValue + " value for Bike as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for Bike as attribute does not exist");};
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Bike field","Successfully fetched " + attributeValue + " value for Bike", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for Bike");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Bike field","Unable to get " + attributeValue + " value for Bike as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for Bike as attribute does not exist");
+			};
         }
 		catch(Exception e){
 			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Bike field","Unable to get " + attributeValue + " value for Bike as attribute does not exist", STATUS.FAIL, takeSnapShot());
@@ -1422,8 +1584,8 @@ public class SampleImplementation extends DriverAction {
         try{
 			scrollIntoView(Sample.Bike);
         	GemTestReporter.addTestStep("Scroll to Bike element","Successful able to scroll to Bike element", STATUS.PASS, takeSnapShot());
-        	Settings.LOGGER.info("Successful able to scroll to Bike element");			
-}			catch(Exception e){;
+        	Settings.LOGGER.info("Successful able to scroll to Bike element");
+			}			catch(Exception e){;
         			GemTestReporter.addTestStep("Scroll to Bike element","Unable to scroll to Bike element", STATUS.FAIL, takeSnapShot());
         };
     }
@@ -1437,6 +1599,22 @@ public class SampleImplementation extends DriverAction {
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify Bike field is visible","Bike field is not visible", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("Bike field is not visible");};
+    }
+
+    public void verifyBikeContainsText(String typeText) {
+        //The below function is for web element @FindBy(Sample.Bike);
+        try{
+			if(getElementText(Sample.Bike).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify Bike field contains " + typeText,"Text of Bike field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of Bike field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify Bike field contains " + typeText,"Text" + typeText + "is not present in Bike field. Expected: "+typeText+" Actual: "+ getElementText(Sample.Bike), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of Bike field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.Bike));}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside Bike is equal to " + typeText,"Text inside Bike is not equal", STATUS.FAIL, takeSnapShot());
+        };
     }
 
     public void verifyBikeText(String typeText) {
@@ -1491,10 +1669,16 @@ public class SampleImplementation extends DriverAction {
         String text = new String();
         try{
 			text = getAttributeName(Sample.Boat, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Boat field","Successfully fetched " + attributeValue + " value for Boat", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for Boat");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Boat field","Unable to get " + attributeValue + " value for Boat as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for Boat as attribute does not exist");};
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Boat field","Successfully fetched " + attributeValue + " value for Boat", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for Boat");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Boat field","Unable to get " + attributeValue + " value for Boat as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for Boat as attribute does not exist");
+			};
         }
 		catch(Exception e){
 			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Boat field","Unable to get " + attributeValue + " value for Boat as attribute does not exist", STATUS.FAIL, takeSnapShot());
@@ -1569,8 +1753,8 @@ public class SampleImplementation extends DriverAction {
         try{
 			scrollIntoView(Sample.Boat);
         	GemTestReporter.addTestStep("Scroll to Boat element","Successful able to scroll to Boat element", STATUS.PASS, takeSnapShot());
-        	Settings.LOGGER.info("Successful able to scroll to Boat element");			
-}			catch(Exception e){;
+        	Settings.LOGGER.info("Successful able to scroll to Boat element");
+			}			catch(Exception e){;
         			GemTestReporter.addTestStep("Scroll to Boat element","Unable to scroll to Boat element", STATUS.FAIL, takeSnapShot());
         };
     }
@@ -1584,6 +1768,22 @@ public class SampleImplementation extends DriverAction {
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify Boat field is visible","Boat field is not visible", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("Boat field is not visible");};
+    }
+
+    public void verifyBoatContainsText(String typeText) {
+        //The below function is for web element @FindBy(Sample.Boat);
+        try{
+			if(getElementText(Sample.Boat).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify Boat field contains " + typeText,"Text of Boat field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of Boat field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify Boat field contains " + typeText,"Text" + typeText + "is not present in Boat field. Expected: "+typeText+" Actual: "+ getElementText(Sample.Boat), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of Boat field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.Boat));}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside Boat is equal to " + typeText,"Text inside Boat is not equal", STATUS.FAIL, takeSnapShot());
+        };
     }
 
     public void verifyBoatText(String typeText) {
@@ -1612,15 +1812,26 @@ public class SampleImplementation extends DriverAction {
         };
     }
 
+    public void deselectCar(String typeText) {
+        //The below function is for web element @FindBy(Sample.car);
+        try{
+			dropDown(Sample.car,typeText);
+        	Settings.LOGGER.info("User is able to select " + typeText +" visible text in the dropdown");
+        }
+		catch(Exception e){
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+    }
+
     public void verifyCarIsEnabled() {
         //The below function is for web element @FindBy(Sample.car);
         try{
 			getElement(Sample.car).isEnabled();
         	GemTestReporter.addTestStep("Verify car field is enabled","car field is enabled", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("car field is enabled");}
+        	Settings.LOGGER.info("car field is enabled");}
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify car field is enabled","C field is not enabled", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("car field is not enabled");};
+        	Settings.LOGGER.info("car field is not enabled");};
     }
 
     public void elementIsClickableCar() {
@@ -1652,10 +1863,16 @@ public class SampleImplementation extends DriverAction {
         String text = new String();
         try{
 			text = getAttributeName(Sample.car, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "car field","Successfully fetched " + attributeValue + " value for car", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for car");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "car field","Unable to get " + attributeValue + " value for car as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for car as attribute does not exist");};
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "car field","Successfully fetched " + attributeValue + " value for car", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for car");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "car field","Unable to get " + attributeValue + " value for car as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for car as attribute does not exist");
+			};
         }
 		catch(Exception e){
 			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "car field","Unable to get " + attributeValue + " value for car as attribute does not exist", STATUS.FAIL, takeSnapShot());
@@ -1710,8 +1927,8 @@ public class SampleImplementation extends DriverAction {
         try{
 			scrollIntoView(Sample.car);
         	GemTestReporter.addTestStep("Scroll to car element","Successful able to scroll to car element", STATUS.PASS, takeSnapShot());
-        	Settings.LOGGER.info("Successful able to scroll to car element");			
-}			catch(Exception e){;
+        	Settings.LOGGER.info("Successful able to scroll to car element");
+			}			catch(Exception e){;
         			GemTestReporter.addTestStep("Scroll to car element","Unable to scroll to car element", STATUS.FAIL, takeSnapShot());
         };
     }
@@ -1725,6 +1942,22 @@ public class SampleImplementation extends DriverAction {
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify car field is visible","car field is not visible", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("car field is not visible");};
+    }
+
+    public void verifyCarContainsText(String typeText) {
+        //The below function is for web element @FindBy(Sample.car);
+        try{
+			if(getElementText(Sample.car).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify car field contains " + typeText,"Text of car field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of car field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify car field contains " + typeText,"Text" + typeText + "is not present in car field. Expected: "+typeText+" Actual: "+ getElementText(Sample.car), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of car field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.car));}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside car is equal to " + typeText,"Text inside car is not equal", STATUS.FAIL, takeSnapShot());
+        };
     }
 
     public void verifyCarText(String typeText) {
@@ -1769,10 +2002,16 @@ public class SampleImplementation extends DriverAction {
         String text = new String();
         try{
 			text = getAttributeName(Sample.Submit, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Submit field","Successfully fetched " + attributeValue + " value for Submit", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for Submit");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Submit field","Unable to get " + attributeValue + " value for Submit as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for Submit as attribute does not exist");};
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Submit field","Successfully fetched " + attributeValue + " value for Submit", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for Submit");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Submit field","Unable to get " + attributeValue + " value for Submit as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for Submit as attribute does not exist");
+			};
         }
 		catch(Exception e){
 			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "Submit field","Unable to get " + attributeValue + " value for Submit as attribute does not exist", STATUS.FAIL, takeSnapShot());
@@ -1827,8 +2066,8 @@ public class SampleImplementation extends DriverAction {
         try{
 			scrollIntoView(Sample.Submit);
         	GemTestReporter.addTestStep("Scroll to Submit element","Successful able to scroll to Submit element", STATUS.PASS, takeSnapShot());
-        	Settings.LOGGER.info("Successful able to scroll to Submit element");			
-}			catch(Exception e){;
+        	Settings.LOGGER.info("Successful able to scroll to Submit element");
+			}			catch(Exception e){;
         			GemTestReporter.addTestStep("Scroll to Submit element","Unable to scroll to Submit element", STATUS.FAIL, takeSnapShot());
         };
     }
@@ -1842,6 +2081,22 @@ public class SampleImplementation extends DriverAction {
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify Submit field is visible","Submit field is not visible", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("Submit field is not visible");};
+    }
+
+    public void verifySubmitContainsText(String typeText) {
+        //The below function is for web element @FindBy(Sample.Submit);
+        try{
+			if(getElementText(Sample.Submit).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify Submit field contains " + typeText,"Text of Submit field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of Submit field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify Submit field contains " + typeText,"Text" + typeText + "is not present in Submit field. Expected: "+typeText+" Actual: "+ getElementText(Sample.Submit), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of Submit field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.Submit));}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside Submit is equal to " + typeText,"Text inside Submit is not equal", STATUS.FAIL, takeSnapShot());
+        };
     }
 
     public void verifySubmitText(String typeText) {
@@ -1897,10 +2152,16 @@ public class SampleImplementation extends DriverAction {
         String text = new String();
         try{
 			text = getAttributeName(Sample.html, attributeValue);
-        	if(!text.equals("")){GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "html field","Successfully fetched " + attributeValue + " value for html", STATUS.PASS, takeSnapShot());
-        			Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for html");}
-			 else {GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "html field","Unable to get " + attributeValue + " value for html as attribute does not exist", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to get " + attributeValue + " value for html as attribute does not exist");};
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "html field","Successfully fetched " + attributeValue + " value for html", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for html");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "html field","Unable to get " + attributeValue + " value for html as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for html as attribute does not exist");
+			};
         }
 		catch(Exception e){
 			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "html field","Unable to get " + attributeValue + " value for html as attribute does not exist", STATUS.FAIL, takeSnapShot());
@@ -1955,8 +2216,8 @@ public class SampleImplementation extends DriverAction {
         try{
 			scrollIntoView(Sample.html);
         	GemTestReporter.addTestStep("Scroll to html element","Successful able to scroll to html element", STATUS.PASS, takeSnapShot());
-        	Settings.LOGGER.info("Successful able to scroll to html element");			
-}			catch(Exception e){;
+        	Settings.LOGGER.info("Successful able to scroll to html element");
+			}			catch(Exception e){;
         			GemTestReporter.addTestStep("Scroll to html element","Unable to scroll to html element", STATUS.FAIL, takeSnapShot());
         };
     }
@@ -1970,6 +2231,22 @@ public class SampleImplementation extends DriverAction {
 		catch(Exception e){
 			GemTestReporter.addTestStep("Verify html field is visible","html field is not visible", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("html field is not visible");};
+    }
+
+    public void verifyHtmlContainsText(String typeText) {
+        //The below function is for web element @FindBy(Sample.html);
+        try{
+			if(getElementText(Sample.html).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify html field contains " + typeText,"Text of html field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of html field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify html field contains " + typeText,"Text" + typeText + "is not present in html field. Expected: "+typeText+" Actual: "+ getElementText(Sample.html), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of html field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.html));}	
+		}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside html is equal to " + typeText,"Text inside html is not equal", STATUS.FAIL, takeSnapShot());
+        };
     }
 
     public void verifyHtmlText(String typeText) {
