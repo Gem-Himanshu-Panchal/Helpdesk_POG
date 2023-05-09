@@ -105,50 +105,6 @@ public class UtilFunctions extends PageObject {
         }
     }
 
-    public void scrollToElement(By locator) {
-        try {
-            ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", $(locator));
-        } catch (Exception e) {
-            Assert.fail("Could not scroll to element: " + $(locator));
-//            LOG.info("Could not scroll to element: " + $(locator));
-        }
-    }
-
-    public void scrollToElement(WebElementFacade element) {
-        try {
-            ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
-        } catch (Exception e) {
-            Assert.fail("Could not scroll to element: " + element);
-//            LOG.info("Could not scroll to element: " + element);
-        }
-    }
-
-    public void dragAndDrop(WebElementFacade fromElement, WebElementFacade toElement) {
-        try {
-            new SerenityActions(getDriver()).dragAndDrop(fromElement, toElement).build().perform();
-        } catch (Exception e) {
-            Assert.fail("Could not drag element: " + fromElement + " to: " + toElement);
-//            LOG.info("Could not drag element: " + fromElement + " to: " + toElement);
-        }
-    }
-
-    public void dragAndDrop(By fromElement, By toElement) {
-        try {
-            new SerenityActions(getDriver()).dragAndDrop($(fromElement), $(toElement)).build().perform();
-        } catch (Exception e) {
-            Assert.fail("Could not drag element: " + fromElement + " to: " + toElement);
-//            LOGGER.info("Could not drag element: " + fromElement + " to: " + toElement);
-        }
-    }
-
-    public void verifyTitle(String expectedTitle) {
-        String title = getDriver().getTitle();
-        if (!title.equals(expectedTitle)) {
-            Assert.fail("Title of page does not match. Expected Title: " + expectedTitle + " Actual Title: " + title);
-//            LOG.info("Title of page does not match. Expected Title: " + expectedTitle + " Actual Title: " + title);
-        }
-    }
-
     public void noOfTabs(String expectedTitle) {
         ArrayList<String> tabs = new ArrayList<String>(getDriver().getWindowHandles());
 //        LOG.info("No of tabs: " + tabs.size());
@@ -157,21 +113,6 @@ public class UtilFunctions extends PageObject {
     public void changeFocusOfElement(WebElementFacade elementFacade) {
         JavascriptExecutor executor = (JavascriptExecutor) getDriver();
         executor.executeScript("arguments[0].focus();", elementFacade);
-    }
-
-
-    public void refreshPage() {
-        getDriver().navigate().refresh();
-//        LOG.info("Refresh Page");
-    }
-
-    public void sendInputToAlert(String inputText) {
-        try {
-            getDriver().switchTo().alert().sendKeys(inputText);
-        } catch (Exception e) {
-            Assert.fail("Could not enter text for alert");
-//            LOG.info("Could not enter text for alert");
-        }
     }
 
     public static void getWindowFocus(String windowHandle) {

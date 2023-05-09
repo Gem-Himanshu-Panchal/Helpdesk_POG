@@ -425,7 +425,7 @@ public class UtilsStepDefinitionCodeGenerator {
         String annotationType = "";
         List<Parameter> parameters = new LinkedList<>();
         functionName = Settings.USER_CLICK_FUNCTION + meaningFulName + Settings.USER_NAVIGATE_FUNCTION;
-        annotationValue = "\"" + pageName.replace("<page>", className) + Settings.USER_CLICK_ANNOTATION + " " + meaningFulName + " "+type+" " + Settings.USER_NAVIGATE_ANNOTATION + "$" + "\""; //changed the step definition
+        annotationValue = "\"" + pageName.replace("<page>", className) + Settings.USER_CLICK_ANNOTATION + " " + meaningFulName + " " + type + " " + Settings.USER_NAVIGATE_ANNOTATION + "$" + "\""; //changed the step definition
         textToEnter = "clickOn" + meaningFulName + Settings.USER_NAVIGATE_FUNCTION;
         blockToEnter = textToEnter + "(" + ")";
         annotationType = "When";
@@ -563,7 +563,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "hoverOver" + meaningFulName;
         annotationValue = "\"" + pageName.replace("<page>", className) + "User hovers over " + meaningFulName + " and checks \\\"(.*)\\\" label$" + "\""; //changed the step definition
-        blockToEnter = functionName + "("+"label"+")";
+        blockToEnter = functionName + "(" + "label" + ")";
         method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "label"));
         // add a body to the method
@@ -605,7 +605,7 @@ public class UtilsStepDefinitionCodeGenerator {
         blockToEnter = textToEnter + "(" + "locator" + ")";
 //        blockToEnter = functionName + "(" + "" + ")";
         annotationType = "Then";
-        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("By", 0), "locator"));
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "locator"));
 
         Settings.LOGGER.info("Step created: " + annotationValue + "and function created: " + functionName);
 
@@ -634,7 +634,137 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
-        public static void setLinkStepDefinitionElementPresence(CompilationUnit c, Field field, String className) {
+    public static void setLinkStepDefinitionDragAndDrop(CompilationUnit c) {
+//        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+        List<Parameter> parameters = new LinkedList<>();
+
+        functionName = Settings.USER_DRAG_DROP;
+        annotationValue = "\"^User drags from \\\"(.*?)\\\" and drops to " + "\\\"(.*?)\\\"" + " position$" + "\""; //changed the step definition
+        textToEnter = "dragAndDrop";
+        blockToEnter = textToEnter + "(" + "from, to" + ")";
+//        blockToEnter = functionName + "(" + "" + ")";
+        annotationType = "Then";
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "from"));
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "to"));
+
+        Settings.LOGGER.info("Step created: " + annotationValue + "and function created: " + functionName);
+
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+//        method.setParameters(parameters);
+        method.setParameters(parameters);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+
+        method.setAnnotations(list_espr);
+
+        ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+
+    }
+    public static void setLinkStepDefinitionFileUpload(CompilationUnit c) {
+//        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+        List<Parameter> parameters = new LinkedList<>();
+
+        functionName = Settings.USER_UPLOAD_FILE;
+        annotationValue = "\"^User uploads file from  \\\"(.*?)\\\" path to \\\"(.*?)\\\" element$" + "\""; //changed the step definition
+        textToEnter = "fileUpload";
+        blockToEnter = textToEnter + "(" + "filePath, locator" + ")";
+//        blockToEnter = functionName + "(" + "" + ")";
+        annotationType = "Then";
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "filePath"));
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "locator"));
+
+        Settings.LOGGER.info("Step created: " + annotationValue + "and function created: " + functionName);
+
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+//        method.setParameters(parameters);
+        method.setParameters(parameters);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+
+        method.setAnnotations(list_espr);
+
+        ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+
+    }
+
+    public static void setLinkStepDefinitionRightClick(CompilationUnit c, Field field, String className) {
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+        List<Parameter> parameters = new LinkedList<>();
+        functionName = Settings.USER_RIGHT_CLICK_FUNCTION + meaningFulName;
+        annotationValue = "\"" + pageName.replace("<page>", className) + Settings.USER_RIGHT_CLICK_ANNOTATION + " " + meaningFulName + "$" + "\"";
+        //changed the step definition
+        blockToEnter = functionName + "()";
+        annotationType = "When";
+        Settings.LOGGER.info("Step created: " + annotationValue + "and function created: " + functionName);
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "typeText"));
+        method.setParameters(parameters); // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+        method.setAnnotations(list_espr);
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        String firstLetter = Settings.LOCATOR_FILE_NAME.substring(0, 1).toLowerCase();
+        String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
+        ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+
+    public static void setLinkStepDefinitionElementPresence(CompilationUnit c, Field field, String className) {
         String functionName = getMeaningFullName(field.getName(), false);
         meaningFulName = getMeaningFullName(field.getName(), true);
         Settings.LOGGER.info("Name of field: " + meaningFulName);
@@ -644,10 +774,47 @@ public class UtilsStepDefinitionCodeGenerator {
         annotationType = "Then";
         MethodDeclaration method = null;
         List<Parameter> parameters = new LinkedList<>();
-        functionName = "verify" + meaningFulName+"Exists";
+        functionName = "verify" + meaningFulName + "Exists";
         annotationValue = "\"" + pageName.replace("<page>", className) + "User verifies " + meaningFulName + " is present on screen$" + "\""; //changed the step definition
-        blockToEnter = functionName + "("+")";
+        blockToEnter = functionName + "(" + ")";
         method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+        method.setAnnotations(list_espr);
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        String firstLetter = Settings.LOCATOR_FILE_NAME.substring(0, 1).toLowerCase();
+        String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
+        ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+    public static void setLinkStepDefinitionAttributeContainsText(CompilationUnit c, Field field, String className) {
+        String functionName = getMeaningFullName(field.getName(), false);
+        meaningFulName = getMeaningFullName(field.getName(), true);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        String annotationValue = "";
+        String blockToEnter = "";
+        String annotationType = "";
+        annotationType = "Then";
+        MethodDeclaration method = null;
+        List<Parameter> parameters = new LinkedList<>();
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "attribute"));
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "value"));
+        functionName = "verifyAttributeContainsValueFor" + meaningFulName;
+        annotationValue = "\"" + pageName.replace("<page>", className) + "User verifies attribute \\\"(.*?)\\\" contains \\\"(.*?)\\\" value for "+ meaningFulName + "$" + "\""; //changed the step definition
+        blockToEnter = functionName + "(attribute, value" + ")";
+        method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+        method.setParameters(parameters);
         BlockStmt block = new BlockStmt();
         method.setBody(block);
         NormalAnnotationExpr na = new NormalAnnotationExpr();
@@ -679,9 +846,9 @@ public class UtilsStepDefinitionCodeGenerator {
         annotationType = "Then";
         MethodDeclaration method = null;
         List<Parameter> parameters = new LinkedList<>();
-        functionName = "scrollTo" + meaningFulName+"Element";
+        functionName = "scrollTo" + meaningFulName + "Element";
         annotationValue = "\"" + pageName.replace("<page>", className) + "User scrolls to " + meaningFulName + " element$" + "\""; //changed the step definition
-        blockToEnter = functionName + "("+")";
+        blockToEnter = functionName + "(" + ")";
         method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         BlockStmt block = new BlockStmt();
         method.setBody(block);
@@ -786,9 +953,9 @@ public class UtilsStepDefinitionCodeGenerator {
         String annotationType = "";
         List<Parameter> parameters = new LinkedList<>();
         functionName = Settings.USER_VERIFIES_VALUE_ATTRIBUTE + meaningFulName;
-        annotationValue = "\"" + pageName.replace("<page>", className) + "User verifies " + "\\\"(.*)\\\"" + " attribute for " + meaningFulName + " as "  +"\\\"(.*)\\\""+ "$"+"\""; //changed the step definition
+        annotationValue = "\"" + pageName.replace("<page>", className) + "User verifies " + "\\\"(.*)\\\"" + " attribute for " + meaningFulName + " as " + "\\\"(.*)\\\"" + "$" + "\""; //changed the step definition
         textToEnter = "verifyAttributeValueFor" + meaningFulName;
-        blockToEnter = textToEnter + "(" + "attributeName" + ","+"attributeValue"+")";
+        blockToEnter = textToEnter + "(" + "attributeName" + "," + "attributeValue" + ")";
 //        blockToEnter = functionName + "(" + "" + ")";
         annotationType = "Then";
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "attributeName"));
@@ -1002,7 +1169,8 @@ public class UtilsStepDefinitionCodeGenerator {
 
     }
 
-    public static void setLinkStepDefinitionVerifyClear(CompilationUnit c, Field field, String className, String type) {
+    public static void setLinkStepDefinitionVerifyClear(CompilationUnit c, Field field, String className, String
+            type) {
         if (type.equals("a")) {
             type = "link";
         }
@@ -1225,9 +1393,94 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(method.toString());
         Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
+    public static void setLinkStepDefinitionMethodCountChildElements(CompilationUnit c, Field field, String className) {
+
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+        List<Parameter> parameters = new LinkedList<>();
+
+        functionName = Settings.USER_COUNT_CHILD_ELEMENTS + meaningFulName;
+        annotationValue = "\"" + pageName.replace("<page>", className) + Settings.USER_VERIFY_CHILD_ELEMENTS_COUNT_ANNOTATION + " " + meaningFulName + " " + "element" + "$" + "\""; //changed the step definition
+        textToEnter = Settings.USER_COUNT_CHILD_ELEMENTS + meaningFulName;
+        blockToEnter = textToEnter + "(count" + ")";
+        annotationType = "Then";
+        Settings.LOGGER.info("Step created: " + annotationValue + "and function created: " + functionName);
+
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+        method.setParameters(parameters);
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("int", 0), "count"));
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+
+        method.setAnnotations(list_espr);
+        String firstLetter = Settings.LOCATOR_FILE_NAME.substring(0, 1).toLowerCase();
+        String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
+        ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+    public static void setLinkStepDefinitionMethodCountElements(CompilationUnit c, Field field, String className) {
+
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+        List<Parameter> parameters = new LinkedList<>();
+
+        functionName = Settings.USER_COUNT_ELEMENTS + meaningFulName;
+        annotationValue = "\"" + pageName.replace("<page>", className) + Settings.USER_VERIFY_ELEMENTS_COUNT_ANNOTATION + " " + meaningFulName + " " + "element" + "$" + "\""; //changed the step definition
+        textToEnter = Settings.USER_COUNT_ELEMENTS + meaningFulName;
+        blockToEnter = textToEnter + "(count" + ")";
+        annotationType = "Then";
+        Settings.LOGGER.info("Step created: " + annotationValue + "and function created: " + functionName);
+
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+        method.setParameters(parameters);
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("int", 0), "count"));
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+
+        method.setAnnotations(list_espr);
+        String firstLetter = Settings.LOCATOR_FILE_NAME.substring(0, 1).toLowerCase();
+        String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
+        ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
 
     public static void setLinkStepDefinitionMethodContains(CompilationUnit c, Field field, String className) {
-
         meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
@@ -1270,7 +1523,8 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
-    public static void setLinkStepDefinitionMethodThenEnabled(CompilationUnit c, Field field, String className, String type) {
+    public static void setLinkStepDefinitionMethodThenEnabled(CompilationUnit c, Field field, String
+            className, String type) {
         if (type.equals("a")) {
             type = "link";
         }
@@ -1315,7 +1569,8 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
-    public static void setLinkStepDefinitionMethodDeselects(CompilationUnit c, Field field, String className, String type) {
+    public static void setLinkStepDefinitionMethodDeselects(CompilationUnit c, Field field, String
+            className, String type) {
         meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
@@ -1425,7 +1680,8 @@ public class UtilsStepDefinitionCodeGenerator {
      *
      * @throws IOException
      */
-    public static void savePageObjectsOnFileSystem(String directoryName, String className, CompilationUnit c, boolean stepGeneration) throws IOException {
+    public static void savePageObjectsOnFileSystem(String directoryName, String className, CompilationUnit c,
+                                                   boolean stepGeneration) throws IOException {
 
         String data = "";
         String fileNameToCreate = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test"
@@ -1627,6 +1883,45 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(method.toString());
         Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
+
+    public static void setLinkStepDefinitionJSClick(CompilationUnit c) {
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+
+        List<Parameter> parameters = new LinkedList<>();
+        functionName = "clickUsingJS";
+        annotationType = "When";
+        annotationValue = "\"" + Settings.USER_CLICKS_JS + "$" + "\"";
+        textToEnter = "clickUsingJS";
+        blockToEnter = textToEnter + "(locatorName" + ")";
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "locatorName"));
+        method.setParameters(parameters);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+
+        method.setAnnotations(list_espr);
+
+        ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+
     public static void setLinkStepDefinitionWait(CompilationUnit c) {
         String functionName = "";
         String annotationValue = "";
@@ -2019,7 +2314,8 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
-    public static void setLinkStepDefinitionMethodForSelect(CompilationUnit c, Field field, String type, String className) {
+    public static void setLinkStepDefinitionMethodForSelect(CompilationUnit c, Field field, String type, String
+            className) {
         if (type.equals("a")) {
             type = "link";
         }
@@ -2261,7 +2557,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "maximizeBrowserToDefault";
         annotationType = "When";
-        annotationValue = "\"" +Settings.MAXIMIZE_TO_DEFAULT + "\"";
+        annotationValue = "\"" + Settings.MAXIMIZE_TO_DEFAULT + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2297,7 +2593,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "minimizeGivenBrowser";
         annotationType = "When";
-        annotationValue = "\"" +Settings.MINIMIZE_TO_DEFAULT + "\"";
+        annotationValue = "\"" + Settings.MINIMIZE_TO_DEFAULT + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2333,7 +2629,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "browserSize";
         annotationType = "When";
-        annotationValue = "\"" +Settings.BROWSER_SIZE + "\"";
+        annotationValue = "\"" + Settings.BROWSER_SIZE + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2369,8 +2665,8 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "setSizeOfBrowser";
         annotationType = "When";
-        annotationValue = "\"" +Settings.SET_BROWSER_SIZE + "\"";
-        blockToEnter = functionName + "(" + "width"+","+"height"+ ")";
+        annotationValue = "\"" + Settings.SET_BROWSER_SIZE + "\"";
+        blockToEnter = functionName + "(" + "width" + "," + "height" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("Integer", 0), "width"));
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("Integer", 0), "height"));
@@ -2408,8 +2704,8 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "setPositionOfBrowser";
         annotationType = "When";
-        annotationValue = "\"" +Settings.SET_BROWSER_POSITION + "\"";
-        blockToEnter = functionName + "(" + "x"+","+"y"+ ")";
+        annotationValue = "\"" + Settings.SET_BROWSER_POSITION + "\"";
+        blockToEnter = functionName + "(" + "x" + "," + "y" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("Integer", 0), "x"));
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("Integer", 0), "y"));
@@ -2446,7 +2742,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "browserPosition";
         annotationType = "When";
-        annotationValue = "\"" +Settings.BROWSER_POSITION + "\"";
+        annotationValue = "\"" + Settings.BROWSER_POSITION + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2482,7 +2778,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "windowHandle";
         annotationType = "When";
-        annotationValue = "\"" +Settings.GET_WINDOW_HANDLE + "\"";
+        annotationValue = "\"" + Settings.GET_WINDOW_HANDLE + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2518,7 +2814,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "windowHandles";
         annotationType = "When";
-        annotationValue = "\"" +Settings.GET_WINDOW_HANDLES + "\"";
+        annotationValue = "\"" + Settings.GET_WINDOW_HANDLES + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2554,7 +2850,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "pageSource";
         annotationType = "When";
-        annotationValue = "\"" +Settings.GET_PAGE_SOURCE + "\"";
+        annotationValue = "\"" + Settings.GET_PAGE_SOURCE + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2590,7 +2886,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "closeTab";
         annotationType = "When";
-        annotationValue = "\"" +Settings.CLOSE_CURRENT_TAB + "\"";
+        annotationValue = "\"" + Settings.CLOSE_CURRENT_TAB + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2615,6 +2911,7 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(method.toString());
         Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
+
     public static void setLinkStepDefinitionCloseTabAndSwitch(CompilationUnit c) {
         String functionName = "";
         String annotationValue = "";
@@ -2625,8 +2922,8 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "closeTabAndSwitch";
         annotationType = "When";
-        annotationValue = "\"" +Settings.CLOSE_TAB_AND_SWITCH + "\"";
-        blockToEnter = functionName + "(" +"windowName" +")";
+        annotationValue = "\"" + Settings.CLOSE_TAB_AND_SWITCH + "\"";
+        blockToEnter = functionName + "(" + "windowName" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "windowName"));
         method.setParameters(parameters);
@@ -2651,6 +2948,7 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(method.toString());
         Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
+
     public static void setLinkStepDefinitionSwitchToAlert(CompilationUnit c) {
         String functionName = "";
         String annotationValue = "";
@@ -2661,7 +2959,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "alertSwitch";
         annotationType = "When";
-        annotationValue = "\"" +Settings.SWITCH_ALERT + "\"";
+        annotationValue = "\"" + Settings.SWITCH_ALERT + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2686,6 +2984,7 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(method.toString());
         Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
+
     public static void setLinkStepDefinitionAcceptAlert(CompilationUnit c) {
         String functionName = "";
         String annotationValue = "";
@@ -2696,7 +2995,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "alertAccept";
         annotationType = "When";
-        annotationValue = "\"" +Settings.ACCEPT_ALERT + "\"";
+        annotationValue = "\"" + Settings.ACCEPT_ALERT + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2732,7 +3031,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "alertDismiss";
         annotationType = "When";
-        annotationValue = "\"" +Settings.DISMISS_ALERT + "\"";
+        annotationValue = "\"" + Settings.DISMISS_ALERT + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2768,8 +3067,8 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "inputForAlert";
         annotationType = "When";
-        annotationValue = "\"" +Settings.ALERT_INPUT + "\"";
-        blockToEnter = functionName + "(" +"input"+ ")";
+        annotationValue = "\"" + Settings.ALERT_INPUT + "\"";
+        blockToEnter = functionName + "(" + "input" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "input"));
         method.setParameters(parameters);
@@ -2805,7 +3104,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "scrollUp";
         annotationType = "When";
-        annotationValue = "\"" +Settings.SCROLL_UP + "\"";
+        annotationValue = "\"" + Settings.SCROLL_UP + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2841,7 +3140,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "scrollDown";
         annotationType = "When";
-        annotationValue = "\"" +Settings.SCROLL_DOWN + "\"";
+        annotationValue = "\"" + Settings.SCROLL_DOWN + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -2877,8 +3176,8 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "scrollPage";
         annotationType = "When";
-        annotationValue = "\"" +Settings.SCROLL_PAGE + "\"";
-        blockToEnter = functionName + "(" + "x"+","+"y"+ ")";
+        annotationValue = "\"" + Settings.SCROLL_PAGE + "\"";
+        blockToEnter = functionName + "(" + "x" + "," + "y" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("Integer", 0), "x"));
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("Integer", 0), "y"));
@@ -2915,9 +3214,9 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "elementScroll";
         annotationType = "When";
-        annotationValue = "\"" +Settings.SCROLL_ELEMENT + "\"";
+        annotationValue = "\"" + Settings.SCROLL_ELEMENT + "\"";
         blockToEnter = functionName + "(" + ")";
-        blockToEnter = functionName + "(" + "x"+","+"y"+ ")";
+        blockToEnter = functionName + "(" + "x" + "," + "y" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("Integer", 0), "x"));
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("Integer", 0), "y"));
@@ -2954,8 +3253,8 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "urlNavigation";
         annotationType = "When";
-        annotationValue = "\"" +Settings.NAVIGATE_URL + "\"";
-        blockToEnter = functionName + "(" +"url"+ ")";
+        annotationValue = "\"" + Settings.NAVIGATE_URL + "\"";
+        blockToEnter = functionName + "(" + "url" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "url"));
         method.setParameters(parameters);
@@ -2991,7 +3290,7 @@ public class UtilsStepDefinitionCodeGenerator {
         List<Parameter> parameters = new LinkedList<>();
         functionName = "refreshPage";
         annotationType = "When";
-        annotationValue = "\"" +Settings.REFRESH_PAGE + "\"";
+        annotationValue = "\"" + Settings.REFRESH_PAGE + "\"";
         blockToEnter = functionName + "(" + ")";
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
         method.setParameters(parameters);
@@ -3028,15 +3327,13 @@ public class UtilsStepDefinitionCodeGenerator {
         annotationType = "When";
         annotationValue = "\"" + Settings.TAKE_SNAPSHOT + "\"";
         MethodDeclaration method = null;
-        if(readProperties("Framework").contains("GEMJAR")) {
+        if (readProperties("Framework").contains("GEMJAR")) {
             blockToEnter = functionName + "(" + ")";
             method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
             method.setParameters(parameters);
             // add a body to the method
-        }
-        else
-        {
-            blockToEnter = functionName + "(" +"filePath"+ ")";
+        } else {
+            blockToEnter = functionName + "(" + "filePath" + ")";
             method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
             parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "filePath"));
             method.setParameters(parameters);
