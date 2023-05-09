@@ -186,8 +186,8 @@ public class UtilsStepDefinition {
     }
 
     @When("^User take snapshot")
-    public void takeScreenshot(String filePath) {
-        utils.takeScreenshot(filePath);
+    public void takeScreenshot() {
+        utils.takeScreenshot();
     }
 
     @When("^User switches to Active Element$")

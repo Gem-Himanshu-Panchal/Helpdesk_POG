@@ -119,6 +119,7 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsHoverOver(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "checkbox")) {
                 UtilsMethodCodeGenerator.setLinkMethodsSelect(c, field);// Radio and CheckBox and Normal Click Operation
@@ -150,6 +151,7 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsHoverOver(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "dropdown")) {
                 UtilsMethodCodeGenerator.setLinkMethodsDropDown(c, field);
@@ -184,6 +186,7 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsHoverOver(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
+                UtilsMethodCodeGenerator.setMethodClickable(c, field);
             }
 
             if (!StringUtils.equalsIgnoreCase(field.getName(), "driver")) {

@@ -541,6 +541,11 @@ public class SampleStepDefinition {
         sample.verifyCssContainsText(typeText);
     }
 
+    @Then("^For the Sample page, User is able to click Css element$")
+    public void verifyUserIsClickableCss() {
+        sample.elementIsClickableCss();
+    }
+
     @When("^For the Sample page, User selects Javascript radio button$")
     public void userSelectsJavascript() {
         sample.selectJavascript();
@@ -602,6 +607,11 @@ public class SampleStepDefinition {
     @Then("^For the Sample page, User verifies \"(.*)\" is present in Javascript element$")
     public void userVerifiesTextContainsInJavascript(String typeText) {
         sample.verifyJavascriptContainsText(typeText);
+    }
+
+    @Then("^For the Sample page, User is able to click Javascript element$")
+    public void verifyUserIsClickableJavascript() {
+        sample.elementIsClickableJavascript();
     }
 
     @When("^For the Sample page, User selects Bike checkbox$")
@@ -860,6 +870,11 @@ public class SampleStepDefinition {
         sample.scrollToSubmitElement();
     }
 
+    @When("^For the Sample page, User verifies Submit button is enabled$")
+    public void userIsEnabledSubmit() {
+        sample.verifySubmitIsEnabled();
+    }
+
     @When("^For the Sample page, User clicks on Html link$")
     public void userClicksOnHtml() {
         sample.clickOnHtml();
@@ -920,5 +935,10 @@ public class SampleStepDefinition {
     @Then("^For the Sample page, User verifies \"(.*)\" is present in Html element$")
     public void userVerifiesTextContainsInHtml(String typeText) {
         sample.verifyHtmlContainsText(typeText);
+    }
+
+    @When("^For the Sample page, User verifies Html link is enabled$")
+    public void userIsEnabledHtml() {
+        sample.verifyHtmlIsEnabled();
     }
 }
