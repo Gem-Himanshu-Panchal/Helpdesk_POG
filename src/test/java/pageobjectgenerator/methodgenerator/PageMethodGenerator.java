@@ -109,6 +109,8 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsAttributeValueVerification(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsHoverOver(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsVerifyCountChildElements(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsVerifyCountElements(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "button")) {
@@ -192,6 +194,7 @@ public class PageMethodGenerator {
             if (!StringUtils.equalsIgnoreCase(field.getName(), "driver")) {
                 UtilsMethodCodeGenerator.setLinkMethodForVisibility(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForAttributeContains(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
             }
         }

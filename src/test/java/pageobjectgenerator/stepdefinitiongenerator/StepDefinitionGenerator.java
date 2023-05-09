@@ -100,6 +100,7 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionHoverOver(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionElementPresence(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollToView(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeContainsText(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenEnabled(c, field, aClass.getSimpleName(), locatorType);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "checkbox")) {
@@ -115,6 +116,7 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollToView(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodContains(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenEnabled(c, field, aClass.getSimpleName(), locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeContainsText(c, field, aClass.getSimpleName());
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "input")) {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionClear(c, field, aClass.getSimpleName(), locatorType);
@@ -133,6 +135,7 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionElementPresence(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollToView(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodContains(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeContainsText(c, field, aClass.getSimpleName());
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "click")) {
                 UtilsStepDefinitionCodeGenerator.setClickStepDefinitionMethod(c, field, locatorType, aClass.getSimpleName());
@@ -145,6 +148,7 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName(), locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionElementPresence(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollToView(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeContainsText(c, field, aClass.getSimpleName());
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "image")) {
                 UtilsStepDefinitionCodeGenerator.setClickStepDefinitionMethod(c, field, locatorType, aClass.getSimpleName());
@@ -159,6 +163,7 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionHoverOver(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionElementPresence(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollToView(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeContainsText(c, field, aClass.getSimpleName());
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "a")) {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethod(c, field, locatorType, aClass.getSimpleName());// Radio and CheckBox and Normal Click Operation
@@ -172,6 +177,7 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionElementPresence(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollToView(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodContains(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeContainsText(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenEnabled(c, field, aClass.getSimpleName(), locatorType);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "radio button")) {
@@ -186,6 +192,7 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionElementPresence(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollToView(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodContains(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeContainsText(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenClickable(c, field, aClass.getSimpleName());
             }
 
@@ -203,9 +210,22 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionElementPresence(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollToView(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodContains(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeContainsText(c, field, aClass.getSimpleName());
+            }
+            if (StringUtils.equalsIgnoreCase(locatorType, "div")) {
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodCountChildElements(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodCountElements(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionElementPresence(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollToView(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodContains(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName(), locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName(), locatorType);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, true, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeContainsText(c, field, aClass.getSimpleName());
             }
 
-        }
+            }
         UtilsStepDefinitionCodeGenerator.savePageObjectsOnFileSystem(Settings.STEP_DEFINITION_PO_DIR,
                 aClass.getSimpleName() + "StepDefinition", c, true);
     }

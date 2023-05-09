@@ -52,6 +52,8 @@ public class Settings {
 	public static final String USER_GET_ATTRIBUTE_FUNCTION ="userGetsAttribute";
 	public static final String USER_VERIFIES_VALUE="userVerifyValueFor";
 	public static final String USER_CLICK_HOLD="userClicksAndHoldsElement";
+	public static final String USER_DRAG_DROP="userDragsAndDrops";
+	public static final String USER_UPLOAD_FILE="userUploadsFile";
 	public static final String USER_VERIFIES_CHECKED="verifyIsSelectedFor";
 	public static final String USER_VERIFIES_VALUE_ATTRIBUTE="userVerifyAttributeFor";
 	public static final String USER_CLEAR_ANNOTATION ="User clears";
@@ -69,7 +71,11 @@ public class Settings {
 	public static final String USER_CONTAINS_ANNOTATION ="User verifies \\\"(.*)\\\" is present in";
 	public static final String USER_CLICK_FUNCTION ="userClicksOn";
 	public static final String USER_CLICKABLE_FUNCTION ="verifyUserIsClickable";
+	public static final String USER_COUNT_CHILD_ELEMENTS ="verifyChildElementsCount";
+	public static final String USER_COUNT_ELEMENTS ="verifyCountOfElementsFor";
 	public static final String USER_CLICKABLE_ANNOTATION ="User is able to click";
+	public static final String USER_VERIFY_CHILD_ELEMENTS_COUNT_ANNOTATION ="User verifies (.*) is the count of child elements for";
+	public static final String USER_VERIFY_ELEMENTS_COUNT_ANNOTATION ="User verifies (.*) is the count of elements for";
 	public static final String USER_DOUBLE_CLICK_FUNCTION ="userDoubleCLickON";
 	public static final String USER_DOUBLE_CLICK_ANNOTATION ="User double click on";
 	public static final String USER_ENABLED_FUNCTION ="userIsEnabled";
@@ -84,13 +90,14 @@ public class Settings {
 	public static final String USER_HOME_PAGE_ANNOTATION ="^User is on homepage";
 	public static final String USER_SELECT_ANNOTATION="User selects \\\"(.*)\\\" from";
 	public static final String USER_DESELECT_ANNOTATION="User deselects \\\"(.*)\\\" from";
-	public static final String USER_NAVIGATE_BACK =" ^User navigates Back to Previous Page";
+	public static final String USER_NAVIGATE_BACK ="^User navigates Back to Previous Page";
 	public static final String SWITCH_ACTIVE_ELEMENT = "^User switches to Active Element";
 	public static final String SWITCH_PARENT_FRAME = "^User switches to Parent Frame";
 	public static final String SWITCH_DEFAULT_CONTENT = "^User switches to Default Content";
 	public static final String SWITCH_FRAME_STRING = "^User switches to \\\"(.*)\\\" frame";
 	public static final String SWITCH_FRAME_INT = "^User switches to (.*) frame";
 	public static final String SWITCH_WINDOW = "^User switches to \\\"(.*)\\\" window";
+	public static final String USER_CLICKS_JS = "^User clicks \\\"(.*?)\\\"";
 	public static final String USER_WAITS = "^User waits for (.*) seconds";
 	public static final String USER_CLOSES_BROWSER ="^User closes browser";
 
@@ -142,6 +149,14 @@ public class Settings {
 	public static String BEFORE_FUNCTION="setDriverInitialisation";
 	public static final String USER_SELECTS_FUNCTION ="userSelects";
 	public static final String USER_SELECTS_ANNOTATION ="User selects";
+	public static final String USER_RIGHT_CLICK_FUNCTION ="rightClickOn";
+	public static final String USER_RIGHT_CLICK_ANNOTATION ="User right clicks on";
+
+
+
+
+
+
 
 
 

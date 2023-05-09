@@ -13,10 +13,10 @@ public class Sample extends PageObject {
     public static By firstName = By.xpath("//*[@id='fname']");
 
     @LocatorType(value = "input")
-    public static By password = By.xpath("//input[@name='password']");
+    public static By password = By.id("password");
 
- //   @LocatorType(value = "input")
-  //  public static List<By> passwordNew = Arrays.asList(By.id("password1"), By.xpath("//input[@name='password1']"));
+//    @LocatorType(value = "input")
+//    public static List<By> passwordNEW = Arrays.asList(By.id("password"), By.xpath("//*[@id='password11']"));
 
     @LocatorType(value = "input")
     public static By lastName = By.id("lname");
@@ -45,7 +45,7 @@ public class Sample extends PageObject {
     @LocatorType(value = "button")
     public static By Submit = By.xpath("//input[@type='submit']");
 
-   @LocatorType(value = "a")
+    @LocatorType(value = "a")
     public static By html = By.xpath("//a[contains(text(),'HTML')]");
 
 

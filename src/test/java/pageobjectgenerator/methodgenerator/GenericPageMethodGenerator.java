@@ -63,6 +63,10 @@ public class GenericPageMethodGenerator {
         UtilsMethodCodeGenerator.setLinkMethodNavigateToUrl(c);
         UtilsMethodCodeGenerator.setLinkMethodRefresh(c);
         UtilsMethodCodeGenerator.setLinkMethodTakeSnapshot(c);
+        UtilsMethodCodeGenerator.setLinkMethodGetLocatorWithName(c);
+        UtilsMethodCodeGenerator.setLinkMethodClickUsingJS(c);
+        UtilsMethodCodeGenerator.setLinkMethodDragAndDrop(c);
+        UtilsMethodCodeGenerator.setLinkMethodFileUpload(c);
         UtilsMethodCodeGenerator.savePageObjectsOnFileSystem(Settings.IMPLEMENTATION_PO_DIR,
                 "UtilsImplementation", c, false);
 

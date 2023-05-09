@@ -66,7 +66,10 @@ public class GenericStepDefinitionGenerator {
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSwitchFrame(c, false);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSwitchWindow(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionWait(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionJSClick(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionClickAndHold(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionDragAndDrop(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionFileUpload(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionQuit(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodGiven(c, "homePage");
         UtilsStepDefinitionCodeGenerator.savePageObjectsOnFileSystem(Settings.STEP_DEFINITION_PO_DIR,
