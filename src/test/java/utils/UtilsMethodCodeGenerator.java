@@ -11,7 +11,6 @@ import japa.parser.ast.expr.NameExpr;
 import japa.parser.ast.expr.NormalAnnotationExpr;
 import japa.parser.ast.stmt.BlockStmt;
 import japa.parser.ast.type.ClassOrInterfaceType;
-import locators.Google;
 import locatorstrategyform.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.BooleanUtils;
