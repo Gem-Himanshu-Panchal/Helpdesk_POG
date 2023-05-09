@@ -123,15 +123,15 @@ public class PageMethodGenerator {
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "checkbox")) {
                 UtilsMethodCodeGenerator.setLinkMethodsSelect(c, field);// Radio and CheckBox and Normal Click Operation
-                UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
                 UtilsMethodCodeGenerator.setMethodClickable(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodsIsSelected(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForIsSelected(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsIsNotSelected(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsValueVerification(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
-            }
+                UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
+              }
             if (StringUtils.equalsIgnoreCase(locatorType, "click")) {
                 UtilsMethodCodeGenerator.setLinkMethodsDoubleClick(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation

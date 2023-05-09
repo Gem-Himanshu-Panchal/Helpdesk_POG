@@ -422,7 +422,7 @@ public class UtilsMethodCodeGenerator {
         meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         // Add the Getter method
-        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "verifyElementNotSelectedFor" + meaningFulName);
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "verify"+meaningFulName+"IsNotSelected");
         // add a body to the method
         BlockStmt block = new BlockStmt();
         method.setBody(block);
@@ -799,7 +799,7 @@ public class UtilsMethodCodeGenerator {
                 ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
                 ASTHelper.addStmt(block, new NameExpr("}"));
             } else {
-                ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tgetDriver().navigate().forward()"));
+                ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tActions actions = new Actions(getDriver());\n\t\t\tactions.moveToElement($("+Settings.LOCATOR_FILE_NAME+"."+field.getName()+"))"));
                 ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User successfully navigated Forward\"" + ")"));
                 ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
                 ASTHelper.addStmt(block, new NameExpr("}"));
