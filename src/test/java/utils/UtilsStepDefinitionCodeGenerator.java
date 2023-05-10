@@ -960,7 +960,7 @@ public class UtilsStepDefinitionCodeGenerator {
         annotationType = "Then";
         MethodDeclaration method = null;
         List<Parameter> parameters = new LinkedList<>();
-        functionName = "verifyElementNotSelectedFor" + field.getName();
+        functionName = "verify"+meaningFulName+"IsNotSelected";
         annotationValue = "\"" + pageName.replace("<page>", className) + "User verifies " + meaningFulName + " checkbox is not selected$" + "\""; //changed the step definition
         blockToEnter = functionName + "(" + ")";
         method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);

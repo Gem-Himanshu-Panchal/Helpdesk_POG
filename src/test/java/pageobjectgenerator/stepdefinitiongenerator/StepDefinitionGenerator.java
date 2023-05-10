@@ -110,11 +110,12 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName(), locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, true, aClass.getSimpleName());
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionChecked(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenSelected(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionNotChecked(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionElementPresence(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollToView(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodContains(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenEnabled(c, field, aClass.getSimpleName(), locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeContainsText(c, field, aClass.getSimpleName());
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "input")) {
