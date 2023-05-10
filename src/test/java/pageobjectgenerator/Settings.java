@@ -103,34 +103,34 @@ public class Settings {
 
 	public static final String MAXIMIZE_TO_DEFAULT ="^User maximizes window to default$";
 
-	public static final String MINIMIZE_TO_DEFAULT ="^User minimizes window to default";
-	public static final String GET_PAGE_SOURCE ="^User gets page source";
+	public static final String MINIMIZE_TO_DEFAULT ="^User minimizes window to default$";
+	public static final String GET_PAGE_SOURCE ="^User gets page source$";
 
-	public static final String SWITCH_ALERT ="^User switches to alert";
-	public static final String ACCEPT_ALERT ="^User accepts alert";
+	public static final String SWITCH_ALERT ="^User switches to alert$";
+	public static final String ACCEPT_ALERT ="^User accepts alert$";
 
-	public static final String DISMISS_ALERT ="^User dismisses alert";
-	public static final String SCROLL_UP ="^User scrolls page up";
-	public static final String SCROLL_DOWN ="^User scrolls page down";
-	public static final String REFRESH_PAGE ="^User refreshes page";
-	public static final String TAKE_SNAPSHOT ="^User take snapshot";
-	public static final String SCROLL_PAGE ="^User scrolls page to \\\"(.*)\\\" x coordinate and \\\"(.*)\\\" y coordinate";
+	public static final String DISMISS_ALERT ="^User dismisses alert$";
+	public static final String SCROLL_UP ="^User scrolls page up$";
+	public static final String SCROLL_DOWN ="^User scrolls page down$";
+	public static final String REFRESH_PAGE ="^User refreshes page$";
+	public static final String TAKE_SNAPSHOT ="^User take snapshot$";
+	public static final String SCROLL_PAGE ="^User scrolls page to \\\"(.*)\\\" x coordinate and \\\"(.*)\\\" y coordinate$";
 	public static final String SCROLL_ELEMENT ="^User scrolls element to \\\"(.*)\\\" x coordinate and \\\"(.*)\\\" y coordinate";
 
-	public static final String NAVIGATE_URL ="^User navigates to \\\"(.*)\\\" url";
-	public static final String ALERT_INPUT ="^User enters \\\"(.*)\\\" as alert input";
-	public static final String BROWSER_SIZE ="^User gets browser size";
+	public static final String NAVIGATE_URL ="^User navigates to \\\"(.*)\\\" url$";
+	public static final String ALERT_INPUT ="^User enters \\\"(.*)\\\" as alert input$";
+	public static final String BROWSER_SIZE ="^User gets browser size$";
 
-	public static final String BROWSER_POSITION ="^User gets browser positions";
-	public static final String GET_WINDOW_HANDLE ="^User gets window handle";
-	public static final String GET_WINDOW_HANDLES ="^User gets window handles";
-	public static final String SET_BROWSER_SIZE ="^User sets browser size to \\\"(.*)\\\" width and \\\"(.*)\\\" height";
+	public static final String BROWSER_POSITION ="^User gets browser positions$";
+	public static final String GET_WINDOW_HANDLE ="^User gets window handle$";
+	public static final String GET_WINDOW_HANDLES ="^User gets window handles$";
+	public static final String SET_BROWSER_SIZE ="^User sets browser size to \\\"(.*)\\\" width and \\\"(.*)\\\" height$";
 
-	public static final String SET_BROWSER_POSITION ="^User sets browser position to \\\"(.*)\\\" x coordinate and \\\"(.*)\\\" y coordinate";
-	public static final String CLOSE_CURRENT_TAB ="User closes current tab";
+	public static final String SET_BROWSER_POSITION ="^User sets browser position to \\\"(.*)\\\" x coordinate and \\\"(.*)\\\" y coordinate$";
+	public static final String CLOSE_CURRENT_TAB ="^User closes current tab$";
 
-	public static final String CLOSE_TAB_AND_SWITCH ="User closes current tab and switches to \\\"(.*)\\\" tab";
-	public static final String USER_NAVIGATE_FORWARD ="^User navigates Forward to Next Page";
+	public static final String CLOSE_TAB_AND_SWITCH ="^User closes current tab and switches to \\\"(.*)\\\" tab$";
+	public static final String USER_NAVIGATE_FORWARD ="^User navigates Forward to Next Page$";
 	public static final String USER_NAVIGATE_TO ="^User navigates to \\\"(.*)\\\"$";
 
 	public static final String USER_VERIFY_URL ="^User verifies the current URL with \\\"(.*)\\\"$";

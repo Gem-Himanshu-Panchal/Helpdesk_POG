@@ -70,7 +70,7 @@ public class UtilsStepDefinition {
         utils.navigateTo(url);
     }
 
-    @When("^User navigates Forward to Next Page$")
+    @When("^User navigates Forward to Next Page$$")
     public void navigateForward() {
         utils.forwardNavigation();
     }
@@ -85,87 +85,87 @@ public class UtilsStepDefinition {
         utils.maximizeBrowserToDefault();
     }
 
-    @When("^User minimizes window to default")
+    @When("^User minimizes window to default$")
     public void minimizeGivenBrowser() {
         utils.minimizeGivenBrowser();
     }
 
-    @When("^User gets browser size")
+    @When("^User gets browser size$")
     public void browserSize() {
         utils.browserSize();
     }
 
-    @When("^User sets browser size to \"(.*)\" width and \"(.*)\" height")
+    @When("^User sets browser size to \"(.*)\" width and \"(.*)\" height$")
     public void setSizeOfBrowser(Integer width, Integer height) {
         utils.setSizeOfBrowser(width,height);
     }
 
-    @When("^User sets browser position to \"(.*)\" x coordinate and \"(.*)\" y coordinate")
+    @When("^User sets browser position to \"(.*)\" x coordinate and \"(.*)\" y coordinate$")
     public void setPositionOfBrowser(Integer x, Integer y) {
         utils.setPositionOfBrowser(x,y);
     }
 
-    @When("^User gets browser positions")
+    @When("^User gets browser positions$")
     public void browserPosition() {
         utils.browserPosition();
     }
 
-    @When("^User gets window handle")
+    @When("^User gets window handle$")
     public void windowHandle() {
         utils.windowHandle();
     }
 
-    @When("^User gets window handles")
+    @When("^User gets window handles$")
     public void windowHandles() {
         utils.windowHandles();
     }
 
-    @When("^User gets page source")
+    @When("^User gets page source$")
     public void pageSource() {
         utils.pageSource();
     }
 
-    @When("User closes current tab")
+    @When("^User closes current tab$")
     public void closeTab() {
         utils.closeTab();
     }
 
-    @When("User closes current tab and switches to \"(.*)\" tab")
+    @When("^User closes current tab and switches to \"(.*)\" tab$")
     public void closeTabAndSwitch(String windowName) {
         utilFunctions.closeTabAndSwitch(windowName);
     }
 
-    @When("^User switches to alert")
+    @When("^User switches to alert$")
     public void alertSwitch() {
         utils.alertSwitch();
     }
 
-    @When("^User accepts alert")
+    @When("^User accepts alert$")
     public void alertAccept() {
         utils.alertAccept();
     }
 
-    @When("^User dismisses alert")
+    @When("^User dismisses alert$")
     public void alertDismiss() {
         utils.alertDismiss();
     }
 
-    @When("^User enters \"(.*)\" as alert input")
+    @When("^User enters \"(.*)\" as alert input$")
     public void inputForAlert(String input) {
         utils.inputForAlert(input);
     }
 
-    @When("^User scrolls page up")
+    @When("^User scrolls page up$")
     public void scrollUp() {
         utils.scrollUp();
     }
 
-    @When("^User scrolls page down")
+    @When("^User scrolls page down$")
     public void scrollDown() {
         utils.scrollDown();
     }
 
-    @When("^User scrolls page to \"(.*)\" x coordinate and \"(.*)\" y coordinate")
+    @When("^User scrolls page to \"(.*)\" x coordinate and \"(.*)\" y coordinate$")
     public void scrollPage(Integer x, Integer y) {
         utils.scrollPage(x,y);
     }
@@ -175,14 +175,14 @@ public class UtilsStepDefinition {
         utils.elementScroll(x,y);
     }
 
-    @When("^User refreshes page")
+    @When("^User refreshes page$")
     public void refreshPage() {
         utils.refreshPage();
     }
 
-    @When("^User take snapshot")
-    public void takeScreenshot(String filePath) {
-        utils.takeScreenshot(filePath);
+    @When("^User take snapshot$")
+    public void takeScreenshot() {
+        utils.takeScreenshot();
     }
 
     @When("^User switches to Active Element$")

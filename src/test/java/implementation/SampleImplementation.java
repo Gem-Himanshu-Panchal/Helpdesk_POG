@@ -1,9 +1,13 @@
 package implementation;
 
-import net.serenitybdd.core.pages.WebElementFacade;
-import net.serenitybdd.core.pages.PageObject;
-import org.apache.commons.io.FileUtils;
-import java.io.File;
+import com.gemini.generic.reporting.GemTestReporter;
+import com.gemini.generic.reporting.STATUS;
+import com.gemini.generic.ui.utils.DriverAction;
+import com.gemini.generic.utils.GemJarUtils;
+import org.openqa.selenium.chrome.ChromeOptions;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import com.gemini.generic.utils.GemJarGlobalVar;
 import com.gemini.generic.ui.utils.DriverManager;
 import pageobjectgenerator.Settings;
 import net.serenitybdd.core.Serenity;
@@ -29,202 +33,255 @@ import java.util.List;
 import java.util.ArrayList;
 import utils.UtilsMethodCodeGenerator;
 
-public class SampleImplementation extends PageObject {
-
-    private WebDriver driver =getDriver();
+public class SampleImplementation extends DriverAction {
 
     public void typeTextIntoFirstName(String typeText) {
         //The below function is for web element @FindBy(Sample.firstName);
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.firstName));
-        	typeInto(element,typeText);
+			waitUntilElementAppear(Sample.firstName,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			typeText(Sample.firstName,typeText);
         	Settings.LOGGER.info("User enters "+typeText+" as value");
         }
 		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not enter " + typeText + " into FirstName");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
+			GemTestReporter.addTestStep("Enter the text in firstName field","Unable to Enter Text in firstName field", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Unable to Enter Text in firstName field");
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void typeTextAndEnterForFirstName(String typeText) {
         //The below function is for web element @FindBy(Sample.firstName);
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.firstName));
-        	$(element).typeAndEnter(typeText);
+			verifyFirstNameIsDisplayed();
+			typeText(Sample.firstName,typeText);
+        	 Actions action = new Actions(DriverManager.getWebDriver());;
+        	 action.sendKeys(Keys.ENTER);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses enter");
         }
 		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not enter " + typeText + " into FirstName");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
+			GemTestReporter.addTestStep("Enter the text in firstName field and press enter","Unable to Enter Text in firstName field", STATUS.FAIL, takeSnapShot());
+        				Settings.LOGGER.info("Unable to Enter Text in firstName field and press enter");
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void typeTextAndTabForFirstName(String typeText) {
         //The below function is for web element @FindBy(Sample.firstName);
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.firstName));
-        	typeInto(element,typeText);
+			verifyFirstNameIsDisplayed();
+			typeText(Sample.firstName,typeText);
+        	Actions action = new Actions(DriverManager.getWebDriver());;
+        	action.sendKeys(Keys.TAB);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses Tab");
         }
 		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not enter " + typeText + " into FirstName");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
+			GemTestReporter.addTestStep("Enter the text in firstName field and presses tab","Unable to Enter Text in firstName field", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Unable to Enter Text in firstName field and press tab");
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public String getTextFromFirstName() {
         //The below function is for web element @FindBy(Sample.firstName);
-        String text = "";
+        String text = new String();
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.firstName));
-        	text = element.getText();
-			Settings.LOGGER.info("User gets the text of firstName element");
+			verifyFirstNameIsEnabled();
+			text = getElementText(Sample.firstName);
+			GemTestReporter.addTestStep("Get text of firstName element","Successful able to fetch text of firstName element", STATUS.PASS, takeSnapShot());
         }
 		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not get text of FirstName");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
-        }
+			GemTestReporter.addTestStep("Get text of firstName element","Unable to fetch text of firstName element", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to fetch text of firstName, User gets an exception: "+e);
+        } 
 		return text;
     }
 
     public void verifyFirstNameIsEnabled() {
         //The below function is for web element @FindBy(Sample.firstName);
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.firstName));
-        	assertTrue("FirstName is not enabled", element.isEnabled());
-        	Settings.LOGGER.info("User verifies the given firstName element is enabled");
-        }
+			WebDriverWait webDriverWait = new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
+			webDriverWait.until(ExpectedConditions.presenceOfElementLocated(Sample.firstName));
+			getElement(Sample.firstName).isEnabled();
+        	GemTestReporter.addTestStep("Verify firstName field is enabled","firstName field is enabled", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("firstName field is enabled");}
 		catch(Exception e){
-			Assert.fail(e.getMessage());
-			Serenity.recordReportData().withTitle("Failure").andContents("Element is not enabled");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        };
+			GemTestReporter.addTestStep("Verify firstName field is enabled","F field is not enabled", STATUS.FAIL, takeSnapShot());
+        	Settings.LOGGER.info("firstName field is not enabled");
+			Settings.LOGGER.info("User gets an exception: "+e);};
     }
 
     public void clearFirstName() {
         //The below function is for web element @FindBy(Sample.firstName);
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.firstName));
-        	element.clear();
-        	Settings.LOGGER.info("User deletes the value for firstName element");
-        }
+			verifyFirstNameIsEnabled();
+			clearText(Sample.firstName);
+        	GemTestReporter.addTestStep("Clear text for firstName field","Input for firstName field cleared successfully", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("firstName field cleared successfully");}
 		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not clear FirstName");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
-        };
+			GemTestReporter.addTestStep("Clear text for firstName field","Unable to clear text for firstName field", STATUS.FAIL, takeSnapShot());
+        	Settings.LOGGER.info("Unable to clear text for firstName field");
+			Settings.LOGGER.info("User gets an exception: "+e);};
     }
 
     public String getAttributeFromFirstName(String attributeValue) {
         //This function is for web element @FindBy(Sample.firstName);
-        String valueOfAttribute = "";
+        String text = new String();
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.firstName));
-			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for firstName element");
-        	valueOfAttribute = $(Sample.firstName).getAttribute(attributeValue);
+			waitUntilElementAppear(Sample.firstName,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			text = getAttributeName(Sample.firstName, attributeValue);
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "firstName field","Successfully fetched " + attributeValue + " value for firstName", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for firstName");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "firstName field","Unable to get " + attributeValue + " value for firstName as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for firstName as attribute does not exist");
+			};
         }
 		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
-        }
-		return valueOfAttribute;
+			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "firstName field","Unable to get " + attributeValue + " value for firstName as attribute does not exist", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to get " + attributeValue + " value for firstName as attribute does not exist");
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+        return text;
     }
 
     public void verifyValueFromFirstName(String typeText) {
         //This function is for web element @FindBy(Sample.firstName);
+        String text = new String();
         try{
-		WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.firstName));
-		assertTrue("Actual value: " + $(Sample.firstName).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Sample.firstName).getAttribute("value")));
-        Settings.LOGGER.info("User verifies value: " + typeText + "for FirstName");
-        }
-		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not verify value for firstName)");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
+			waitUntilElementAppear(Sample.firstName,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			text = getAttributeName(Sample.firstName,"value");
+        	if(typeText.equals(text)){
+				GemTestReporter.addTestStep("Verify value of firstName matches " +typeText,"Value for firstName verified successfully", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("Value for firstName verified successfully" );	}
+			else{
+				GemTestReporter.addTestStep("Verify value of firstName matches " +typeText,"Unable to verify value for firstName. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Unable to verify value for firstName. Actual: "+text+" Expected: "+typeText );	}
+		}
+		catch(Exception e){;
+        	GemTestReporter.addTestStep("Verify value of firstName field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to get attribute value");
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public String verifyAttributeValueForFirstName(String attributeName, String attributeValue) {
         //This function is for web element @FindBy(Sample.firstName);
+        String text = new String();
         try{
-			assertTrue(StringUtils.equalsIgnoreCase(attributeValue,$(Sample.firstName).getAttribute(attributeName)));
-        }
-		catch(Exception e){
+			waitUntilElementAppear(Sample.firstName,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			text = getAttributeName(Sample.firstName,attributeName);
+        	if(attributeValue.equals(text)){
+				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Successful", STATUS.PASS, takeSnapShot());
+        	}
+			else{
+				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Failed", STATUS.FAIL, takeSnapShot());
+        	}
+		}
+		catch(Exception e){;
+        	GemTestReporter.addTestStep("Get value of Value attribute for firstName field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to get attribute value");
 			Settings.LOGGER.info("User gets an exception: "+e);
-        }
-		return $(Sample.firstName).getAttribute(attributeName);
+        };
+        return text;
     }
 
     public void verifyValueClearedForFirstName() {
         //This function is for web element @FindBy(Sample.firstName);
-        assertTrue("Actual value: " + $(Sample.firstName).getAttribute("value"), StringUtils.equalsIgnoreCase("", $(Sample.firstName).getAttribute("value")));
-        Settings.LOGGER.info("User verifies value is cleared for FirstName");
+        String text = new String();
+        try{
+			waitUntilElementAppear(Sample.firstName,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			text = getAttributeName(Sample.firstName,"value");
+        	if(text.equals("")){
+				GemTestReporter.addTestStep("Verify value cleared for firstName field","Verified input value for firstName is successfully cleared", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("Verified input value for firstName is successfully cleared");}
+			else{
+				GemTestReporter.addTestStep("Verify value cleared for firstName field","Input value for firstName not cleared successfully ", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Input value for firstName not cleared successfully ");}
+		}
+		catch(Exception e){;
+        	GemTestReporter.addTestStep("Verify value gets cleared for firstName field","Unable to clear value", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to clear value");
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
     }
 
     public void hoverOverFirstName(String labelText) {
         //This function is for web element @FindBy(Sample.firstName);
-        SerenityActions serenityActions = new SerenityActions(getDriver());
         try{
 			verifyFirstNameIsEnabled();
-			serenityActions.moveToElement($(Sample.firstName)).build().perform();
-        	Settings.LOGGER.info("User successfully hovers over");
+			hoverOver(Sample.firstName,labelText);
         } 
 		catch(Exception e){
+			GemTestReporter.addTestStep("Hover on "+labelText," Hovering on " + labelText + " Failed", STATUS.FAIL, takeSnapShot());
 			Settings.LOGGER.info("User gets an exception: "+e);
+			Settings.LOGGER.info(" Hovering on " + labelText + " Failed");
         };
     }
 
     public void verifyFirstNameExists() {
         //This function is for web element @FindBy(Sample.firstName);
         try{
-			if(getDriver().findElements(Sample.firstName).size()>0){;
+			waitUntilElementAppear(Sample.firstName,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			if(isExist(Sample.firstName)){;
+        		GemTestReporter.addTestStep("Verify element firstName is present on Screen","firstName element is present on Screen", STATUS.PASS, takeSnapShot());
         			Settings.LOGGER.info("firstName is present on Screen");}	
 			 else{
-				Assert.fail("firstName element is not present on Screen");
+				GemTestReporter.addTestStep("Verify element firstName is present on Screen","firstName element is not present on Screen", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("firstName element is not present on Screen");}	
 		}
 		catch(Exception e){
-			Assert.fail("firstName element is not present on Screen");
+			GemTestReporter.addTestStep("Verify element firstName is present on Screen","firstName element is not present on Screen", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("firstName element is not present on Screen");
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void scrollToFirstNameElement() {
         //This function is for web element @FindBy(Sample.firstName);
         try{
-			JavascriptExecutor js = (JavascriptExecutor) getDriver();
-			js.executeScript("arguments[0].scrollIntoView();", $(Sample.firstName));
-        			Settings.LOGGER.info(" Successful able to scroll to firstName element ");}	
-			catch(Exception e){;
-        			Assert.fail(" Unable to scroll to firstName element ");
+			scrollIntoView(Sample.firstName);
+			waitUntilElementAppear(Sample.firstName,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+        	GemTestReporter.addTestStep("Scroll to firstName element","Successful able to scroll to firstName element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to firstName element");
+			}			catch(Exception e){;
+        	GemTestReporter.addTestStep("Scroll to firstName element","Unable to scroll to firstName element", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to scroll to firstName element");
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void verifyFirstNameIsDisplayed() {
         //The below function is for web element @FindBy(Sample.firstName);
-        assertTrue("FirstName is not visible", $(Sample.firstName).isDisplayed());
-        Settings.LOGGER.info("User verifies firstName element is displayed");
+        try{
+			waitUntilElementAppear(Sample.firstName,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			getElement(Sample.firstName).isDisplayed();
+        	GemTestReporter.addTestStep("Verify firstName field is visible","firstName field is visible", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("firstName field is visible");}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify firstName field is visible","firstName field is not visible", STATUS.FAIL, takeSnapShot());
+        	Settings.LOGGER.info("firstName field is not visible");
+			Settings.LOGGER.info("User gets an exception: "+e);};
     }
 
     public void verifyFirstNameContainsText(String typeText) {
         //The below function is for web element @FindBy(Sample.firstName);
         try{
-			assertTrue("Actual text: " + $(Sample.firstName).getText(), StringUtils.containsIgnoreCase($(Sample.firstName).getText(), typeText));
-        	Settings.LOGGER.info("User verifies firstName contains " + typeText);
-        }
+			verifyFirstNameIsDisplayed();
+			if(getElementText(Sample.firstName).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify firstName field contains " + typeText,"Text of firstName field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of firstName field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify firstName field contains " + typeText,"Text" + typeText + "is not present in firstName field. Expected: "+typeText+" Actual: "+ getElementText(Sample.firstName), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of firstName field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.firstName));}	
+		}
 		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside firstName is equal to " + typeText,"Text inside firstName is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Text inside firstName is not equal");
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
@@ -232,10 +289,18 @@ public class SampleImplementation extends PageObject {
     public void verifyAttributeContainsValueForFirstName(String attribute, String typeText) {
         //The below function is for web element @FindBy(Sample.firstName);
         try{
-			assertTrue("Actual value: " + $(Sample.firstName).getAttribute(attribute), StringUtils.contains($(Sample.firstName).getAttribute(attribute), typeText));
-        	Settings.LOGGER.info("User verifies firstName contains " + typeText);
-        }
+			verifyFirstNameIsDisplayed();
+			if(getElement(Sample.firstName).getAttribute(attribute).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify firstName field contains " + typeText,"Attribute " + attribute + " of firstName field contains " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Attribute " + attribute + " of firstName field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify firstName field contains " + typeText, typeText + "is not present in firstName" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.firstName).getAttribute(attribute), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Attribute " + attribute + " of firstName field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElement(Sample.firstName).getAttribute(attribute));}	
+		}
 		catch(Exception e){
+			GemTestReporter.addTestStep("Verify firstName field contains " + typeText, typeText + "is not present in firstName" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.firstName), STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info( typeText + "is not present in firstName" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.firstName));
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
@@ -243,10 +308,17 @@ public class SampleImplementation extends PageObject {
     public void verifyFirstNameText(String typeText) {
         //The below function is for web element @FindBy(Sample.firstName);
         try{
-			assertTrue("Actual text: " + $(Sample.firstName).getText(), StringUtils.equalsIgnoreCase(typeText,$(Sample.firstName).getText()));
-        	Settings.LOGGER.info("User gets the text of firstName element");
-        }
+			verifyFirstNameIsDisplayed();
+			if(getElementText(Sample.firstName).equals(typeText)){;
+        		GemTestReporter.addTestStep("Verify text of firstName field is equal to " + typeText,"Text of firstName field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("Text of firstName field is equal to " + typeText);}	
+			else{
+				GemTestReporter.addTestStep("Verify text of firstName field is equal to " + typeText,"Text of firstName field is not equal. Expected: "+typeText+" Actual: "+getElementText(Sample.firstName), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of firstName field is not equal. Expected: "+typeText+" Actual: "+getElementText(Sample.firstName));}	
+		}
 		catch(Exception e){
+			GemTestReporter.addTestStep("Verify text of firstName field is equal to " + typeText,"Text of firstName field is not equal. Expected: "+typeText+" Actual: "+getElementText(Sample.firstName), STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Text of firstName field is not equal. Expected: "+typeText+" Actual: "+getElementText(Sample.firstName));
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
@@ -254,195 +326,250 @@ public class SampleImplementation extends PageObject {
     public void typeTextIntoPassword(String typeText) {
         //The below function is for web element @FindBy(Sample.password);
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.password));
-        	typeInto(element,typeText);
+			waitUntilElementAppear(Sample.password,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			typeText(Sample.password,typeText);
         	Settings.LOGGER.info("User enters "+typeText+" as value");
         }
 		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not enter " + typeText + " into Password");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
+			GemTestReporter.addTestStep("Enter the text in password field","Unable to Enter Text in password field", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Unable to Enter Text in password field");
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void typeTextAndEnterForPassword(String typeText) {
         //The below function is for web element @FindBy(Sample.password);
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.password));
-        	$(element).typeAndEnter(typeText);
+			verifyPasswordIsDisplayed();
+			typeText(Sample.password,typeText);
+        	 Actions action = new Actions(DriverManager.getWebDriver());;
+        	 action.sendKeys(Keys.ENTER);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses enter");
         }
 		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not enter " + typeText + " into Password");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
+			GemTestReporter.addTestStep("Enter the text in password field and press enter","Unable to Enter Text in password field", STATUS.FAIL, takeSnapShot());
+        				Settings.LOGGER.info("Unable to Enter Text in password field and press enter");
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void typeTextAndTabForPassword(String typeText) {
         //The below function is for web element @FindBy(Sample.password);
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.password));
-        	typeInto(element,typeText);
+			verifyPasswordIsDisplayed();
+			typeText(Sample.password,typeText);
+        	Actions action = new Actions(DriverManager.getWebDriver());;
+        	action.sendKeys(Keys.TAB);;
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses Tab");
         }
 		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not enter " + typeText + " into Password");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
+			GemTestReporter.addTestStep("Enter the text in password field and presses tab","Unable to Enter Text in password field", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Unable to Enter Text in password field and press tab");
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public String getTextFromPassword() {
         //The below function is for web element @FindBy(Sample.password);
-        String text = "";
+        String text = new String();
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.password));
-        	text = element.getText();
-			Settings.LOGGER.info("User gets the text of password element");
+			verifyPasswordIsEnabled();
+			text = getElementText(Sample.password);
+			GemTestReporter.addTestStep("Get text of password element","Successful able to fetch text of password element", STATUS.PASS, takeSnapShot());
         }
 		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not get text of Password");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
-        }
+			GemTestReporter.addTestStep("Get text of password element","Unable to fetch text of password element", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to fetch text of password, User gets an exception: "+e);
+        } 
 		return text;
     }
 
     public void verifyPasswordIsEnabled() {
         //The below function is for web element @FindBy(Sample.password);
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.password));
-        	assertTrue("Password is not enabled", element.isEnabled());
-        	Settings.LOGGER.info("User verifies the given password element is enabled");
-        }
+			WebDriverWait webDriverWait = new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
+			webDriverWait.until(ExpectedConditions.presenceOfElementLocated(Sample.password));
+			getElement(Sample.password).isEnabled();
+        	GemTestReporter.addTestStep("Verify password field is enabled","password field is enabled", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("password field is enabled");}
 		catch(Exception e){
-			Assert.fail(e.getMessage());
-			Serenity.recordReportData().withTitle("Failure").andContents("Element is not enabled");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        };
+			GemTestReporter.addTestStep("Verify password field is enabled","P field is not enabled", STATUS.FAIL, takeSnapShot());
+        	Settings.LOGGER.info("password field is not enabled");
+			Settings.LOGGER.info("User gets an exception: "+e);};
     }
 
     public void clearPassword() {
         //The below function is for web element @FindBy(Sample.password);
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.password));
-        	element.clear();
-        	Settings.LOGGER.info("User deletes the value for password element");
-        }
+			verifyPasswordIsEnabled();
+			clearText(Sample.password);
+        	GemTestReporter.addTestStep("Clear text for password field","Input for password field cleared successfully", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("password field cleared successfully");}
 		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not clear Password");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
-        };
+			GemTestReporter.addTestStep("Clear text for password field","Unable to clear text for password field", STATUS.FAIL, takeSnapShot());
+        	Settings.LOGGER.info("Unable to clear text for password field");
+			Settings.LOGGER.info("User gets an exception: "+e);};
     }
 
     public String getAttributeFromPassword(String attributeValue) {
         //This function is for web element @FindBy(Sample.password);
-        String valueOfAttribute = "";
+        String text = new String();
         try{
-			WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        	WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.password));
-			Settings.LOGGER.info("User gets attribute as "+attributeValue+" for password element");
-        	valueOfAttribute = $(Sample.password).getAttribute(attributeValue);
+			waitUntilElementAppear(Sample.password,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			text = getAttributeName(Sample.password, attributeValue);
+        	if(!text.equals(""))
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "password field","Successfully fetched " + attributeValue + " value for password", STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Successfully fetched " + attributeValue + " value for password");
+			}
+			 else 
+			{
+				GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "password field","Unable to get " + attributeValue + " value for password as attribute does not exist", STATUS.FAIL, takeSnapShot());
+        		Settings.LOGGER.info("Unable to get " + attributeValue + " value for password as attribute does not exist");
+			};
         }
 		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not get value for attribute " + attributeValue);
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
-        }
-		return valueOfAttribute;
+			GemTestReporter.addTestStep("Get value of " + attributeValue + " attribute for " + "password field","Unable to get " + attributeValue + " value for password as attribute does not exist", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to get " + attributeValue + " value for password as attribute does not exist");
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
+        return text;
     }
 
     public void verifyValueFromPassword(String typeText) {
         //This function is for web element @FindBy(Sample.password);
+        String text = new String();
         try{
-		WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut"))));
-        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(Sample.password));
-		assertTrue("Actual value: " + $(Sample.password).getAttribute("value"), StringUtils.equalsIgnoreCase(typeText,$(Sample.password).getAttribute("value")));
-        Settings.LOGGER.info("User verifies value: " + typeText + "for Password");
-        }
-		catch(Exception e){
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not verify value for password)");
-        	Settings.LOGGER.info("User gets an exception: "+e.getMessage());
-        	Assert.fail(e.getMessage());
+			waitUntilElementAppear(Sample.password,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			text = getAttributeName(Sample.password,"value");
+        	if(typeText.equals(text)){
+				GemTestReporter.addTestStep("Verify value of password matches " +typeText,"Value for password verified successfully", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("Value for password verified successfully" );	}
+			else{
+				GemTestReporter.addTestStep("Verify value of password matches " +typeText,"Unable to verify value for password. Actual: "+text+" Expected: "+typeText, STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Unable to verify value for password. Actual: "+text+" Expected: "+typeText );	}
+		}
+		catch(Exception e){;
+        	GemTestReporter.addTestStep("Verify value of password field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to get attribute value");
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public String verifyAttributeValueForPassword(String attributeName, String attributeValue) {
         //This function is for web element @FindBy(Sample.password);
+        String text = new String();
         try{
-			assertTrue(StringUtils.equalsIgnoreCase(attributeValue,$(Sample.password).getAttribute(attributeName)));
-        }
-		catch(Exception e){
+			waitUntilElementAppear(Sample.password,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			text = getAttributeName(Sample.password,attributeName);
+        	if(attributeValue.equals(text)){
+				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Successful", STATUS.PASS, takeSnapShot());
+        	}
+			else{
+				GemTestReporter.addTestStep("Verify if value of '+attributeName+' matches" +attributeValue,"Validation Failed", STATUS.FAIL, takeSnapShot());
+        	}
+		}
+		catch(Exception e){;
+        	GemTestReporter.addTestStep("Get value of Value attribute for password field","Unable to get attribute value", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to get attribute value");
 			Settings.LOGGER.info("User gets an exception: "+e);
-        }
-		return $(Sample.password).getAttribute(attributeName);
+        };
+        return text;
     }
 
     public void verifyValueClearedForPassword() {
         //This function is for web element @FindBy(Sample.password);
-        assertTrue("Actual value: " + $(Sample.password).getAttribute("value"), StringUtils.equalsIgnoreCase("", $(Sample.password).getAttribute("value")));
-        Settings.LOGGER.info("User verifies value is cleared for Password");
+        String text = new String();
+        try{
+			waitUntilElementAppear(Sample.password,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			text = getAttributeName(Sample.password,"value");
+        	if(text.equals("")){
+				GemTestReporter.addTestStep("Verify value cleared for password field","Verified input value for password is successfully cleared", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("Verified input value for password is successfully cleared");}
+			else{
+				GemTestReporter.addTestStep("Verify value cleared for password field","Input value for password not cleared successfully ", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Input value for password not cleared successfully ");}
+		}
+		catch(Exception e){;
+        	GemTestReporter.addTestStep("Verify value gets cleared for password field","Unable to clear value", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to clear value");
+			Settings.LOGGER.info("User gets an exception: "+e);
+        };
     }
 
     public void hoverOverPassword(String labelText) {
         //This function is for web element @FindBy(Sample.password);
-        SerenityActions serenityActions = new SerenityActions(getDriver());
         try{
 			verifyPasswordIsEnabled();
-			serenityActions.moveToElement($(Sample.password)).build().perform();
-        	Settings.LOGGER.info("User successfully hovers over");
+			hoverOver(Sample.password,labelText);
         } 
 		catch(Exception e){
+			GemTestReporter.addTestStep("Hover on "+labelText," Hovering on " + labelText + " Failed", STATUS.FAIL, takeSnapShot());
 			Settings.LOGGER.info("User gets an exception: "+e);
+			Settings.LOGGER.info(" Hovering on " + labelText + " Failed");
         };
     }
 
     public void verifyPasswordExists() {
         //This function is for web element @FindBy(Sample.password);
         try{
-			if(getDriver().findElements(Sample.password).size()>0){;
+			waitUntilElementAppear(Sample.password,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			if(isExist(Sample.password)){;
+        		GemTestReporter.addTestStep("Verify element password is present on Screen","password element is present on Screen", STATUS.PASS, takeSnapShot());
         			Settings.LOGGER.info("password is present on Screen");}	
 			 else{
-				Assert.fail("password element is not present on Screen");
+				GemTestReporter.addTestStep("Verify element password is present on Screen","password element is not present on Screen", STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("password element is not present on Screen");}	
 		}
 		catch(Exception e){
-			Assert.fail("password element is not present on Screen");
+			GemTestReporter.addTestStep("Verify element password is present on Screen","password element is not present on Screen", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("password element is not present on Screen");
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void scrollToPasswordElement() {
         //This function is for web element @FindBy(Sample.password);
         try{
-			JavascriptExecutor js = (JavascriptExecutor) getDriver();
-			js.executeScript("arguments[0].scrollIntoView();", $(Sample.password));
-        			Settings.LOGGER.info(" Successful able to scroll to password element ");}	
-			catch(Exception e){;
-        			Assert.fail(" Unable to scroll to password element ");
+			scrollIntoView(Sample.password);
+			waitUntilElementAppear(Sample.password,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+        	GemTestReporter.addTestStep("Scroll to password element","Successful able to scroll to password element", STATUS.PASS, takeSnapShot());
+        	Settings.LOGGER.info("Successful able to scroll to password element");
+			}			catch(Exception e){;
+        	GemTestReporter.addTestStep("Scroll to password element","Unable to scroll to password element", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to scroll to password element");
+			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
 
     public void verifyPasswordIsDisplayed() {
         //The below function is for web element @FindBy(Sample.password);
-        assertTrue("Password is not visible", $(Sample.password).isDisplayed());
-        Settings.LOGGER.info("User verifies password element is displayed");
+        try{
+			waitUntilElementAppear(Sample.password,Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			getElement(Sample.password).isDisplayed();
+        	GemTestReporter.addTestStep("Verify password field is visible","password field is visible", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("password field is visible");}
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify password field is visible","password field is not visible", STATUS.FAIL, takeSnapShot());
+        	Settings.LOGGER.info("password field is not visible");
+			Settings.LOGGER.info("User gets an exception: "+e);};
     }
 
     public void verifyPasswordContainsText(String typeText) {
         //The below function is for web element @FindBy(Sample.password);
         try{
-			assertTrue("Actual text: " + $(Sample.password).getText(), StringUtils.containsIgnoreCase($(Sample.password).getText(), typeText));
-        	Settings.LOGGER.info("User verifies password contains " + typeText);
-        }
+			verifyPasswordIsDisplayed();
+			if(getElementText(Sample.password).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify password field contains " + typeText,"Text of password field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of password field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify password field contains " + typeText,"Text" + typeText + "is not present in password field. Expected: "+typeText+" Actual: "+ getElementText(Sample.password), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of password field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.password));}	
+		}
 		catch(Exception e){
+			GemTestReporter.addTestStep("Check if text inside password is equal to " + typeText,"Text inside password is not equal", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Text inside password is not equal");
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
@@ -450,10 +577,18 @@ public class SampleImplementation extends PageObject {
     public void verifyAttributeContainsValueForPassword(String attribute, String typeText) {
         //The below function is for web element @FindBy(Sample.password);
         try{
-			assertTrue("Actual value: " + $(Sample.password).getAttribute(attribute), StringUtils.contains($(Sample.password).getAttribute(attribute), typeText));
-        	Settings.LOGGER.info("User verifies password contains " + typeText);
-        }
+			verifyPasswordIsDisplayed();
+			if(getElement(Sample.password).getAttribute(attribute).contains(typeText)){;
+        		GemTestReporter.addTestStep("Verify password field contains " + typeText,"Attribute " + attribute + " of password field contains " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Attribute " + attribute + " of password field does not contain" + typeText);
+			}
+			else{
+				GemTestReporter.addTestStep("Verify password field contains " + typeText, typeText + "is not present in password" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.password).getAttribute(attribute), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Attribute " + attribute + " of password field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElement(Sample.password).getAttribute(attribute));}	
+		}
 		catch(Exception e){
+			GemTestReporter.addTestStep("Verify password field contains " + typeText, typeText + "is not present in password" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.password), STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info( typeText + "is not present in password" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.password));
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
@@ -461,10 +596,17 @@ public class SampleImplementation extends PageObject {
     public void verifyPasswordText(String typeText) {
         //The below function is for web element @FindBy(Sample.password);
         try{
-			assertTrue("Actual text: " + $(Sample.password).getText(), StringUtils.equalsIgnoreCase(typeText,$(Sample.password).getText()));
-        	Settings.LOGGER.info("User gets the text of password element");
-        }
+			verifyPasswordIsDisplayed();
+			if(getElementText(Sample.password).equals(typeText)){;
+        		GemTestReporter.addTestStep("Verify text of password field is equal to " + typeText,"Text of password field is equal to " + typeText, STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("Text of password field is equal to " + typeText);}	
+			else{
+				GemTestReporter.addTestStep("Verify text of password field is equal to " + typeText,"Text of password field is not equal. Expected: "+typeText+" Actual: "+getElementText(Sample.password), STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Text of password field is not equal. Expected: "+typeText+" Actual: "+getElementText(Sample.password));}	
+		}
 		catch(Exception e){
+			GemTestReporter.addTestStep("Verify text of password field is equal to " + typeText,"Text of password field is not equal. Expected: "+typeText+" Actual: "+getElementText(Sample.password), STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Text of password field is not equal. Expected: "+typeText+" Actual: "+getElementText(Sample.password));
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }

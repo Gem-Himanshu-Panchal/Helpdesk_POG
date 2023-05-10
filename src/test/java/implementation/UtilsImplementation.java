@@ -1,9 +1,13 @@
 package implementation;
 
-import net.serenitybdd.core.pages.WebElementFacade;
-import net.serenitybdd.core.pages.PageObject;
-import org.apache.commons.io.FileUtils;
-import java.io.File;
+import com.gemini.generic.reporting.GemTestReporter;
+import com.gemini.generic.reporting.STATUS;
+import com.gemini.generic.ui.utils.DriverAction;
+import com.gemini.generic.utils.GemJarUtils;
+import org.openqa.selenium.chrome.ChromeOptions;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import com.gemini.generic.utils.GemJarGlobalVar;
 import com.gemini.generic.ui.utils.DriverManager;
 import pageobjectgenerator.Settings;
 import net.serenitybdd.core.Serenity;
@@ -29,508 +33,523 @@ import java.util.List;
 import java.util.ArrayList;
 import utils.UtilsMethodCodeGenerator;
 
-public class UtilsImplementation extends PageObject {
+public class UtilsImplementation extends DriverAction {
 
     public String getURL() {
-        String currentUrl = "";
-        try{
-			currentUrl = getDriver().getCurrentUrl();
-        	Settings.LOGGER.info("User successfully gets current URL");
+        
+			String url = getCurrentURL();
+			try{
+			GemTestReporter.addTestStep("Verify user is able to fetch url","User is able to fetch url successfully", STATUS.PASS, takeSnapShot());
         } 
-		catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to fetch url","User is unable to fetch url", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to fetch url");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to get current URL");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to get current URL");
-			Assert.fail(e.getMessage());
         }
-		return currentUrl;
+		return url;
     }
 
     public void verifyURL(String expectedURL) {
         try{
-			String actualURL = getURL();
-        	assertTrue("Actual URL: " + getURL(), actualURL.equals(expectedURL));
-        	Settings.LOGGER.info("User successfully navigated back");
-        } 
-		catch(Exception e){
+			String actualURL = getCurrentURL();
+        	if(actualURL.equals(expectedURL)) {
+				GemTestReporter.addTestStep("Verify if current URL matches <a href ='" +expectedURL+"'>"+expectedURL+"</a>","Validation Successful", STATUS.PASS, takeSnapShot());
+        	}
+			else {
+			GemTestReporter.addTestStep("Verify if current URL matches <a href ='" +expectedURL+"'>"+expectedURL+"</a>","Validation Failed", STATUS.FAIL, takeSnapShot());
+        }
+			}
+		catch(Exception e){GemTestReporter.addTestStep("Verify if current URL matches <a href ='" +expectedURL+"'>"+expectedURL+"</a>","Validation Failed", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to verify url");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Actual URL: " + getURL());
-			Serenity.recordReportData().withTitle("Failure").andContents("Actual URL: " + getURL());
-			Assert.fail(e.getMessage());
         };
     }
 
     public String getTitle() {
-        String title = "";
-        try{
-			title = getDriver().getTitle();
-        	Settings.LOGGER.info("User successfully gets current title");
+        String title = getTitle();
+			try{
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			GemTestReporter.addTestStep("Verify user is able to fetch title","User is able to fetch title successfully", STATUS.PASS, takeSnapShot());
         } 
 		catch(Exception e){
+			GemTestReporter.addTestStep("Verify user is able to fetch title","User is unable to fetch title", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to fetch title");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to get current title");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to get current title");
-			Assert.fail(e.getMessage());
         }
 		return title;
     }
 
     public void verifyTitle(String expectedTitle) {
-        try{
-			String actualTitle = getTitle();
-        	assertTrue("Actual title: " + actualTitle, actualTitle.equals(expectedTitle));
-        	Settings.LOGGER.info("User successfully verifies title");
-        } 
-		catch(Exception e){
+        
+			String actualTitle = getTitle(getCurrentURL());
+			try{
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+        	if(actualTitle.equals(expectedTitle)) {
+				GemTestReporter.addTestStep("Verify page title ","Page title verified successfully. Expected: '" +expectedTitle+"' Actual: '" +actualTitle+"'", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("Page title verified successfully. Expected: '" +expectedTitle+"' Actual: '" +actualTitle+"'" );	}
+			else {
+			GemTestReporter.addTestStep("Verify page title ","Unable to verify page title. Expected: '" +expectedTitle+"' Actual: '" +actualTitle+"'", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Unable to verify page title. Expected: '" +expectedTitle+"' Actual: '" +actualTitle+"'" );	}
+		}
+		catch(Exception e){GemTestReporter.addTestStep("Verify page title ","Unable to verify page title. Expected: '" +expectedTitle+"' Actual: '" +actualTitle+"'", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to verify title");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Actual Title: " + getTitle());
-			Serenity.recordReportData().withTitle("Failure").andContents("Actual Title: " + getTitle());
-			Assert.fail(e.getMessage());
         };
     }
 
     public void navigateTo(String url) {
         try{
-			getDriver().navigate().to(url);
-        	Settings.LOGGER.info("User successfully navigated to URL: " + url);
-        } 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not navigate to URL: " + url);
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not navigate to URL: " + url);
-			Assert.fail(e.getMessage());
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			DriverManager.getWebDriver().navigate().to(url);GemTestReporter.addTestStep("Verify user is able to navigate to "+url,"User is able to navigate to "+url+" successfully", STATUS.PASS, takeSnapShot());
+        			Settings.LOGGER.info("User is able to navigate to "+url+" successfully");
+        }
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to navigate to "+url,"User is unable to navigate to "+url, STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to navigate to "+url);
+			Settings.LOGGER.info("User gets an exception: " + e);
         };
     }
 
     public void forwardNavigation() {
         try{
-			getDriver().navigate().forward();
-        	Settings.LOGGER.info("User successfully navigated Forward");
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			navigateForward();
         } 
-		catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to navigate forward","Unable to navigate forward", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to navigate forward");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not navigate forward");
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not navigate forward");
-			Assert.fail(e.getMessage());
         };
     }
 
     public void backwardNavigation() {
         try{
-			getDriver().navigate().back();
-        	Settings.LOGGER.info("User successfully navigated back");
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			navigateBack();
         } 
-		catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to navigate backward","Unable to navigate backward", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to navigate backward");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not navigate back");
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not navigate back");
-			Assert.fail(e.getMessage());
         };
     }
 
     public void switchActiveElement() {
         try{
-			getDriver().switchTo().activeElement();
-        	Settings.LOGGER.info("User successfully switched to active element");
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			switchToActiveElement();
+        			GemTestReporter.addTestStep("Verify user is able to switch to element","User is able to switch to element", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to switch to element");
         } 
-		catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to switch to element","Unable to switch to element", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to switch to element");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not switch to active element");
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not switch to active element");
-			Assert.fail(e.getMessage());
         };
     }
 
     public void switchDefaultContent() {
         try{
-			getDriver().switchTo().defaultContent();
-        	Settings.LOGGER.info("User successfully switched to default content");
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			switchToDefaultContent();
+        			GemTestReporter.addTestStep("Verify user is able to switch to default content","User is able to switch to default content", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to switch to default content");
         } 
-		catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to switch to default content","Unable to switch to default content", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to switch to default content");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not switch to default element");
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not switch to default element");
-			Assert.fail(e.getMessage());
         };
     }
 
     public void switchParentFrame() {
         try{
-			getDriver().switchTo().parentFrame();
-        	Settings.LOGGER.info("User successfully switched to parent frame");
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			switchToParentFrame();
+        			GemTestReporter.addTestStep("Verify user is able to switch to Parent Frame","User is able to switch to Parent Frame", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to switch to Parent Frame");
         } 
-		catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to switch to element","Unable to switch to Parent Frame", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to switch to Parent Frame");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not switch to parent frame");
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not switch to parent frame");
-			Assert.fail(e.getMessage());
         };
     }
 
     public void switchFrame(String nameOrId) {
         try{
-			getDriver().switchTo().frame(nameOrId);
-        	Settings.LOGGER.info("User successfully switched to frame" + nameOrId);
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			switchToFrame(nameOrId);
+        			GemTestReporter.addTestStep("Verify user is able to switch to Frame","User is able to switch to Frame", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to switch to Frame");
         } 
-		catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to switch to Frame","Unable to switch to Frame", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to switch to Frame");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not switch to frame: " + nameOrId);
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not switch to frame: " + nameOrId);
-			Assert.fail(e.getMessage());
         };
     }
 
     public void switchFrame(int index) {
         try{
-			getDriver().switchTo().frame(index);
-        	Settings.LOGGER.info("User successfully switched to frame" + index);
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			switchToFrame(index);
+        			GemTestReporter.addTestStep("Verify user is able to switch to Frame","User is able to switch to Frame", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to switch to Frame");
         } 
-		catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to switch to Frame","Unable to switch to Frame", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to switch to Frame");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not switch to frame: " + index);
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not switch to frame: " + index);
-			Assert.fail(e.getMessage());
         };
     }
 
     public void switchWindow(String nameOrHandle) {
         try{
-			getDriver().switchTo().window(nameOrHandle);
-        	Settings.LOGGER.info("User successfully switched to window" + nameOrHandle);
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			DriverManager.getWebDriver().switchTo().window(nameOrHandle);
+        			GemTestReporter.addTestStep("Verify user is able to switch to Window","User is able to switch to Window", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to switch to Window");
         } 
-		catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to switch to Window","Unable to switch to Window", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to switch to Window");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not switch to window: " + nameOrHandle);
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not switch to window: " + nameOrHandle);
-			Assert.fail(e.getMessage());
         };
     }
 
     public void wait(int duration) {
         try{
-			waitABit(duration);
-        	Settings.LOGGER.info("User waits for " + duration + " seconds");
+			DriverManager.getWebDriver().wait(duration);
         } 
 		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not wait for : " + duration + " seconds");
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not wait for : " + duration + " seconds");
-			Assert.fail(e.getMessage());
+			Settings.LOGGER.info("User gets an exception: "+ e);
         };
     }
 
     public void clicksAndHold(String locatorName) {
         try{
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			By locator = getLocator(locatorName);
-			new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")))).until(ExpectedConditions.elementToBeClickable(locator));
-        	new SerenityActions(getDriver()).moveToElement($(locator)).clickAndHold().build().perform();
-        	Settings.LOGGER.info("User successfully clicks and holds " + locator + " element");
+			new Actions(DriverManager.getWebDriver()).moveToElement((WebElement) locator).clickAndHold().build().perform();
+        			GemTestReporter.addTestStep("Verify user is able to click and hold "+locatorName+" element","User is able to click and hold "+locatorName+" element", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to click and hold "+locatorName+" element");
         } 
-		catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to click and hold "+locatorName+" element","Unable to click and hold "+locatorName+" element", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to click and hold "+locatorName+" element");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not click and hold: " + locatorName);
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not click and hold: " + locatorName);
-			Assert.fail(e.getMessage());
         };
     }
 
     public void tearDown() {
         try{
-			getDriver().quit();
-        	Settings.LOGGER.info("User successfully closed driver");
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			DriverManager.quitDriver();
+        			GemTestReporter.addTestStep("Verify user is able to close driver","User is able to close driver successfully", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to close driver successfully");
         } 
-		catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to close driver","Unable to close driver", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to close driver");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not close driver");
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not close driver");
-			Assert.fail(e.getMessage());
         };
     }
 
     public void openApplication() {
-        try{
-			getDriver().get(Settings.URL);
-        Settings.LOGGER.info("User launches the application");
-        } 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not launch the application with URL: " + Settings.URL);
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not launch the application with URL: " + Settings.URL);
-			Assert.fail(e.getMessage());
-		};
+        if (GemJarUtils.getGemJarConfigData("chromeOptions") != null && !GemJarUtils.getGemJarConfigData("chromeOptions").isEmpty()) {
+			ChromeOptions options = new ChromeOptions();
+        	options.addArguments("--remote-allow-origins=*");
+        	options.addArguments("--" + GemJarUtils.getGemJarConfigData("chromeOptions"));
+        	DriverManager.initializeChrome(options);
+        }
+		else{
+			if(GemJarUtils.getGemJarConfigData("browserName").equals("firefox")){
+				WebDriverManager.firefoxdriver().clearDriverCache().setup();
+        		DriverManager.setWebDriver(new FirefoxDriver());
+        	}
+			else{
+			ChromeOptions options = new ChromeOptions();
+        	options.addArguments("--remote-allow-origins=*");
+        	DriverManager.initializeChrome(options);
+        		}
+	}
+		maximizeBrowser();
+        launchUrl(GemJarUtils.getGemJarConfigData("launchUrl"));
+        setImplicitTimeOut(Long.parseLong(GemJarGlobalVar.implicitTime));
+        setPageLoadTimeOut(Long.parseLong(GemJarGlobalVar.pageTimeout));
+        setScriptTimeOut(Long.parseLong(GemJarGlobalVar.scriptTimeout));
     }
 
     public void maximizeBrowserToDefault() {
         try{
-			getDriver().manage().window().maximize();
-        	Settings.LOGGER.info("Browser Maximization to default successful");
-		} catch(Exception e){;
-        		Settings.LOGGER.info("Unable to maximize browser to default");
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			STATUS status = maximizeToDefaultBrowserSize();
+        Boolean maximizeStatus = Objects.equals(status, "PASS");;
+        if(maximizeStatus) 	{
+			GemTestReporter.addTestStep("Verify Browser Maximized to Default Size ","Browser Maximization successful.", STATUS.PASS, takeSnapShot());;
+        			Settings.LOGGER.info("Verify Browser Maximized to Default Size ","Browser Maximization successful." );	}
+			else {
+			GemTestReporter.addTestStep("Verify Browser Maximized to Default Size ","Unable to maximize browser.", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Verify Browser Maximized to Default Size ","Unable to maximize browser.");	}
+		}
+		catch(Exception e){GemTestReporter.addTestStep("Verify Browser Maximized to Default Size ","Unable to maximize browser.", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to maximize browser.");
 			Settings.LOGGER.info("User gets an exception: "+e);
-        	Serenity.recordReportData().withTitle("Failure").andContents("Could not maximize browser to default");
-			Assert.fail(e.getMessage());
         };
     }
 
     public void minimizeGivenBrowser() {
         try{
-			getDriver().manage().window().minimize();
-        			Settings.LOGGER.info("Browser Minimization successful.");
-}catch(Exception e){;
-        			Settings.LOGGER.info("Unable to minimize browser.");
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			minimizeBrowser();
+        } 
+		catch(Exception e){
+			GemTestReporter.addTestStep("Verify Browser Minimized","Unable to minimize browser.", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to minimize browser.");
 			Settings.LOGGER.info("User gets an exception: "+e);
-        	Serenity.recordReportData().withTitle("Failure").andContents("Could not minimize browser");
-			Assert.fail(e.getMessage());
         };
     }
 
     public Object browserSize() {
         Integer sizeOfBrowser = null;
-        try { 
-			Object size = getDriver().manage().window().getSize();
-        	if(size!=null);
+        try{
+		Object size = getBrowserSize();
+        if(size!=null){
+			GemTestReporter.addTestStep("Get Browser Size ","Browser Size fetched successfully.", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("Browser Size fetched successfully.");
         	sizeOfBrowser = Integer.valueOf(size.toString());
-        
-		} catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not get size of browser");
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not get size of browser");
-			Assert.fail(e.getMessage());
-		};
+		}}		
+		catch(Exception e){GemTestReporter.addTestStep("Get Browser Size ","Unable to fetch Browser Size.", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to fetch browser size");
+			Settings.LOGGER.info("User gets an exception: " + e);;
+        }
+		;
         return sizeOfBrowser;
     }
 
     public void setSizeOfBrowser(int width, int height) {
         try{
-			Dimension newDimension = new Dimension(width, height);
-			getDriver().manage().window().setSize(newDimension)		;
-        	Settings.LOGGER.info("User successfully set size of browser");
+			setBrowserSize(width,height);
         } 
-			catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify User is able to set browser size","User is unable to set browser size to width: "+width+" and height: "+height+" coordinates.", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to set browser position to width: "+width+" and height: "+height+" coordinates.");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not set size of browser");
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not set size of browser");
-			Assert.fail(e.getMessage());
-		};
+        };
     }
 
     public void setPositionOfBrowser(int x, int y) {
         try{
-			getDriver().manage().window().setPosition(new Point(x,y));
-        	Settings.LOGGER.info("User successfully set position of browser");
+			setBrowserPosition(x,y);
         } 
-			catch(Exception e){
+		catch(Exception e){GemTestReporter.addTestStep("Verify User is able to set browser position","User is unable to set browser position to x: "+x+" and y: "+y+" coordinates.", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to set browser position to x: "+x+" and y: "+y+" coordinates.");
 			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Could not set position of browser");
-			Serenity.recordReportData().withTitle("Failure").andContents("Could not set position of browser");
-			Assert.fail(e.getMessage());
-		};
+        };
     }
 
     public Object browserPosition() {
         Integer positionOfBrowser = null;
         try{
-		Object position = getDriver().manage().window().getPosition();
-        if(position!=null)	;
+		Object position = getBrowserLocation();
+        if(position!=null){
+			GemTestReporter.addTestStep("Get Browser Position ","Browser Position fetched successfully.", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("Browser Position fetched successfully.");
         	positionOfBrowser = Integer.valueOf(position.toString());
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to get browser position");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to get browser position");
-			Assert.fail(e.getMessage());
+		}}		
+		catch(Exception e){GemTestReporter.addTestStep("Get Browser Position ","Unable to fetch Browser position.", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to fetch browser position");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
-		return positionOfBrowser;
+		;
+        return positionOfBrowser;
     }
 
     public Object windowHandle() {
-        String windowHandle = null;
-        try { 
-			windowHandle = getDriver().getWindowHandle();
-        if(windowHandle==null){
-			throw new NullPointerException();
-        } 
-			} catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to get window handle");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to get window handle");
-			Assert.fail(e.getMessage());
-		};
+        String windowHandle =null;
+		try{
+		wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+		windowHandle = getWindowHandle();
+        if(windowHandle!=null){
+			GemTestReporter.addTestStep("Get Window Handle","Window Handle fetched successfully.", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("Window Handle fetched successfully.");
+        
+		}}		
+		catch(Exception e){GemTestReporter.addTestStep("Get Window Handle","Unable to fetch Window Handle", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to fetch Window Handle");
+			Settings.LOGGER.info("User gets an exception: " + e);;
+        }
+		;
         return windowHandle;
     }
 
     public String windowHandles() {
-        String windowHandles = null;
-        try { 
-			windowHandles = getDriver().getWindowHandles().toString();
-        if(windowHandles==null){
-			throw new NullPointerException();
-        } 
-			} catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to get window handles");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to get window handles");
-			Assert.fail(e.getMessage());
-		};
+        String windowHandles =null;
+		try{
+		wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+		windowHandles = getWindowHandles().toString();
+        if(windowHandles!=null){
+			GemTestReporter.addTestStep("Get Window Handles","Window Handles fetched successfully.", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("Window Handles fetched successfully.");
+        
+		}}		
+		catch(Exception e){GemTestReporter.addTestStep("Get Window Handles","Unable to fetch Window Handles", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to fetch Window Handles");
+			Settings.LOGGER.info("User gets an exception: " + e);;
+        }
+		;
         return windowHandles;
     }
 
     public String pageSource() {
-        String pageSource = null;
-        try { 
-			pageSource = getDriver().getPageSource();
-        if(pageSource==null){
-			throw new NullPointerException();
-        } 
-			} catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to get page source");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to get page source");
-			Assert.fail(e.getMessage());
-		};
+        String pageSource = getPageSource();
+		try
+		{
+		;
+        if(pageSource!=null){
+			GemTestReporter.addTestStep("Get Page Source","Page Source fetched successfully.", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("Page Source fetched successfully.");
+        
+		}}		
+		catch(Exception e){GemTestReporter.addTestStep("Get Page Source","Unable to fetch Page Source", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to fetch Page Source");
+			Settings.LOGGER.info("User gets an exception: " + e);;
+        }
+		;
         return pageSource;
     }
 
     public void closeTab() {
         try{
-			getDriver().close();
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to close current tab");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to close current tab");
-			Assert.fail(e.getMessage());
+			closeCurrentTab();
+        
+			GemTestReporter.addTestStep("Verify user is able to close current tab","User successfully closes current tab.", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User successfully closes current tab.");
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to close current tab","User is unable to close current tab.", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to close current tab.");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
 
     public void alertSwitch() {
         try{
-			getDriver().switchTo().alert();
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to switch to Alert");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to switch to Alert");
-			Assert.fail(e.getMessage());
+			switchToAlert();
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to switch to alert","User is unable to switch to alert.", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to switch to alert.");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
 
     public void alertAccept() {
         try{
-			getDriver().switchTo().alert().accept();
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to accept Alert");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to accept Alert");
-			Assert.fail(e.getMessage());
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			acceptAlert();
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to accept alert","User is unable to accept alert.", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to accept alert.");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
 
     public void alertDismiss() {
         try{
-			getDriver().switchTo().alert().dismiss();
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to dismiss Alert");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to dismiss Alert");
-			Assert.fail(e.getMessage());
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			dismissAlert();
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to dismiss alert","User is unable to dismiss alert.", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to dismiss alert.");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
 
     public void inputForAlert(String input) {
         try{
-			getDriver().switchTo().alert().sendKeys(input);
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to enter " + input + "into Alert");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to enter " + input + "into Alert");
-			Assert.fail(e.getMessage());
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			alertInput(input);
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to input for an alert","User is unable to enter input for an alert.", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to enter input for an alert.");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
 
     public void scrollUp() {
         try{
-			JavascriptExecutor js = (JavascriptExecutor) getDriver();
-			js.executeScript("window.scrollTo(0, -document.body.scrollHeight)");
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to scroll to top of page");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to scroll to top of page");
-			Assert.fail(e.getMessage());
+			scrollToTop();
+			GemTestReporter.addTestStep("Verify user is able to scroll up","User is able to scroll up successfully.", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to scroll up successfully.");
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to scroll up","Unable to scroll up", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to scroll up");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
 
     public void scrollDown() {
         try{
-			 JavascriptExecutor js = (JavascriptExecutor) getDriver();
-			js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to scroll to bottom of page");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to scroll to bottom of page");
-			Assert.fail(e.getMessage());
+			scrollToBottom();
+			GemTestReporter.addTestStep("Verify user is able to scroll down","User is able to scroll down successfully.", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to scroll down successfully.");
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to scroll down","Unable to scroll down", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to scroll down");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
 
     public void scrollPage(int x, int y) {
         try{
-			JavascriptExecutor js = (JavascriptExecutor) getDriver();
-			js.executeScript("window.scrollBy("+x+","+y+")");
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to scroll page");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to scroll page");
-			Assert.fail(e.getMessage());
+			pageScroll(x,y);
+			GemTestReporter.addTestStep("Verify user is able to scroll page to x: "+x+" and y: "+y+" coordinates","User is able to scroll page to x: "+x+" and y: "+y+" coordinates", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to scroll page to x: "+x+" and y: "+y+" coordinates");
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to scroll page to x: "+x+" and y: "+y+" coordinates","Unable to scroll page to x: "+x+" and y: "+y+" coordinates", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to scroll page to x: "+x+" and y: "+y+" coordinates");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
 
     public void elementScroll(int x, int y) {
         try{
-			JavascriptExecutor js = (JavascriptExecutor) getDriver();
-			js.executeScript("window.scrollBy("+x+","+y+")");
-        } 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
+			scrollAnElementToSpecificPosition(x,y);
+			GemTestReporter.addTestStep("Verify user is able to scroll element to x: "+x+" and y: "+y+" coordinates","User is able to scroll element to x: "+x+" and y: "+y+" coordinates", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to scroll element to x: "+x+" and y: "+y+" coordinates");
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to scroll element to x: "+x+" and y: "+y+" coordinates","Unable to scroll element to x: "+x+" and y: "+y+" coordinates", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to scroll element to x: "+x+" and y: "+y+" coordinates");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
 
     public void refreshPage() {
         try{
-			getDriver().navigate().refresh();
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
+			refresh();
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to refresh page","Unable to refresh page", STATUS.FAIL, takeSnapShot());
 			Settings.LOGGER.info("Unable to refresh page");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to refresh page");
-			Assert.fail(e.getMessage());
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
 
-    public void takeScreenshot(String filePath) {
+    public void takeScreenshot() {
         try{
-			TakesScreenshot scrShot =((TakesScreenshot)getDriver());
-			File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-			File DestFile=new File(filePath);
-			FileUtils.copyFile(SrcFile, DestFile);
-        } 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
+			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			takeSnapShot();
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to take screenshot","Unable to take screenshot", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to take screenshot");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
@@ -554,15 +573,16 @@ public class UtilsImplementation extends PageObject {
 
     public void clickUsingJS(String locatorName) {
         try{
-			By locator = getLocator(locatorName);
-			JavascriptExecutor executor = (JavascriptExecutor)getDriver();
-			executor.executeScript("arguments[0].click();", $(locator));
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to click using JS");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to click using JS");
-			Assert.fail(e.getMessage());
+				By locator = getLocator(locatorName);
+			JavascriptExecutor executor = (JavascriptExecutor)DriverManager.getWebDriver();
+			executor.executeScript("arguments[0].click();", locator);
+			GemTestReporter.addTestStep("Verify user is able to force click on javascript element","User is able to click element : Password", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to click element : Password");
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to force click","User is unable to click element : Password", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to click element : Password");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
@@ -571,13 +591,14 @@ public class UtilsImplementation extends PageObject {
         try{
 			By fromLocator = getLocator(from);
 			By toLocator = getLocator(to);
-			new SerenityActions(getDriver()).dragAndDrop($(fromLocator), $(toLocator)).build().perform();
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to drag and drop element");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to drag and drop element");
-			Assert.fail(e.getMessage());
+			new SerenityActions(DriverManager.getWebDriver()).dragAndDrop((WebElement)fromLocator, (WebElement)toLocator).build().perform();
+			GemTestReporter.addTestStep("Verify user is able to scroll drag to drop element to x: Password","User is able to drag and drop element : Password", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to drag and drop element : Password");
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to scroll drag to drop element to x: Password","User is able to drag and drop element : Password", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is able to drag and drop element : Password");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
@@ -585,13 +606,14 @@ public class UtilsImplementation extends PageObject {
     public void fileUpload(String filePath, String locatorName) {
         try{
 			By locator = getLocator(locatorName);
-			$(locator).sendKeys(filePath);
-        	} 
-		catch(Exception e){
-			Settings.LOGGER.info("User gets an exception: "+e);
-			Settings.LOGGER.info("Unable to upload file");
-			Serenity.recordReportData().withTitle("Failure").andContents("Unable to upload file");
-			Assert.fail(e.getMessage());
+			typeText((WebElement)locator, "filePath " + filePath);
+			GemTestReporter.addTestStep("Verify user is able to upload file to drop element : Password","User is able to upload file to element : Password", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to upload file to element : Password");
+        
+		}		
+		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to upload file to element: Password","User is unable to upload file to element : Password", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("User is unable to upload file to element : Password");
+			Settings.LOGGER.info("User gets an exception: " + e);;
         }
 		;
     }
