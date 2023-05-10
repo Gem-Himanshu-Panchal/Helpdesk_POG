@@ -194,6 +194,7 @@ public class UtilsMethodCodeGenerator {
             imports.add(new ImportDeclaration(new NameExpr("org.openqa.selenium.By"), false, false));
             imports.add(new ImportDeclaration(new NameExpr("java.lang.reflect.Field"), false, false));
             imports.add(new ImportDeclaration(new NameExpr("java.util.List"), false, false));
+            imports.add(new ImportDeclaration(new NameExpr("java.util.ArrayList"), false, false));
             imports.add(new ImportDeclaration(new NameExpr("utils.UtilsMethodCodeGenerator"), false, false));
         }
 
@@ -414,7 +415,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties(\"timeOut\"))))"));
             ASTHelper.addStmt(block, new NameExpr("\tassertTrue(\"" + meaningFulName + " is not selected\", wait.until(ExpectedConditions.elementToBeSelected("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+")))"));
             ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User verifies if checkbox is selected\")"));
-            ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Serenity" + "." + "recordReportData().withTitle(\"Failure\").andContents(\"Unable to verify element Selected or not\")"));
+            ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\tAssert.fail(e.getMessage());\n\t\t\t" + "Serenity" + "." + "recordReportData().withTitle(\"Failure\").andContents(\"Unable to verify element Selected or not\")"));
             ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"Unable to select " + field.getName() + " checkbox\" );" + "\n\t}"));
 
         }
@@ -820,11 +821,12 @@ public class UtilsMethodCodeGenerator {
                 ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
                 ASTHelper.addStmt(block, new NameExpr("}"));
             } else {
-                ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tgetDriver().navigate().forward()"));
-                ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User successfully navigated Forward\"" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("SerenityActions serenityActions = new SerenityActions(getDriver())"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\t" + "serenityActions" + "." + "moveToElement($(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + "))" + "." + "build().perform()"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User successfully hovers over\"" + ")"));
                 ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
                 ASTHelper.addStmt(block, new NameExpr("}"));
-                Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver()" + "." + "get" + "(" + "Settings.URL" + ")")));
+                Settings.LOGGER.info(String.valueOf(new NameExpr("serenityActions" + "." + "moveToElement($(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + "))" + "." + "build().perform()")));
             }
 
         ASTHelper.addMember(c.getTypes().get(0), method);
@@ -890,9 +892,9 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(\"" + meaningFulName + " has" + " count " +  "child elements\");\n\t\t\t}" + " catch(" + "Exception e" + "){\n\t\t\t" + "GemTestReporter.addTestStep(\"Verify element " + meaningFulName + " has\"" + " + count + " + "\"child elements)\",\"" + meaningFulName + " has\" + count + \"child elements\", STATUS.FAIL, takeSnapShot())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         } else {
-            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElementFacade parentElement = $(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ");\n\t\t\tList<WebElementFacade> allChildElements = parentElement.findElements(By.xpath(\"*\"));\n\t\t\tassertEquals(count, allChildElements.size()){"));
-            ASTHelper.addStmt(block, new NameExpr("\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(\"" + field.getName() + " has\" + allChildElements.size() + \"child elements\");}\t\n\t\t\t else{\n\t\t\t\t" + "Assert.fail(\"Actual child count - \" + allChildElements.size()\")"));
-            ASTHelper.addStmt(block, new NameExpr("\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(\"" + field.getName() + " has\" + allChildElements.size() + \"child elements\");}\t\n\t\t}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Assert.fail(\"Actual child count - \" + allChildElements.size()\")"));
+            ASTHelper.addStmt(block, new NameExpr("List<WebElement> allChildElements = new ArrayList<>()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElementFacade parentElement = $(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ");\n\t\t\tallChildElements = parentElement.findElements(By.xpath(\"*\"));\n\t\t\tAssert.assertEquals(count, allChildElements.size())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(\"" + field.getName() + " has\" + allChildElements.size() + \"child elements\");\t\n\t\t}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Assert.fail(\"Actual child count - \" + allChildElements.size())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
 
@@ -920,14 +922,14 @@ public class UtilsMethodCodeGenerator {
         //DriverAction.getAttributeName(element,"value") of Gemjar Framework to get the value attribute of an element
 
         if (readProperties("Framework").contains("GEMJAR")) {
-            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tList<WebElement> allElements = DriverManager.getWebDriver().findElements(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ");\n\t\t\tAssert.assertEquals(count, allElements.size())"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tallElements = DriverManager.getWebDriver().findElements(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ");\n\t\t\tAssert.assertEquals(count, allElements.size())"));
             ASTHelper.addStmt(block, new NameExpr("\t\tGemTestReporter.addTestStep(\"Verify element " + meaningFulName + " count" + ")\",\"" + meaningFulName + " count is\" + count, STATUS.PASS, takeSnapShot())"));
             ASTHelper.addStmt(block, new NameExpr("\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(\"" + meaningFulName + " count is " + "count\");\n\t\t\t}" + " catch(" + "Exception e" + "){\n\t\t\t" + "GemTestReporter.addTestStep(\"Verify element " + meaningFulName + " count is\"" + " + count,\"" + meaningFulName + " count is\" + count, STATUS.FAIL, takeSnapShot())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         } else {
-            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tList<WebElementFacade> allElements = $(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ");\n\t\t\tassertEquals(count, allElements.size()){"));
-            ASTHelper.addStmt(block, new NameExpr("\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(\"" + field.getName() + " count is \" + allElements.size());}\t\n\t\t\t else{\n\t\t\t\t" + "Assert.fail(\"Actual count - \" + allElements.size()\")"));
-            ASTHelper.addStmt(block, new NameExpr("\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(\"" + field.getName() + " count is \" + allElements.size());}\t\n\t\t}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Assert.fail(\"Actual count - \" + allElements.size()\")"));
+            ASTHelper.addStmt(block, new NameExpr("List<WebElement> allElements = new ArrayList<>()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tallElements = getDriver().findElements(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ");\n\t\t\tAssert.assertEquals(count, allElements.size())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(\"" + field.getName() + " count is \" + allElements.size());\t\n\t\t}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Assert.fail(\"Actual count - \" + allElements.size())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
 
@@ -1126,7 +1128,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tnew WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties(\"timeOut\")))).until(ExpectedConditions.elementToBeClickable("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+"))"));
             ASTHelper.addStmt(block, new NameExpr("\tassertTrue(\"" + meaningFulName + " is not clickable\", " + "$(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")" + "." + "isClickable" + "(" + "))"));
             ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User verifies " + field.getName() + " is clickable\"" + ")"));
-            ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Serenity" + "." + "recordReportData().withTitle(\"Failure\").andContents(\"Unable to click\")"));
+            ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\tAssert.fail(e.getMessage());\n\t\t\t" + "Serenity" + "." + "recordReportData().withTitle(\"Failure\").andContents(\"Unable to click\")"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e.getMessage()" + ")"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
@@ -1160,7 +1162,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\tWebElement element = wait.until(ExpectedConditions.presenceOfElementLocated("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+"))"));
             ASTHelper.addStmt(block, new NameExpr("\tassertTrue(\"" + meaningFulName + " is not enabled\", " + "element" + "." + "isEnabled" + "(" + "))"));
             ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User verifies the given " + field.getName() + " element is enabled\"" + ")"));
-            ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Serenity" + "." + "recordReportData().withTitle(\"Failure\").andContents(\"Unable to click\")"));
+            ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\tAssert.fail(e.getMessage());\n\t\t\t" + "Serenity" + "." + "recordReportData().withTitle(\"Failure\").andContents(\"Unable to click\")"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e.getMessage()" + ")"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
@@ -2464,7 +2466,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         } else {
-            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tBy fromLocator = getLocator(from);\n\t\t\tBy toLocator = getLocator(to);\n\t\t\tnew SerenityActions(getDriver()).dragAndDrop($(from), $(to)).build().perform()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tBy fromLocator = getLocator(from);\n\t\t\tBy toLocator = getLocator(to);\n\t\t\tnew SerenityActions(getDriver()).dragAndDrop($(fromLocator), $(toLocator)).build().perform()"));
             ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }

@@ -38,6 +38,7 @@ Feature: Test
   Scenario: Verify Birthday field is enabled
     When For the Sample page, User verifies Birthday input is enabled
     Then For the Sample page, User enters "15-07-2000" as input for Birthday
+    And User clic
 #
   Scenario: Verify Birthday field is empty
     When For the Sample page, User enters "15-07-2000" as input for Birthday

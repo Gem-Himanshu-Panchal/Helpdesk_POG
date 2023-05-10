@@ -8,8 +8,8 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 import java.util.concurrent.TimeUnit;
-import implementation.SampleImplementation;
-import locators.Sample;
+import implementation.GoogleImplementation;
+import locators.Google;
 import implementation.UtilsImplementation;
 import utils.UtilFunctions;
 import org.openqa.selenium.*;
@@ -75,7 +75,7 @@ public class UtilsStepDefinition {
         utils.forwardNavigation();
     }
 
-    @When(" ^User navigates Back to Previous Page$")
+    @When("^User navigates Back to Previous Page$")
     public void navigateBack() {
         utils.backwardNavigation();
     }
@@ -186,8 +186,8 @@ public class UtilsStepDefinition {
     }
 
     @When("^User take snapshot")
-    public void takeScreenshot() {
-        utils.takeScreenshot();
+    public void takeScreenshot(String filePath) {
+        utils.takeScreenshot(filePath);
     }
 
     @When("^User switches to Active Element$")
@@ -225,9 +225,29 @@ public class UtilsStepDefinition {
         utils.wait(duration*1000);
     }
 
+    @When("^User clicks \"(.*?)\"$")
+    public void clickUsingJS(String locatorName) {
+        utils.clickUsingJS(locatorName);
+    }
+
     @Then("^User clicks and holds \"(.*?)\" element$")
-    public void userClicksAndHoldsElement(By locator) {
+    public void userClicksAndHoldsElement(String locator) {
         utils.clicksAndHold(locator);
+    }
+
+    @Then("^User drags from \"(.*?)\" and drops to \"(.*?)\" position$")
+    public void userDragsAndDrops(String from, String to) {
+        utils.dragAndDrop(from, to);
+    }
+
+    @Then("^User uploads file from  \"(.*?)\" path to \"(.*?)\" element$")
+    public void userUploadsFile(String filePath, String locator) {
+        utils.fileUpload(filePath, locator);
+    }
+
+    @Then("^User verifies file \"(.*?)\" is downloaded$")
+    public void userUploadsFile(String filePath) {
+        utilFunctions.isFileDownloaded(filePath);
     }
 
     @Then("^User closes browser$")

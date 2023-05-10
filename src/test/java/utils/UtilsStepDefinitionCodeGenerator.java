@@ -724,6 +724,49 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
+    public static void setLinkStepDefinitionFileDownload(CompilationUnit c) {
+//        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        String functionName = "";
+        String annotationValue = "";
+        String textToEnter = "";
+        String blockToEnter = "";
+        String annotationType = "";
+        List<Parameter> parameters = new LinkedList<>();
+
+        functionName = Settings.USER_UPLOAD_FILE;
+        annotationValue = "\"^User verifies file \\\"(.*?)\\\" is downloaded$" + "\""; //changed the step definition
+        textToEnter = "isFileDownloaded";
+        blockToEnter = textToEnter + "(" + "filePath" + ")";
+//        blockToEnter = functionName + "(" + "" + ")";
+        annotationType = "Then";
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "filePath"));
+        Settings.LOGGER.info("Step created: " + annotationValue + "and function created: " + functionName);
+
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
+//        method.setParameters(parameters);
+        method.setParameters(parameters);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        NormalAnnotationExpr na = new NormalAnnotationExpr();
+        na.setName(new NameExpr(annotationType));
+        List<MemberValuePair> list_mvp = new LinkedList<MemberValuePair>();
+        MemberValuePair mvp = new MemberValuePair();
+
+        List<AnnotationExpr> list_espr = new LinkedList<AnnotationExpr>();
+        mvp = new MemberValuePair("xpath", new NameExpr(annotationValue));
+        list_mvp.add(mvp);
+        na.setPairs(list_mvp);
+        list_espr.add(0, na);
+
+        method.setAnnotations(list_espr);
+
+        ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+
+    }
 
     public static void setLinkStepDefinitionRightClick(CompilationUnit c, Field field, String className) {
         meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);

@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import pageobjectgenerator.Settings;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Set;
@@ -25,18 +26,20 @@ import static com.gemini.generic.ui.utils.DriverAction.*;
 
 public class UtilFunctions extends PageObject {
 
-    public static boolean isFileDownloaded(String fileName, int timeoutSeconds) throws InterruptedException {
-        WebDriver driver = SerenityWebdriverManager.inThisTestThread().getCurrentDriver();
-        File dir = new File(System.getProperty("user.home") + "/Downloads");
-        File[] files = dir.listFiles();
-        long startTime = System.currentTimeMillis();
-        while ((System.currentTimeMillis() - startTime) < (timeoutSeconds * 1000)) {
-            for (File file : files) {
-                if (file.getName().equalsIgnoreCase(fileName)) {
-                    return true;
+    public static boolean isFileDownloaded(String fileName) throws InterruptedException, IOException {
+        try {
+            File dir = new File(System.getProperty("user.home") + "/Downloads");
+            File[] files = dir.listFiles();
+            long startTime = System.currentTimeMillis();
+            while ((System.currentTimeMillis() - startTime) < Long.parseLong(UtilsMethodCodeGenerator.readProperties("timeOut"))) {
+                for (File file : files) {
+                    if (file.getName().equalsIgnoreCase(fileName)) {
+                        return true;
+                    }
                 }
             }
-            driver.manage().timeouts().wait(10000);
+        } catch (Exception e) {
+            Assert.fail("");
         }
         return false;
     }

@@ -70,6 +70,7 @@ public class GenericStepDefinitionGenerator {
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionClickAndHold(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionDragAndDrop(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionFileUpload(c);
+//        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionFileDownload(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionQuit(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodGiven(c, "homePage");
         UtilsStepDefinitionCodeGenerator.savePageObjectsOnFileSystem(Settings.STEP_DEFINITION_PO_DIR,
