@@ -101,7 +101,7 @@ public class Settings {
 	public static final String USER_WAITS = "^User waits for (.*) seconds";
 	public static final String USER_CLOSES_BROWSER ="^User closes browser";
 
-	public static final String MAXIMIZE_TO_DEFAULT ="^User maximizes window to default";
+	public static final String MAXIMIZE_TO_DEFAULT ="^User maximizes window to default$";
 
 	public static final String MINIMIZE_TO_DEFAULT ="^User minimizes window to default";
 	public static final String GET_PAGE_SOURCE ="^User gets page source";
@@ -130,7 +130,7 @@ public class Settings {
 	public static final String CLOSE_CURRENT_TAB ="User closes current tab";
 
 	public static final String CLOSE_TAB_AND_SWITCH ="User closes current tab and switches to \\\"(.*)\\\" tab";
-	public static final String USER_NAVIGATE_FORWARD ="User navigates Forward to Next Page";
+	public static final String USER_NAVIGATE_FORWARD ="^User navigates Forward to Next Page";
 	public static final String USER_NAVIGATE_TO ="^User navigates to \\\"(.*)\\\"$";
 
 	public static final String USER_VERIFY_URL ="^User verifies the current URL with \\\"(.*)\\\"$";

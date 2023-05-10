@@ -8,8 +8,8 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 import java.util.concurrent.TimeUnit;
-import implementation.GoogleImplementation;
-import locators.Google;
+import implementation.SampleImplementation;
+import locators.Sample;
 import implementation.UtilsImplementation;
 import utils.UtilFunctions;
 import org.openqa.selenium.*;
@@ -70,7 +70,7 @@ public class UtilsStepDefinition {
         utils.navigateTo(url);
     }
 
-    @When("User navigates Forward to Next Page$")
+    @When("^User navigates Forward to Next Page$")
     public void navigateForward() {
         utils.forwardNavigation();
     }
@@ -80,7 +80,7 @@ public class UtilsStepDefinition {
         utils.backwardNavigation();
     }
 
-    @When("^User maximizes window to default")
+    @When("^User maximizes window to default$")
     public void maximizeBrowserToDefault() {
         utils.maximizeBrowserToDefault();
     }
@@ -175,11 +175,6 @@ public class UtilsStepDefinition {
         utils.elementScroll(x,y);
     }
 
-    @When("^User navigates to \"(.*)\" url")
-    public void urlNavigation(String url) {
-        utils.urlNavigation(url);
-    }
-
     @When("^User refreshes page")
     public void refreshPage() {
         utils.refreshPage();
@@ -243,11 +238,6 @@ public class UtilsStepDefinition {
     @Then("^User uploads file from  \"(.*?)\" path to \"(.*?)\" element$")
     public void userUploadsFile(String filePath, String locator) {
         utils.fileUpload(filePath, locator);
-    }
-
-    @Then("^User verifies file \"(.*?)\" is downloaded$")
-    public void userUploadsFile(String filePath) {
-        utilFunctions.isFileDownloaded(filePath);
     }
 
     @Then("^User closes browser$")

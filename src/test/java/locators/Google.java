@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 
 public class Google extends PageObject {
 
-    @LocatorType(value="div")
+    @LocatorType(value="input")
     public static By firstName= By.xpath("//*[@id='fname']");
 //    @LocatorType(value="input")
 //    public static By password=By.id("password");

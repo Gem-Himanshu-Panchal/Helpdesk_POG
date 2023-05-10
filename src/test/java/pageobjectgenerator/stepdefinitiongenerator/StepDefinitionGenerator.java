@@ -223,6 +223,9 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, true, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeContainsText(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionHoverOver(c, field, aClass.getSimpleName());
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeVerification(c, field, aClass.getSimpleName());
+
             }
 
             }

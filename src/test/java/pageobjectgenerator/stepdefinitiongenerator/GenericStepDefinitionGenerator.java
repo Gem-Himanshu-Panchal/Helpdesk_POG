@@ -56,7 +56,7 @@ public class GenericStepDefinitionGenerator {
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollToBottom(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionPageScroll(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollElementToPosition(c);
-        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionNavigateToUrl(c);
+//        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionNavigateToUrl(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionRefresh(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionTakeSnapshot(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionActiveElement(c);

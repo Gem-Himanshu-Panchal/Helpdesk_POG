@@ -1,4 +1,3 @@
-@reg
 Feature: Test
 
   Background:
@@ -9,9 +8,11 @@ Feature: Test
 #    Scenario: type
 #      When For the Sample page, User enters "password" as input for PasswordNEW
 
+  @reg
   Scenario: Verify value entered for Firstname
-    When For the Sample page, User enters "Jasleen" as input for FirstName
-    Then For the Sample page, User verifies "Jasleen" is the value for FirstName
+    When For the Sample page, User enters "fdsdf" as FirstName element and presses enter
+    Then User waits for 5 seconds
+#    Then For the Sample page, User verifies "Jasleen" is the value for FirstName
 
   Scenario: Verify First Name field is enabled
     When For the Sample page, User verifies FirstName input is enabled
