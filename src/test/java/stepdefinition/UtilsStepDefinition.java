@@ -50,7 +50,7 @@ public class UtilsStepDefinition {
         utilFunctions.getWindowFocus(windowHandle);
     }
 
-    @And("^User verifies the current URL with \"(.*)\"$")
+    @And("^User verifies \"(.*)\" is the current URL$")
     public void verifyUrl(String url) {
         utils.verifyURL(url);
     }
@@ -70,7 +70,7 @@ public class UtilsStepDefinition {
         utils.navigateTo(url);
     }
 
-    @When("^User navigates Forward to Next Page$$")
+    @When("^User navigates Forward to Next Page$")
     public void navigateForward() {
         utils.forwardNavigation();
     }
@@ -170,7 +170,7 @@ public class UtilsStepDefinition {
         utils.scrollPage(x,y);
     }
 
-    @When("^User scrolls element to \"(.*)\" x coordinate and \"(.*)\" y coordinate")
+    @When("^User scrolls element to \"(.*)\" x coordinate and \"(.*)\" y coordinate$")
     public void elementScroll(Integer x, Integer y) {
         utils.elementScroll(x,y);
     }
@@ -180,7 +180,7 @@ public class UtilsStepDefinition {
         utils.refreshPage();
     }
 
-    @When("^User take snapshot$")
+    @When("^User takes snapshot$")
     public void takeScreenshot() {
         utils.takeScreenshot();
     }

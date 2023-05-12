@@ -36,10 +36,10 @@ import utils.UtilsMethodCodeGenerator;
 public class UtilsImplementation extends DriverAction {
 
     public String getURL() {
-        
-			String url = getCurrentURL();
-			try{
+        String url = getCurrentURL();
+		try{
 			GemTestReporter.addTestStep("Verify user is able to fetch url","User is able to fetch url successfully", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("User is able to fetch url");
         } 
 		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to fetch url","User is unable to fetch url", STATUS.FAIL, takeSnapShot());
 			Settings.LOGGER.info("User is unable to fetch url");
@@ -50,12 +50,14 @@ public class UtilsImplementation extends DriverAction {
 
     public void verifyURL(String expectedURL) {
         try{
-			String actualURL = getCurrentURL();
-        	if(actualURL.equals(expectedURL)) {
+			String text = getCurrentURL();
+        	if(text.equals(expectedURL)) {
 				GemTestReporter.addTestStep("Verify if current URL matches <a href ='" +expectedURL+"'>"+expectedURL+"</a>","Validation Successful", STATUS.PASS, takeSnapShot());
+			Settings.LOGGER.info("URL verified successfully");
         	}
 			else {
 			GemTestReporter.addTestStep("Verify if current URL matches <a href ='" +expectedURL+"'>"+expectedURL+"</a>","Validation Failed", STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Unable to verify url");
         }
 			}
 		catch(Exception e){GemTestReporter.addTestStep("Verify if current URL matches <a href ='" +expectedURL+"'>"+expectedURL+"</a>","Validation Failed", STATUS.FAIL, takeSnapShot());
@@ -67,7 +69,6 @@ public class UtilsImplementation extends DriverAction {
     public String getTitle() {
         String title = getTitle();
 			try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			GemTestReporter.addTestStep("Verify user is able to fetch title","User is able to fetch title successfully", STATUS.PASS, takeSnapShot());
         } 
 		catch(Exception e){
@@ -81,8 +82,7 @@ public class UtilsImplementation extends DriverAction {
     public void verifyTitle(String expectedTitle) {
         
 			String actualTitle = getTitle(getCurrentURL());
-			try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
+			try{;
         	if(actualTitle.equals(expectedTitle)) {
 				GemTestReporter.addTestStep("Verify page title ","Page title verified successfully. Expected: '" +expectedTitle+"' Actual: '" +actualTitle+"'", STATUS.PASS, takeSnapShot());
         			Settings.LOGGER.info("Page title verified successfully. Expected: '" +expectedTitle+"' Actual: '" +actualTitle+"'" );	}
@@ -98,7 +98,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void navigateTo(String url) {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			DriverManager.getWebDriver().navigate().to(url);GemTestReporter.addTestStep("Verify user is able to navigate to "+url,"User is able to navigate to "+url+" successfully", STATUS.PASS, takeSnapShot());
         			Settings.LOGGER.info("User is able to navigate to "+url+" successfully");
         }
@@ -110,7 +109,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void forwardNavigation() {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			navigateForward();
         } 
 		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to navigate forward","Unable to navigate forward", STATUS.FAIL, takeSnapShot());
@@ -121,7 +119,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void backwardNavigation() {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			navigateBack();
         } 
 		catch(Exception e){GemTestReporter.addTestStep("Verify user is able to navigate backward","Unable to navigate backward", STATUS.FAIL, takeSnapShot());
@@ -132,7 +129,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void switchActiveElement() {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			switchToActiveElement();
         			GemTestReporter.addTestStep("Verify user is able to switch to element","User is able to switch to element", STATUS.PASS, takeSnapShot());
 			Settings.LOGGER.info("User is able to switch to element");
@@ -145,7 +141,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void switchDefaultContent() {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			switchToDefaultContent();
         			GemTestReporter.addTestStep("Verify user is able to switch to default content","User is able to switch to default content", STATUS.PASS, takeSnapShot());
 			Settings.LOGGER.info("User is able to switch to default content");
@@ -158,7 +153,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void switchParentFrame() {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			switchToParentFrame();
         			GemTestReporter.addTestStep("Verify user is able to switch to Parent Frame","User is able to switch to Parent Frame", STATUS.PASS, takeSnapShot());
 			Settings.LOGGER.info("User is able to switch to Parent Frame");
@@ -171,7 +165,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void switchFrame(String nameOrId) {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			switchToFrame(nameOrId);
         			GemTestReporter.addTestStep("Verify user is able to switch to Frame","User is able to switch to Frame", STATUS.PASS, takeSnapShot());
 			Settings.LOGGER.info("User is able to switch to Frame");
@@ -184,7 +177,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void switchFrame(int index) {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			switchToFrame(index);
         			GemTestReporter.addTestStep("Verify user is able to switch to Frame","User is able to switch to Frame", STATUS.PASS, takeSnapShot());
 			Settings.LOGGER.info("User is able to switch to Frame");
@@ -219,7 +211,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void clicksAndHold(String locatorName) {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			By locator = getLocator(locatorName);
 			new Actions(DriverManager.getWebDriver()).moveToElement((WebElement) locator).clickAndHold().build().perform();
         			GemTestReporter.addTestStep("Verify user is able to click and hold "+locatorName+" element","User is able to click and hold "+locatorName+" element", STATUS.PASS, takeSnapShot());
@@ -233,7 +224,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void tearDown() {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			DriverManager.quitDriver();
         			GemTestReporter.addTestStep("Verify user is able to close driver","User is able to close driver successfully", STATUS.PASS, takeSnapShot());
 			Settings.LOGGER.info("User is able to close driver successfully");
@@ -271,7 +261,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void maximizeBrowserToDefault() {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			STATUS status = maximizeToDefaultBrowserSize();
         Boolean maximizeStatus = Objects.equals(status, "PASS");;
         if(maximizeStatus) 	{
@@ -289,7 +278,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void minimizeGivenBrowser() {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			minimizeBrowser();
         } 
 		catch(Exception e){
@@ -356,7 +344,6 @@ public class UtilsImplementation extends DriverAction {
     public Object windowHandle() {
         String windowHandle =null;
 		try{
-		wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 		windowHandle = getWindowHandle();
         if(windowHandle!=null){
 			GemTestReporter.addTestStep("Get Window Handle","Window Handle fetched successfully.", STATUS.PASS, takeSnapShot());
@@ -374,7 +361,6 @@ public class UtilsImplementation extends DriverAction {
     public String windowHandles() {
         String windowHandles =null;
 		try{
-		wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 		windowHandles = getWindowHandles().toString();
         if(windowHandles!=null){
 			GemTestReporter.addTestStep("Get Window Handles","Window Handles fetched successfully.", STATUS.PASS, takeSnapShot());
@@ -462,7 +448,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void inputForAlert(String input) {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			alertInput(input);
         
 		}		
@@ -543,7 +528,6 @@ public class UtilsImplementation extends DriverAction {
 
     public void takeScreenshot() {
         try{
-			wait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties("timeOut")));
 			takeSnapShot();
         
 		}		
@@ -573,7 +557,7 @@ public class UtilsImplementation extends DriverAction {
 
     public void clickUsingJS(String locatorName) {
         try{
-				By locator = getLocator(locatorName);
+			By locator = getLocator(locatorName);
 			JavascriptExecutor executor = (JavascriptExecutor)DriverManager.getWebDriver();
 			executor.executeScript("arguments[0].click();", locator);
 			GemTestReporter.addTestStep("Verify user is able to force click on javascript element","User is able to click element : Password", STATUS.PASS, takeSnapShot());

@@ -113,9 +113,9 @@ public class Settings {
 	public static final String SCROLL_UP ="^User scrolls page up$";
 	public static final String SCROLL_DOWN ="^User scrolls page down$";
 	public static final String REFRESH_PAGE ="^User refreshes page$";
-	public static final String TAKE_SNAPSHOT ="^User take snapshot$";
+	public static final String TAKE_SNAPSHOT ="^User takes snapshot$";
 	public static final String SCROLL_PAGE ="^User scrolls page to \\\"(.*)\\\" x coordinate and \\\"(.*)\\\" y coordinate$";
-	public static final String SCROLL_ELEMENT ="^User scrolls element to \\\"(.*)\\\" x coordinate and \\\"(.*)\\\" y coordinate";
+	public static final String SCROLL_ELEMENT ="^User scrolls element to \\\"(.*)\\\" x coordinate and \\\"(.*)\\\" y coordinate$";
 
 	public static final String NAVIGATE_URL ="^User navigates to \\\"(.*)\\\" url$";
 	public static final String ALERT_INPUT ="^User enters \\\"(.*)\\\" as alert input$";
@@ -130,10 +130,10 @@ public class Settings {
 	public static final String CLOSE_CURRENT_TAB ="^User closes current tab$";
 
 	public static final String CLOSE_TAB_AND_SWITCH ="^User closes current tab and switches to \\\"(.*)\\\" tab$";
-	public static final String USER_NAVIGATE_FORWARD ="^User navigates Forward to Next Page$";
+	public static final String USER_NAVIGATE_FORWARD ="^User navigates Forward to Next Page";
 	public static final String USER_NAVIGATE_TO ="^User navigates to \\\"(.*)\\\"$";
 
-	public static final String USER_VERIFY_URL ="^User verifies the current URL with \\\"(.*)\\\"$";
+	public static final String USER_VERIFY_URL ="^User verifies \\\"(.*)\\\" is the current URL$";
 
 	public static final String USER_VERIFY_TITLE ="^User verifies \\\"(.*)\\\" is the title of the page$";
 	public static final String USER_PRESSES_ENTER ="^User presses Enter key$";

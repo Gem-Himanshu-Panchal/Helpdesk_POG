@@ -59,8 +59,8 @@ public class SampleImplementation extends DriverAction {
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses enter");
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Enter the text in firstName field and press enter","Unable to Enter Text in firstName field", STATUS.FAIL, takeSnapShot());
-        				Settings.LOGGER.info("Unable to Enter Text in firstName field and press enter");
+			GemTestReporter.addTestStep("Enter the text in firstName field and press enter","Unable to Enter Text in firstName field and perform enter action", STATUS.FAIL, takeSnapShot());
+        				Settings.LOGGER.info("Unable to Enter Text in firstName field and perform enter action");
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
@@ -75,8 +75,8 @@ public class SampleImplementation extends DriverAction {
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses Tab");
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Enter the text in firstName field and presses tab","Unable to Enter Text in firstName field", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to Enter Text in firstName field and press tab");
+			GemTestReporter.addTestStep("Enter the text in firstName field and presses tab","Unable to Enter Text in firstName field and perform tab action", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Unable to Enter Text in firstName field and perform tab action");
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
@@ -105,7 +105,7 @@ public class SampleImplementation extends DriverAction {
         	GemTestReporter.addTestStep("Verify firstName field is enabled","firstName field is enabled", STATUS.PASS, takeSnapShot());
         	Settings.LOGGER.info("firstName field is enabled");}
 		catch(Exception e){
-			GemTestReporter.addTestStep("Verify firstName field is enabled","F field is not enabled", STATUS.FAIL, takeSnapShot());
+			GemTestReporter.addTestStep("Verify firstName field is enabled","firstName field is not enabled", STATUS.FAIL, takeSnapShot());
         	Settings.LOGGER.info("firstName field is not enabled");
 			Settings.LOGGER.info("User gets an exception: "+e);};
     }
@@ -272,16 +272,16 @@ public class SampleImplementation extends DriverAction {
         try{
 			verifyFirstNameIsDisplayed();
 			if(getElementText(Sample.firstName).contains(typeText)){;
-        		GemTestReporter.addTestStep("Verify firstName field contains " + typeText,"Text of firstName field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        		Settings.LOGGER.info("Text of firstName field does not contain" + typeText);
+        		GemTestReporter.addTestStep("Verify firstName field contains " + typeText,"Text of firstName field contains " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of firstName field contains" + typeText);
 			}
 			else{
 				GemTestReporter.addTestStep("Verify firstName field contains " + typeText,"Text" + typeText + "is not present in firstName field. Expected: "+typeText+" Actual: "+ getElementText(Sample.firstName), STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("Text of firstName field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.firstName));}	
 		}
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside firstName is equal to " + typeText,"Text inside firstName is not equal", STATUS.FAIL, takeSnapShot());
-			Settings.LOGGER.info("Text inside firstName is not equal");
+			GemTestReporter.addTestStep("Verify firstName field contains " + typeText,"Text of firstName field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.firstName), STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Text of firstName field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.firstName));
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
@@ -291,15 +291,15 @@ public class SampleImplementation extends DriverAction {
         try{
 			verifyFirstNameIsDisplayed();
 			if(getElement(Sample.firstName).getAttribute(attribute).contains(typeText)){;
-        		GemTestReporter.addTestStep("Verify firstName field contains " + typeText,"Attribute " + attribute + " of firstName field contains " + typeText, STATUS.PASS, takeSnapShot());
-        		Settings.LOGGER.info("Attribute " + attribute + " of firstName field does not contain" + typeText);
+        		GemTestReporter.addTestStep("Verify attribute " + attribute + " of firstName field contains " + typeText,"Attribute " + attribute + " of firstName field contains " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Attribute " + attribute + " of firstName field contains" + typeText);
 			}
 			else{
-				GemTestReporter.addTestStep("Verify firstName field contains " + typeText, typeText + "is not present in firstName" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.firstName).getAttribute(attribute), STATUS.FAIL, takeSnapShot());
+				GemTestReporter.addTestStep("Verify attribute " + attribute + " of firstName field contains " + typeText, typeText + "is not present in firstName" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.firstName).getAttribute(attribute), STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("Attribute " + attribute + " of firstName field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElement(Sample.firstName).getAttribute(attribute));}	
 		}
 		catch(Exception e){
-			GemTestReporter.addTestStep("Verify firstName field contains " + typeText, typeText + "is not present in firstName" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.firstName), STATUS.FAIL, takeSnapShot());
+			GemTestReporter.addTestStep("Verify attribute " + attribute + " of firstName field contains " + typeText, typeText + "is not present in firstName" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.firstName), STATUS.FAIL, takeSnapShot());
 			Settings.LOGGER.info( typeText + "is not present in firstName" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.firstName));
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
@@ -347,8 +347,8 @@ public class SampleImplementation extends DriverAction {
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses enter");
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Enter the text in password field and press enter","Unable to Enter Text in password field", STATUS.FAIL, takeSnapShot());
-        				Settings.LOGGER.info("Unable to Enter Text in password field and press enter");
+			GemTestReporter.addTestStep("Enter the text in password field and press enter","Unable to Enter Text in password field and perform enter action", STATUS.FAIL, takeSnapShot());
+        				Settings.LOGGER.info("Unable to Enter Text in password field and perform enter action");
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
@@ -363,8 +363,8 @@ public class SampleImplementation extends DriverAction {
         	Settings.LOGGER.info("User enters "+typeText+" as value and presses Tab");
         }
 		catch(Exception e){
-			GemTestReporter.addTestStep("Enter the text in password field and presses tab","Unable to Enter Text in password field", STATUS.FAIL, takeSnapShot());
-        			Settings.LOGGER.info("Unable to Enter Text in password field and press tab");
+			GemTestReporter.addTestStep("Enter the text in password field and presses tab","Unable to Enter Text in password field and perform tab action", STATUS.FAIL, takeSnapShot());
+        			Settings.LOGGER.info("Unable to Enter Text in password field and perform tab action");
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
@@ -393,7 +393,7 @@ public class SampleImplementation extends DriverAction {
         	GemTestReporter.addTestStep("Verify password field is enabled","password field is enabled", STATUS.PASS, takeSnapShot());
         	Settings.LOGGER.info("password field is enabled");}
 		catch(Exception e){
-			GemTestReporter.addTestStep("Verify password field is enabled","P field is not enabled", STATUS.FAIL, takeSnapShot());
+			GemTestReporter.addTestStep("Verify password field is enabled","password field is not enabled", STATUS.FAIL, takeSnapShot());
         	Settings.LOGGER.info("password field is not enabled");
 			Settings.LOGGER.info("User gets an exception: "+e);};
     }
@@ -560,16 +560,16 @@ public class SampleImplementation extends DriverAction {
         try{
 			verifyPasswordIsDisplayed();
 			if(getElementText(Sample.password).contains(typeText)){;
-        		GemTestReporter.addTestStep("Verify password field contains " + typeText,"Text of password field is equal to " + typeText, STATUS.PASS, takeSnapShot());
-        		Settings.LOGGER.info("Text of password field does not contain" + typeText);
+        		GemTestReporter.addTestStep("Verify password field contains " + typeText,"Text of password field contains " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Text of password field contains" + typeText);
 			}
 			else{
 				GemTestReporter.addTestStep("Verify password field contains " + typeText,"Text" + typeText + "is not present in password field. Expected: "+typeText+" Actual: "+ getElementText(Sample.password), STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("Text of password field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.password));}	
 		}
 		catch(Exception e){
-			GemTestReporter.addTestStep("Check if text inside password is equal to " + typeText,"Text inside password is not equal", STATUS.FAIL, takeSnapShot());
-			Settings.LOGGER.info("Text inside password is not equal");
+			GemTestReporter.addTestStep("Verify password field contains " + typeText,"Text of password field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.password), STATUS.FAIL, takeSnapShot());
+			Settings.LOGGER.info("Text of password field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElementText(Sample.password));
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
     }
@@ -579,15 +579,15 @@ public class SampleImplementation extends DriverAction {
         try{
 			verifyPasswordIsDisplayed();
 			if(getElement(Sample.password).getAttribute(attribute).contains(typeText)){;
-        		GemTestReporter.addTestStep("Verify password field contains " + typeText,"Attribute " + attribute + " of password field contains " + typeText, STATUS.PASS, takeSnapShot());
-        		Settings.LOGGER.info("Attribute " + attribute + " of password field does not contain" + typeText);
+        		GemTestReporter.addTestStep("Verify attribute " + attribute + " of password field contains " + typeText,"Attribute " + attribute + " of password field contains " + typeText, STATUS.PASS, takeSnapShot());
+        		Settings.LOGGER.info("Attribute " + attribute + " of password field contains" + typeText);
 			}
 			else{
-				GemTestReporter.addTestStep("Verify password field contains " + typeText, typeText + "is not present in password" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.password).getAttribute(attribute), STATUS.FAIL, takeSnapShot());
+				GemTestReporter.addTestStep("Verify attribute " + attribute + " of password field contains " + typeText, typeText + "is not present in password" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.password).getAttribute(attribute), STATUS.FAIL, takeSnapShot());
         			Settings.LOGGER.info("Attribute " + attribute + " of password field does not contain" + typeText + ". Expected: "+typeText+" Actual: "+getElement(Sample.password).getAttribute(attribute));}	
 		}
 		catch(Exception e){
-			GemTestReporter.addTestStep("Verify password field contains " + typeText, typeText + "is not present in password" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.password), STATUS.FAIL, takeSnapShot());
+			GemTestReporter.addTestStep("Verify attribute " + attribute + " of password field contains " + typeText, typeText + "is not present in password" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.password), STATUS.FAIL, takeSnapShot());
 			Settings.LOGGER.info( typeText + "is not present in password" + attribute + ". Expected: "+typeText+" Actual: "+ getElement(Sample.password));
 			Settings.LOGGER.info("User gets an exception: "+e);
         };
