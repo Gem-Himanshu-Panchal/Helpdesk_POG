@@ -27,16 +27,7 @@ public class UtilsStepDefinitionCodeGenerator {
 
     private static String meaningFulName = "";
 
-    private static String pageName = "^For the <page> page, ";
-
-    /**
-     * returns a basic plain CompilationUnit object
-     *
-     * @return
-     */
-    public static CompilationUnit createBasicCompilationUnit() {
-        return new CompilationUnit();
-    }
+    private static final String pageName = "^For the <page> page, ";
 
     /**
      * returns a CompilationUnit object decorated with package and some basic import
@@ -191,8 +182,8 @@ public class UtilsStepDefinitionCodeGenerator {
     public static void setLinkStepDefinitionMethodValueThenVisibility(CompilationUnit c, Field field,
                                                                       boolean textOrVisibilityParameter) {
 
-        String functionName = getMeaningFullName(field.getName(), false);
-        meaningFulName = getMeaningFullName(field.getName(), true);
+        String functionName = getMeaningFullName(field.getName());
+        meaningFulName = getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String annotationValue = "";
         String blockToEnter = "";
@@ -201,7 +192,7 @@ public class UtilsStepDefinitionCodeGenerator {
         MethodDeclaration method = null;
         List<Parameter> parameters = new LinkedList<>();
         if (!textOrVisibilityParameter) {
-            functionName = "verify" + functionName + "IsDisplayed";
+            functionName = "verify" + meaningFulName + "IsDisplayed";
             annotationValue = "\"" + "^User verifies " + meaningFulName + " is visible" + "$" + "\"";
             blockToEnter = functionName + "(" + ")";
             method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
@@ -241,7 +232,7 @@ public class UtilsStepDefinitionCodeGenerator {
         if (type.equals("a")) {
             type = "link";
         }
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
 
         String functionName = "";
@@ -322,7 +313,7 @@ public class UtilsStepDefinitionCodeGenerator {
         if (type.equals("a")) {
             type = "link";
         }
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
 
         String functionName = "";
@@ -365,8 +356,8 @@ public class UtilsStepDefinitionCodeGenerator {
 
     //is selected verification step
     public static void setLinkStepDefinitionMethodThenSelected(CompilationUnit c, Field field, String className) {
-        String functionName = getMeaningFullName(field.getName(), false);
-        meaningFulName = getMeaningFullName(field.getName(), true);
+        String functionName = "";
+        meaningFulName = getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String annotationValue = "";
         String blockToEnter = "";
@@ -374,7 +365,7 @@ public class UtilsStepDefinitionCodeGenerator {
         annotationType = "Then";
         MethodDeclaration method = null;
         List<Parameter> parameters = new LinkedList<>();
-        functionName = "verify" + functionName + "IsSelected";
+        functionName = "verify" + meaningFulName + "IsSelected";
         annotationValue = "\"" + pageName.replace("<page>", className) + "User verifies " + meaningFulName + " is selected" + "$" + "\"";
         blockToEnter = functionName + "(" + ")";
         method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
@@ -402,7 +393,7 @@ public class UtilsStepDefinitionCodeGenerator {
 
     //verification of attribute value
     public static void setLinkStepDefinitionAttributeGetter(CompilationUnit c, Field field, boolean valueVerification, String className) {
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -459,8 +450,8 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionHoverOver(CompilationUnit c, Field field, String className) {
-        String functionName = getMeaningFullName(field.getName(), false);
-        meaningFulName = getMeaningFullName(field.getName(), true);
+        String functionName = "";
+        meaningFulName = getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String annotationValue = "";
         String blockToEnter = "";
@@ -498,7 +489,7 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionClickAndHold(CompilationUnit c) {
-//        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+//        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         String functionName = "";
         String annotationValue = "";
         String textToEnter = "";
@@ -542,7 +533,7 @@ public class UtilsStepDefinitionCodeGenerator {
 
     }
     public static void setLinkStepDefinitionDragAndDrop(CompilationUnit c) {
-//        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+//        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         String functionName = "";
         String annotationValue = "";
         String textToEnter = "";
@@ -587,7 +578,7 @@ public class UtilsStepDefinitionCodeGenerator {
 
     }
     public static void setLinkStepDefinitionFileUpload(CompilationUnit c) {
-//        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+//        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         String functionName = "";
         String annotationValue = "";
         String textToEnter = "";
@@ -632,7 +623,7 @@ public class UtilsStepDefinitionCodeGenerator {
 
     }
     public static void setLinkStepDefinitionFileDownload(CompilationUnit c) {
-//        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+//        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         String functionName = "";
         String annotationValue = "";
         String textToEnter = "";
@@ -676,7 +667,7 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionRightClick(CompilationUnit c, Field field, String className) {
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -715,15 +706,14 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionElementPresence(CompilationUnit c, Field field, String className) {
-        String functionName = getMeaningFullName(field.getName(), false);
-        meaningFulName = getMeaningFullName(field.getName(), true);
+        String functionName = getMeaningFullName(field.getName());
+        meaningFulName = getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String annotationValue = "";
         String blockToEnter = "";
         String annotationType = "";
         annotationType = "Then";
         MethodDeclaration method = null;
-        List<Parameter> parameters = new LinkedList<>();
         functionName = "verify" + meaningFulName + "Exists";
         annotationValue = "\"" + pageName.replace("<page>", className) + "User verifies " + meaningFulName + " is present on screen$" + "\""; //changed the step definition
         blockToEnter = functionName + "(" + ")";
@@ -749,8 +739,8 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
     public static void setLinkStepDefinitionAttributeContainsText(CompilationUnit c, Field field, String className) {
-        String functionName = getMeaningFullName(field.getName(), false);
-        meaningFulName = getMeaningFullName(field.getName(), true);
+        String functionName = getMeaningFullName(field.getName());
+        meaningFulName = getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String annotationValue = "";
         String blockToEnter = "";
@@ -787,8 +777,8 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionScrollToView(CompilationUnit c, Field field, String className) {
-        String functionName = getMeaningFullName(field.getName(), false);
-        meaningFulName = getMeaningFullName(field.getName(), true);
+        String functionName = getMeaningFullName(field.getName());
+        meaningFulName = getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String annotationValue = "";
         String blockToEnter = "";
@@ -822,15 +812,14 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionChecked(CompilationUnit c, Field field, String className) {
-        String functionName = getMeaningFullName(field.getName(), false);
-        meaningFulName = getMeaningFullName(field.getName(), true);
+        String functionName = getMeaningFullName(field.getName());
+        meaningFulName = getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String annotationValue = "";
         String blockToEnter = "";
         String annotationType = "";
         annotationType = "Then";
         MethodDeclaration method = null;
-        List<Parameter> parameters = new LinkedList<>();
         functionName = "verifyElementSelectedFor" + field.getName();
         annotationValue = "\"" + pageName.replace("<page>", className) + "User verifies " + meaningFulName + " checkbox is selected$" + "\""; //changed the step definition
         blockToEnter = functionName + "(" + ")";
@@ -858,8 +847,8 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionNotChecked(CompilationUnit c, Field field, String className) {
-        String functionName = getMeaningFullName(field.getName(), false);
-        meaningFulName = getMeaningFullName(field.getName(), true);
+        String functionName = getMeaningFullName(field.getName());
+        meaningFulName = getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String annotationValue = "";
         String blockToEnter = "";
@@ -894,7 +883,7 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionAttributeVerification(CompilationUnit c, Field field, String className) {
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -941,7 +930,7 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionTextGetter(CompilationUnit c, Field field, String className) {
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -985,7 +974,7 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionTypeTextAndEnter(CompilationUnit c, Field field, String className) {
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -1029,7 +1018,7 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionTypeTextAndTab(CompilationUnit c, Field field, String className) {
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -1076,7 +1065,7 @@ public class UtilsStepDefinitionCodeGenerator {
         if (type.equals("a")) {
             type = "link";
         }
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -1124,7 +1113,7 @@ public class UtilsStepDefinitionCodeGenerator {
         if (type.equals("a")) {
             type = "link";
         }
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -1208,7 +1197,7 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionDoubleCLick(CompilationUnit c, Field field, String className) {
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -1255,8 +1244,8 @@ public class UtilsStepDefinitionCodeGenerator {
         if (type.equals("a")) {
             type = "link";
         }
-        String functionName = getMeaningFullName(field.getName(), false);
-        meaningFulName = getMeaningFullName(field.getName(), true);
+        String functionName = getMeaningFullName(field.getName());
+        meaningFulName = getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String annotationValue = "";
         String blockToEnter = "";
@@ -1265,7 +1254,7 @@ public class UtilsStepDefinitionCodeGenerator {
         MethodDeclaration method = null;
         List<Parameter> parameters = new LinkedList<>();
         if (!textOrVisibilityParameter) {
-            functionName = "verify" + functionName + "IsDisplayed";
+            functionName = "verify" + meaningFulName + "IsDisplayed";
             annotationValue = "\"" + pageName.replace("<page>", className) + "User verifies" + " " + meaningFulName + " " + type + " is visible" + "$" + "\"";
             blockToEnter = functionName + "(" + ")";
             method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
@@ -1303,7 +1292,7 @@ public class UtilsStepDefinitionCodeGenerator {
 
     public static void setLinkStepDefinitionMethodThenClickable(CompilationUnit c, Field field, String className) {
 
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -1345,7 +1334,7 @@ public class UtilsStepDefinitionCodeGenerator {
     }
     public static void setLinkStepDefinitionMethodCountChildElements(CompilationUnit c, Field field, String className) {
 
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -1388,7 +1377,7 @@ public class UtilsStepDefinitionCodeGenerator {
     }
     public static void setLinkStepDefinitionMethodCountElements(CompilationUnit c, Field field, String className) {
 
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -1431,7 +1420,7 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     public static void setLinkStepDefinitionMethodContains(CompilationUnit c, Field field, String className) {
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -1478,7 +1467,7 @@ public class UtilsStepDefinitionCodeGenerator {
         if (type.equals("a")) {
             type = "link";
         }
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -1521,7 +1510,7 @@ public class UtilsStepDefinitionCodeGenerator {
 
     public static void setLinkStepDefinitionMethodDeselects(CompilationUnit c, Field field, String
             className, String type) {
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         String functionName = "";
         String annotationValue = "";
@@ -1569,7 +1558,7 @@ public class UtilsStepDefinitionCodeGenerator {
      * @param tempVarName
      * @return
      */
-    private static String getMeaningFullName(String tempVarName, boolean isMethodCall) {
+    private static String getMeaningFullName(String tempVarName) {
         String res = tempVarName;
         res = res.replaceAll("\\s", "");
         res = res.replaceAll("&amp", "");
@@ -2029,7 +2018,7 @@ public class UtilsStepDefinitionCodeGenerator {
         if (type.equals("a")) {
             type = "link";
         }
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
 
         String functionName = "";
@@ -2228,7 +2217,7 @@ public class UtilsStepDefinitionCodeGenerator {
         if (type.equals("a")) {
             type = "link";
         }
-        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName(), false);
+        meaningFulName = UtilsStepDefinitionCodeGenerator.getMeaningFullName(field.getName());
         Settings.LOGGER.info("Name of field: " + meaningFulName);
 
         String functionName = "";
@@ -2531,7 +2520,6 @@ public class UtilsStepDefinitionCodeGenerator {
     public static void setLinkStepDefinitionGetBrowserSize(CompilationUnit c) {
         String functionName = "";
         String annotationValue = "";
-        String textToEnter = "";
         String blockToEnter = "";
         String annotationType = "";
 
@@ -2680,7 +2668,6 @@ public class UtilsStepDefinitionCodeGenerator {
     public static void setLinkStepDefinitionGetWindowHandle(CompilationUnit c) {
         String functionName = "";
         String annotationValue = "";
-        String textToEnter = "";
         String blockToEnter = "";
         String annotationType = "";
 
@@ -2824,7 +2811,6 @@ public class UtilsStepDefinitionCodeGenerator {
     public static void setLinkStepDefinitionCloseTabAndSwitch(CompilationUnit c) {
         String functionName = "";
         String annotationValue = "";
-        String textToEnter = "";
         String blockToEnter = "";
         String annotationType = "";
 
@@ -2897,7 +2883,6 @@ public class UtilsStepDefinitionCodeGenerator {
     public static void setLinkStepDefinitionAcceptAlert(CompilationUnit c) {
         String functionName = "";
         String annotationValue = "";
-        String textToEnter = "";
         String blockToEnter = "";
         String annotationType = "";
 
