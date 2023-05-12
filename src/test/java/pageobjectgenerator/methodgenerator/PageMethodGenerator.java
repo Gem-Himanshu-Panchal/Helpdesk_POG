@@ -20,7 +20,7 @@ public class PageMethodGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(PageMethodGenerator.class);
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        ClassLoader classLoader = pageobjectgenerator.PageMethodGenerator.class.getClassLoader();
+        ClassLoader classLoader = PageMethodGenerator.class.getClassLoader();
         Class aClass = classLoader.loadClass("locators" + "." + Settings.LOCATOR_FILE_NAME);
         generatePageMethods(aClass.getDeclaredFields(), aClass);
     }

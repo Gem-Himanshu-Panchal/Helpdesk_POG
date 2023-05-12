@@ -4,7 +4,6 @@ package pageobjectgenerator.methodgenerator;
 import japa.parser.ast.CompilationUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjectgenerator.PageMethodGenerator;
 import pageobjectgenerator.Settings;
 import utils.UtilsMethodCodeGenerator;
 

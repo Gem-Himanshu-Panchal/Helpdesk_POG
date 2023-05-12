@@ -16,7 +16,7 @@ public class CodeGeneratorRunner {
 
     public static void main(String[] args) {
 
-        ClassLoader classLoader = pageobjectgenerator.PageMethodGenerator.class.getClassLoader();
+        ClassLoader classLoader = PageMethodGenerator.class.getClassLoader();
         for (int i = 0; i < args.length; i++) {
 
             Settings.LOCATOR_FILE_NAME = args[i];

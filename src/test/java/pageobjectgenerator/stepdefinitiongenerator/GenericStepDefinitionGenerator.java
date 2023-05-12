@@ -4,8 +4,8 @@ package pageobjectgenerator.stepdefinitiongenerator;
 import japa.parser.ast.CompilationUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pageobjectgenerator.PageMethodGenerator;
 import pageobjectgenerator.Settings;
+import pageobjectgenerator.methodgenerator.PageMethodGenerator;
 import utils.UtilsStepDefinitionCodeGenerator;
 
 import java.io.IOException;

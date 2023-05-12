@@ -8,9 +8,8 @@ import japa.parser.ast.body.*;
 import japa.parser.ast.expr.*;
 import japa.parser.ast.stmt.BlockStmt;
 import japa.parser.ast.type.ClassOrInterfaceType;
-import locatorstrategyform.*;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import pageobjectgenerator.Settings;
@@ -103,40 +102,6 @@ public class UtilsStepDefinitionCodeGenerator {
     }
 
     /**
-     * adds a constructor to the CompilationUnit c with a WebDriver instance and
-     * PageFactory initialization
-     *
-     * @param c
-     * @param s
-     */
-    public static void setDefaultConstructor(CompilationUnit c, State s) {
-
-        // creates the class constructor
-        ConstructorDeclaration constructor = new ConstructorDeclaration();
-        constructor.setName(s.getName());
-        constructor.setModifiers(ModifierSet.PUBLIC);
-
-        // sets the WebDriver instance parameter
-        List<Parameter> parameters = new LinkedList<>();
-        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("WebDriver", 0), "driver"));
-
-        constructor.setParameters(parameters);
-        constructor.setJavaDoc(
-                new JavadocComment("\n\t\tPage Object for " + s.getName() + " (" + s.getStateId() + ") \n\t"));
-
-        // add the body to the constructor
-        BlockStmt constructor_block = new BlockStmt();
-        constructor.setBlock(constructor_block);
-
-        // add basic statements do the constructor method body
-        ASTHelper.addStmt(constructor_block, new NameExpr("this.driver = driver"));
-        ASTHelper.addStmt(constructor_block, new NameExpr("PageFactory.initElements(driver, this)"));
-
-        ASTHelper.addMember(c.getTypes().get(0), constructor);
-
-    }
-
-    /**
      * set the package of the CompilationUnit c
      *
      * @param c
@@ -182,64 +147,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         Settings.LOGGER.info("Imports added are:" + imports);
         return imports;
-    }
-
-    /**
-     * creates the webElements and WedDriver variables together with the correct
-     * locators (for now XPath or CSS locators are used)
-     *
-     * @param c           CompilationUnit
-     * @param webElements List<CandidateWebElement>
-     */
-    public static void setVariables(CompilationUnit c, Set<CandidateWebElement> webElements) {
-
-        setWebElements(c, webElements);
-        setWebDriverVariable(c);
-        //setGetter(c,webElements);
-
-    }
-
-    /**
-     * creates the webElements instances
-     *
-     * @param c           CompilationUnit
-     * @param webElements List<CandidateWebElement>
-     */
-    private static void setWebElements(CompilationUnit c, Set<CandidateWebElement> webElements) {
-
-        for (CandidateWebElement cwe : webElements) {
-
-            VariableDeclarator webElement = new VariableDeclarator();
-            webElement.setId(new VariableDeclaratorId(cwe.getVariableName()));
-
-            FieldDeclaration field = ASTHelper.createFieldDeclaration(ModifierSet.PRIVATE,
-                    ASTHelper.createReferenceType("WebElement", 0), webElement);
-            List<AnnotationExpr> list_espr = new LinkedList<>();
-
-            NormalAnnotationExpr locator_annotation = new NormalAnnotationExpr();
-            locator_annotation.setName(new NameExpr("FindBy"));
-
-            List<MemberValuePair> list_mvp = new LinkedList<>();
-            MemberValuePair mvp = new MemberValuePair();
-
-            if (cwe.getCssLocator() == null) {
-                String xpathLocator = cwe.getXpathLocator();
-                xpathLocator = "\"" + xpathLocator + "\"";
-                mvp = new MemberValuePair("xpath", new NameExpr(xpathLocator));
-            } else if (cwe.getCssLocator() != null) {
-                String cssLocator = cwe.getCssLocator();
-                cssLocator = "\"" + cssLocator + "\"";
-                mvp = new MemberValuePair("css", new NameExpr(cssLocator));
-            } else if (cwe.getVariableName() == null) {
-
-            }
-            list_mvp.add(mvp);
-            locator_annotation.setPairs(list_mvp);
-            list_espr.add(0, locator_annotation);
-
-            field.setAnnotations(list_espr);
-            ASTHelper.addMember(c.getTypes().get(0), field);
-        }
     }
 
     // before class for driver initialisation
@@ -1655,47 +1562,6 @@ public class UtilsStepDefinitionCodeGenerator {
         Settings.LOGGER.info(method.toString());
         Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
-
-    private static int countTowards(Set<Edge> links, Edge edge3) {
-
-        int c = 0;
-
-        for (Edge edge : links) {
-            if (edge3.getTo().equals(edge.getTo())) {
-                c++;
-            }
-        }
-
-        return c;
-    }
-
-    private static void addIndexedParameterToFormMethod(Form f, int i, MethodDeclaration method) {
-
-        if (f.getFormFieldList().get(i).getDefaultAction().equals("sendKeys")) {
-            Parameter par = ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "args" + i);
-            par.setVarArgs(false);
-            ASTHelper.addParameter(method, par);
-        }
-
-    }
-
-    private static void addFormInstructionToBlockMethod(BlockStmt block, Form f, FormField field) {
-
-        switch (field.getDefaultAction()) {
-            case "sendKeys":
-                ASTHelper.addStmt(block, new NameExpr(field.getVariableName() + "." + field.getDefaultAction() + "(args"
-                        + f.getFormFieldList().indexOf(field) + ")"));
-                break;
-
-            case "click":
-                ASTHelper.addStmt(block, new NameExpr(field.getVariableName() + "." + field.getDefaultAction() + "()"));
-                break;
-            default:
-                break;
-        }
-
-    }
-
 
     /**
      * formats a string to camelCase
