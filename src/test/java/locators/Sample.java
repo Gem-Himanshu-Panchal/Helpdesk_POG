@@ -15,9 +15,6 @@ public class Sample extends PageObject {
     @LocatorType(value = "input")
     public static By password = By.id("password");
 
-//    @LocatorType(value = "input")
-//    public static List<By> passwordNEW = Arrays.asList(By.id("password"), By.xpath("//*[@id='password11']"));
-
     @LocatorType(value = "input")
     public static By lastName = By.id("lname");
 
