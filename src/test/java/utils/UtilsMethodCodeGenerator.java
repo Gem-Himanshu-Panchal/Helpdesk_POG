@@ -1508,7 +1508,7 @@ public class UtilsMethodCodeGenerator {
         } else {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tString actualURL = getURL()"));
             ASTHelper.addStmt(block, new NameExpr("\tassertTrue(\"Actual URL: \" + getURL(), actualURL.equals(expectedURL))"));
-            ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User successfully navigated back\"" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"URL verified successfully\"" + ")"));
             ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ");\n\t\t\tSettings.LOGGER.info(\"Actual URL: \" + getURL());\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Actual URL: \" + getURL());\n\t\t\tAssert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver()" + "." + "get" + "(" + "Settings.URL" + ")")));
