@@ -18,6 +18,8 @@ import java.lang.reflect.Field;
 
 public class StepDefinitionGenerator {
 
+    // Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
+
     private static final Logger LOGGER = LoggerFactory.getLogger(StepDefinitionGenerator.class);
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {

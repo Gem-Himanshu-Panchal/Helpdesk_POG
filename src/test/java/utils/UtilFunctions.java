@@ -26,6 +26,8 @@ import static com.gemini.generic.ui.utils.DriverAction.*;
 
 public class UtilFunctions extends PageObject {
 
+    // Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
+
     public static boolean isFileDownloaded(String fileName) throws InterruptedException, IOException {
         try {
             File dir = new File(System.getProperty("user.home") + "/Downloads");
@@ -86,7 +88,7 @@ public class UtilFunctions extends PageObject {
             $(locator).contextClick();
         } catch (Exception e) {
             Assert.fail("Could not do right click on element " + $(locator));
-//            LOG.info("Could not do right click on element " + $(locator));
+            Settings.LOGGER.info("Could not do right click on element " + $(locator));
         }
     }
 
@@ -95,7 +97,7 @@ public class UtilFunctions extends PageObject {
             element.contextClick();
         } catch (Exception e) {
             Assert.fail("Could not do right click on element: " + element);
-//            LOG.info("Could not do right click on element: " + element);
+            Settings.LOGGER.info("Could not do right click on element: " + element);
         }
     }
 
@@ -104,13 +106,13 @@ public class UtilFunctions extends PageObject {
             getDriver().switchTo().alert().accept();
         } catch (Exception e) {
             Assert.fail("Could not do accept alert");
-//            LOG.info("Could not do accept alert");
+            Settings.LOGGER.info("Could not do accept alert");
         }
     }
 
     public void noOfTabs(String expectedTitle) {
         ArrayList<String> tabs = new ArrayList<String>(getDriver().getWindowHandles());
-//        LOG.info("No of tabs: " + tabs.size());
+        Settings.LOGGER.info("No of tabs: " + tabs.size());
     }
 
     public void changeFocusOfElement(WebElementFacade elementFacade) {
@@ -142,6 +144,7 @@ public class UtilFunctions extends PageObject {
         try {
             withAction().sendKeys(Keys.ENTER).build().perform();
         } catch (Exception e) {
+            Settings.LOGGER.info("Could not press enter");
             Assert.fail("Could not press enter");
         }
     }
@@ -150,6 +153,7 @@ public class UtilFunctions extends PageObject {
         try {
             Assert.assertEquals("img", element.getTagName());
         } catch (Exception e) {
+            Settings.LOGGER.info("Could not enter text for alert");
             Assert.fail("Could not enter text for alert");
         }
     }
@@ -158,6 +162,7 @@ public class UtilFunctions extends PageObject {
         try {
             Assert.assertEquals("img", $(locator).getTagName());
         } catch (Exception e) {
+            Settings.LOGGER.info("Could not enter text for alert");
             Assert.fail("Could not enter text for alert");
         }
     }
@@ -166,6 +171,7 @@ public class UtilFunctions extends PageObject {
         try {
             withAction().keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).build().perform();
         } catch (Exception e) {
+            Settings.LOGGER.info("Could not perform select All operation");
             Assert.fail("Could not perform select All operation");
         }
     }
@@ -174,6 +180,7 @@ public class UtilFunctions extends PageObject {
         try {
             withAction().keyDown(Keys.CONTROL).sendKeys("c").keyUp(Keys.CONTROL).build().perform();
         } catch (Exception e) {
+            Settings.LOGGER.info("Could not perform copy operation");
             Assert.fail("Could not perform copy operation");
         }
     }
@@ -182,6 +189,7 @@ public class UtilFunctions extends PageObject {
         try {
             withAction().keyDown(Keys.CONTROL).sendKeys("v").keyUp(Keys.CONTROL).build().perform();
         } catch (Exception e) {
+            Settings.LOGGER.info("Could not perform paste operation");
             Assert.fail("Could not perform paste operation");
         }
     }
@@ -191,8 +199,10 @@ public class UtilFunctions extends PageObject {
             DriverManager.closeDriver();
             DriverManager.getWebDriver().switchTo().window(window);
             GemTestReporter.addTestStep("Close tab and switch to window", "Tab closed successfully and user is able to switch to another window", STATUS.PASS);
+            Settings.LOGGER.info("Tab closed successfully and user is able to switch to another window");
         } catch (Exception e) {
             GemTestReporter.addTestStep("Close tab and switch to window", "Unable to close tab", STATUS.FAIL);
+            Settings.LOGGER.info("Unable to close tab");
             Settings.LOGGER.info("User gets an exception: " + e);
         }
     }
@@ -204,9 +214,11 @@ public class UtilFunctions extends PageObject {
             // Adds the cookie into current browser context
             driver.manage().addCookie(new Cookie(key, value));
             GemTestReporter.addTestStep("Add cookie", "Cookie added successfully", STATUS.PASS);
+            Settings.LOGGER.info("Cookie added successfully");
             driver.quit();
         } catch (Exception e) {
             GemTestReporter.addTestStep("Add cookie", "User is unable to add cookie", STATUS.FAIL);
+            Settings.LOGGER.info("User is unable to add cookie");
             Settings.LOGGER.info("User gets an exception: " + e);
         }
     }
@@ -216,12 +228,13 @@ public class UtilFunctions extends PageObject {
         try {
             driver.get(url);
             Cookie cookie = driver.manage().getCookieNamed(key);
-            GemTestReporter.addTestStep("Get cookie for: key "+key, "User is able to get cookie for: key "+key, STATUS.FAIL);
+            GemTestReporter.addTestStep("Get cookie for: key "+key, "User is able to get cookie for: key "+key, STATUS.PASS);
             Settings.LOGGER.info("User gets cookies associated with: URL" + url);
             driver.quit();
             return cookie;
         } catch (Exception e) {
             GemTestReporter.addTestStep("Get cookie", "User is unable to get cookie", STATUS.FAIL);
+            Settings.LOGGER.info("User is unable to get cookie");
             Settings.LOGGER.info("User gets an exception: " + e);
             return null;
         }
@@ -233,12 +246,13 @@ public class UtilFunctions extends PageObject {
             driver.get(url);
             // Get All available cookies
             Set<Cookie> cookies = driver.manage().getCookies();
-            GemTestReporter.addTestStep("Get all cookies", "User is able to get all cookie", STATUS.FAIL);
+            GemTestReporter.addTestStep("Get all cookies", "User is able to get all cookies", STATUS.PASS);
             Settings.LOGGER.info("User gets all cookies associated with: " + url);
             driver.quit();
             return cookies;
         } catch (Exception e) {
-            GemTestReporter.addTestStep("Get all cookies", "User is unable to get all cookie", STATUS.FAIL);
+            GemTestReporter.addTestStep("Get all cookies", "User is unable to get all cookies", STATUS.FAIL);
+            Settings.LOGGER.info("User is unable to get all cookies");
             Settings.LOGGER.info("User gets an exception: " + e);
             return null;
         }
@@ -250,8 +264,11 @@ public class UtilFunctions extends PageObject {
             driver.get(url);
             // delete a cookie with name 'test1'
             driver.manage().deleteCookieNamed(key);
+            GemTestReporter.addTestStep("Delete cookie", "User is able to delete cookie", STATUS.PASS);
+            Settings.LOGGER.info("User is able to delete cookie "+url);
         } catch (Exception e) {
-            GemTestReporter.addTestStep("Get all cookies", "User is unable to get all cookie", STATUS.FAIL);
+            GemTestReporter.addTestStep("Delete cookie", "User is unable to delete cookie", STATUS.FAIL);
+            Settings.LOGGER.info("User is unable to delete cookie");
             Settings.LOGGER.info("User gets an exception: " + e);
         }
     }
@@ -262,8 +279,11 @@ public class UtilFunctions extends PageObject {
                 driver.get(url);
                 // deletes all cookies
                 driver.manage().deleteAllCookies();
+                GemTestReporter.addTestStep("Delete cookies", "User is able to delete cookies", STATUS.PASS);
+                Settings.LOGGER.info("User is able to delete cookie "+url);
             } catch (Exception e) {
-                GemTestReporter.addTestStep("Get all cookies", "User is unable to get all cookie", STATUS.FAIL);
+                GemTestReporter.addTestStep("Delete cookies", "User is unable to delete cookies", STATUS.FAIL);
+                Settings.LOGGER.info("User is unable to delete cookies "+url);
                 Settings.LOGGER.info("User gets an exception: " + e);
             }
         }

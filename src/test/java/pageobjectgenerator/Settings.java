@@ -7,6 +7,7 @@ import java.io.File;
 
 public class Settings {
 //file name settings
+	// Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
 
 	public static String LOCATOR_FILE_NAME;
 	// Crawler Settings
