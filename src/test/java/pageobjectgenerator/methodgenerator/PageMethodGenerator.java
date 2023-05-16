@@ -39,7 +39,6 @@ public class PageMethodGenerator {
         boolean isByOrFindBy = false;
         CompilationUnit c = UtilsMethodCodeGenerator.createEnhancedCompilationUnit("implementation", "Method");
         UtilsMethodCodeGenerator.setTypeDeclaration(c, aClass.getSimpleName() + "Implementation");
-        UtilsMethodCodeGenerator.setWebDriverVariable(c);
 
 
         for (Field field : fields) {
@@ -109,6 +108,9 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
+                UtilsMethodCodeGenerator.setLinkMethodForContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForAttributeContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
             }
             if (StringUtils.contains(locatorType, "div") || StringUtils.contains(locatorType, "span")) {
                 UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
@@ -121,6 +123,9 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsVerifyCountElements(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
+                UtilsMethodCodeGenerator.setLinkMethodForContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForAttributeContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "button")) {
                 UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
@@ -135,6 +140,9 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsRightClickWebElement(c,field);
                 UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
                 UtilsMethodCodeGenerator.setLinkMethodsIsDisabled(c,field);
+                UtilsMethodCodeGenerator.setLinkMethodForContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForAttributeContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "checkbox")) {
                 UtilsMethodCodeGenerator.setLinkMethodsSelect(c, field);// Radio and CheckBox and Normal Click Operation
@@ -147,17 +155,9 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
-            }
-            if (StringUtils.equalsIgnoreCase(locatorType, "click")) {
-                UtilsMethodCodeGenerator.setLinkMethodsDoubleClick(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
-                UtilsMethodCodeGenerator.setMethodClickable(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodsTypeGetter(c, field);
-                UtilsMethodCodeGenerator.setMethodScrollClick(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
+                UtilsMethodCodeGenerator.setLinkMethodForContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForAttributeContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "a")) {
                 UtilsMethodCodeGenerator.setLinkMethodsClickAndNavigateBack(c, field);// Radio and CheckBox and Normal Click Operation
@@ -170,6 +170,9 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
+                UtilsMethodCodeGenerator.setLinkMethodForContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForAttributeContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "dropdown")) {
                 UtilsMethodCodeGenerator.setLinkMethodsDropDown(c, field);
@@ -183,6 +186,9 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
+                UtilsMethodCodeGenerator.setLinkMethodForContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForAttributeContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "image")) {
                 UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
@@ -207,7 +213,7 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodValidateRowCount(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodValidateColumnCount(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodIsColumnNamePresent(c, field);
-
+                UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "file"))
                 {
@@ -234,13 +240,13 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
                 UtilsMethodCodeGenerator.setMethodClickable(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
+                UtilsMethodCodeGenerator.setLinkMethodForContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForAttributeContains(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
             }
 
             if (!StringUtils.equalsIgnoreCase(field.getName(), "driver")) {
                 UtilsMethodCodeGenerator.setLinkMethodForVisibility(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodForContains(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodForAttributeContains(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
             }
 
         }

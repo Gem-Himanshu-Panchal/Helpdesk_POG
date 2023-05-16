@@ -204,14 +204,12 @@ public class UtilsFunctionsGenerator {
         ASTHelper.addStmt(block, new NameExpr("//This function is for File Download"));
         //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
         if (readProperties("Framework").contains("GEMJAR")) {
-            ASTHelper.addStmt(block, new NameExpr("String text = new String()"));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tFile dir = new File(System.getProperty(\"user.home\") + \"/Downloads\");\n\t\t\tFile[] files = dir.listFiles()"));
             ASTHelper.addStmt(block, new NameExpr("\tlong startTime = System.currentTimeMillis();\n\t\t\twhile ((System.currentTimeMillis() - startTime) < Long.parseLong(UtilsMethodCodeGenerator.readProperties(\"timeOut\"))){\n\t\t\t\t" + "for (File file : files) {\n\t\t\t\t\tif (file.getName().equalsIgnoreCase(fileName)) {\n\t\t\t\t\tGemTestReporter.addTestStep(\"Verify if file is downloaded\",\"File downloaded successfully\", STATUS.PASS, takeSnapShot());\n\t\t\t\t\tSettings.LOGGER.info(\"File downloaded successfully\");\n\t\t\t\t\treturn true"));
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"Verify if file is downloaded\",\"Unable to verify if file is downloaded\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Unable to verify if file is downloaded\")"));
             ASTHelper.addStmt(block, new NameExpr("}"));
             ASTHelper.addStmt(block, new NameExpr("return false"));
         } else {
-            ASTHelper.addStmt(block, new NameExpr("String text = new String()"));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tFile dir = new File(System.getProperty(\"user.home\") + \"/Downloads\");\n\t\t\tFile[] files = dir.listFiles()"));
             ASTHelper.addStmt(block, new NameExpr("\tlong startTime = System.currentTimeMillis();\n\t\t\twhile ((System.currentTimeMillis() - startTime) < Long.parseLong(UtilsMethodCodeGenerator.readProperties(\"timeOut\"))){\n\t\t\t\t" + "for (File file : files) {\n\t\t\t\t\tif (file.getName().equalsIgnoreCase(fileName)) {;\n\t\t\t\t\tSettings.LOGGER.info(\"File downloaded successfully\");\n\t\t\t\t\treturn true"));
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to verify if file is downloaded\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to verify is file is downloaded\");\n\t\t\tAssert.fail(e.getMessage());\n\t\t\t}"));
@@ -309,7 +307,7 @@ public class UtilsFunctionsGenerator {
         ASTHelper.addStmt(block, new NameExpr("//This function copy using keyboard actions (Ctrl+C)"));
         //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
         if (readProperties("Framework").contains("GEMJAR")) {
-            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tnew SerenityActions(DriverManager.getWebDriver()).keyDown(Keys.CONTROL).sendKeys(\"c\").keyUp(Keys.CONTROL).build().perform();\n\t\t\t\t\tGemTestReporter.addTestStep(\"Press Ctrl + C to copy the content\",\"Successfully copied\", STATUS.PASS, takeSnapShot());"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tnew Actions(DriverManager.getWebDriver()).keyDown(Keys.CONTROL).sendKeys(\"c\").keyUp(Keys.CONTROL).build().perform();\n\t\t\t\t\tGemTestReporter.addTestStep(\"Press Ctrl + C to copy the content\",\"Successfully copied\", STATUS.PASS, takeSnapShot());"));
             ASTHelper.addStmt(block, new NameExpr("}catch(" + "Exception e" + "){\n\t\t\t Settings.LOGGER.info(\"Failed to copy\");\n\t\t\t\t\tGemTestReporter.addTestStep(\"Press Ctrl + C to copy the content\",\"Failed to copy\", STATUS.FAIL, takeSnapShot());"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         } else {
