@@ -7,7 +7,11 @@ import java.io.File;
 
 public class Settings {
 //file name settings
-	// Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
+	/**
+	 * @author - Sajith, Hem, Ayush, Jasleen, Priyanshu, Rahul Tagra and Siddhanshi
+	 * @version - 1.0
+	 * @since - 5/16/2023
+	 */
 
 	public static String LOCATOR_FILE_NAME;
 	// Crawler Settings
@@ -20,7 +24,7 @@ public class Settings {
 	//public static final String URL = "http://www.google.com/";
 
 	//public static final String URL = "https://mymis.geminisolutions.com";
-	public static final String URL = "https://geminisolutions.com/";
+	public static final String URL = "D:\\v1-pog\\POG\\src\\test\\resources\\data\\index.html";
 
 	public static final String TITLE = "Sample HTML Page";
 	//Used For Logging the steps

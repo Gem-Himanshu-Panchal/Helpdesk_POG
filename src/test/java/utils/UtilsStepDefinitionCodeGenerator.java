@@ -25,7 +25,12 @@ import java.util.Set;
 
 public class UtilsStepDefinitionCodeGenerator {
 
-    // Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
+    /**
+     * @author - Sajith, Hem, Ayush, Jasleen, Priyanshu, Rahul Tagra and Siddhanshi
+     * @version - 1.0
+     * @since - 5/16/2023
+     */
+
     private static String meaningFulName = "";
 
     private static final String pageName = "^For the <page> page, ";
@@ -3252,7 +3257,7 @@ public class UtilsStepDefinitionCodeGenerator {
         String annotationType = "";
         meaningFulName = getMeaningFullName(field.getName());
         List<Parameter> parameters = new LinkedList<>();
-        functionName = "ValidateRowCountOf" + meaningFulName + "Table";
+        functionName = "validateRowCountOf" + meaningFulName + "Table";
         annotationType = "Then";
         annotationValue = "\""+Settings.VERIFY_ROW_COUNT+field.getName()+" table$"+"\"";
         MethodDeclaration method = null;
@@ -3295,7 +3300,7 @@ public class UtilsStepDefinitionCodeGenerator {
         String annotationType = "";
         List<Parameter> parameters = new LinkedList<>();
         meaningFulName = getMeaningFullName(field.getName());
-        functionName = "ValidateColumnCountOf" + meaningFulName + "Table";
+        functionName = "validateColumnCountOf" + meaningFulName + "Table";
         annotationType = "Then";
         annotationValue = "\""+Settings.VERIFY_COLUMN_COUNT+ field.getName()+" table$"+"\"";
         MethodDeclaration method = null;

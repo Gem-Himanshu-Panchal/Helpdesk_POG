@@ -8,10 +8,12 @@ import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.SerenityActions;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.webdriver.SerenityWebdriverManager;
+import org.apache.logging.log4j.Level;
 import org.junit.Assert;
 import org.junit.rules.Timeout;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import pageobjectgenerator.Settings;
@@ -25,7 +27,11 @@ import static com.gemini.generic.ui.utils.DriverAction.*;
 
 public class UtilFunctions extends PageObject {
 
-    // Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
+    /**
+     * @author - Sajith, Hem, Ayush, Jasleen, Priyanshu, Rahul Tagra and Siddhanshi
+     * @version - 1.0
+     * @since - 5/16/2023
+     */
 
     public static boolean isFileDownloaded(String fileName) throws InterruptedException, IOException {
         try {
@@ -46,7 +52,7 @@ public class UtilFunctions extends PageObject {
     }
 
     public static void switchToTab(String tabName) {
-        WebDriver driver = SerenityWebdriverManager.inThisTestThread().getCurrentDriver();
+        WebDriver driver = DriverManager.getWebDriver();
         String currentHandle = driver.getWindowHandle();
         for (String handle : driver.getWindowHandles()) {
             driver.switchTo().window(handle);
@@ -55,6 +61,7 @@ public class UtilFunctions extends PageObject {
                 return;
             }
         }
+        closeCurrentTab();
         driver.switchTo().window(currentHandle);
     }
 
@@ -72,8 +79,14 @@ public class UtilFunctions extends PageObject {
     }
 
     public static void closeCurrentTab() {
-        WebDriver driver = SerenityWebdriverManager.inThisTestThread().getCurrentDriver();
-        driver.close();
+        try {
+            WebDriver driver = SerenityWebdriverManager.inThisTestThread().getCurrentDriver();
+            driver.close();
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     public static void hoverOverElement(WebElementFacade element) {
@@ -115,7 +128,7 @@ public class UtilFunctions extends PageObject {
     }
 
     public void changeFocusOfElement(WebElementFacade elementFacade) {
-        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+        JavascriptExecutor executor = (JavascriptExecutor) DriverManager.getWebDriver();
         executor.executeScript("arguments[0].focus();", elementFacade);
     }
 
@@ -286,4 +299,28 @@ public class UtilFunctions extends PageObject {
                 Settings.LOGGER.info("User gets an exception: " + e);
             }
         }
+
+    public void clearConsole(){
+        JavascriptExecutor js = (JavascriptExecutor)getDriver();
+        String script = "console.clear();";
+        js.executeScript(script);
+    }
+
+    public void table(By table,By row,By col){
+    WebDriver driver = DriverManager.getWebDriver();
+	WebElement baseTable = driver.findElement(table);
+
+    //To find third row of table
+    WebElement tableRow = baseTable.findElement(row);
+    String rowtext = tableRow.getText();
+    if(!rowtext.isEmpty())
+		 System.out.println("Third row of table : "+rowtext);
+
+    //to get 3rd row's 2nd column data
+    WebElement cellIneed = tableRow.findElement(col);
+    String valueIneed = cellIneed.getText();
+		    System.out.println("Cell value is : " + valueIneed);
+		    driver.close();
+}
+
 }

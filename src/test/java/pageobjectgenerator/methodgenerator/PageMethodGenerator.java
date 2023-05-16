@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjectgenerator.Settings;
 import serializer.LocatorSerializer;
+import utils.UtilsFunctionsGenerator;
 import utils.UtilsMethodCodeGenerator;
 
 import java.io.IOException;
@@ -17,7 +18,11 @@ import java.lang.reflect.Field;
 
 public class PageMethodGenerator {
 
-    // Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
+    /**
+     * @author - Sajith, Hem, Ayush, Jasleen, Priyanshu, Rahul Tagra and Siddhanshi
+     * @version - 1.0
+     * @since - 5/16/2023
+     */
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PageMethodGenerator.class);
 
@@ -103,6 +108,7 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsHoverOver(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
             }
             if (StringUtils.contains(locatorType, "div") || StringUtils.contains(locatorType, "span")) {
                 UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
@@ -114,6 +120,7 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsVerifyCountChildElements(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsVerifyCountElements(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "button")) {
                 UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
@@ -124,6 +131,10 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsRightClick(c,field);
+                UtilsMethodCodeGenerator.setLinkMethodsRightClickWebElement(c,field);
+                UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
+                UtilsMethodCodeGenerator.setLinkMethodsIsDisabled(c,field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "checkbox")) {
                 UtilsMethodCodeGenerator.setLinkMethodsSelect(c, field);// Radio and CheckBox and Normal Click Operation
@@ -135,7 +146,8 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
-              }
+                UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
+            }
             if (StringUtils.equalsIgnoreCase(locatorType, "click")) {
                 UtilsMethodCodeGenerator.setLinkMethodsDoubleClick(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
@@ -145,6 +157,7 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "a")) {
                 UtilsMethodCodeGenerator.setLinkMethodsClickAndNavigateBack(c, field);// Radio and CheckBox and Normal Click Operation
@@ -156,6 +169,7 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "dropdown")) {
                 UtilsMethodCodeGenerator.setLinkMethodsDropDown(c, field);
@@ -168,8 +182,9 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsHoverOver(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
             }
-            if (StringUtils.equalsIgnoreCase(locatorType, "image") || StringUtils.equalsIgnoreCase(locatorType, "file")) {
+            if (StringUtils.equalsIgnoreCase(locatorType, "image")) {
                 UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
                 UtilsMethodCodeGenerator.setMethodClickable(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
@@ -180,7 +195,34 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsHoverOver(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsIsImage(c, field);
             }
+            if (StringUtils.equalsIgnoreCase(locatorType, "table")) {
+                UtilsMethodCodeGenerator.setLinkMethodsGetRowValue(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsGetColValue(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsGetAllValuesFromTable(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodGetRowCount(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodGetColumnCount(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodValidateRowCount(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodValidateColumnCount(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodIsColumnNamePresent(c, field);
+
+            }
+            if (StringUtils.equalsIgnoreCase(locatorType, "file"))
+                {
+                UtilsMethodCodeGenerator.setLinkMethodsClick(c, field);// Radio and CheckBox and Normal Click Operation
+                UtilsMethodCodeGenerator.setMethodClickable(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForUpload(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodForIsSelected(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsAttributeGetter(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsValueVerification(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsHoverOver(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
+                }
             if (StringUtils.equalsIgnoreCase(locatorType, "radio button")) {
                 UtilsMethodCodeGenerator.setLinkMethodsSelect(c, field);// Radio and CheckBox and Normal Click Operation
                 UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
@@ -191,6 +233,7 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsElementPresence(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
                 UtilsMethodCodeGenerator.setMethodClickable(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
             }
 
             if (!StringUtils.equalsIgnoreCase(field.getName(), "driver")) {
@@ -198,14 +241,6 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodForContains(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForAttributeContains(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
-            }
-            if (!StringUtils.equalsIgnoreCase(field.getName(), "table")) {
-                UtilsMethodCodeGenerator.setLinkMethodGetRowCount(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodGetColumnCount(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodValidateRowCount(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodValidateColumnCount(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodIsColumnNamePresent(c, field);
-
             }
 
         }
