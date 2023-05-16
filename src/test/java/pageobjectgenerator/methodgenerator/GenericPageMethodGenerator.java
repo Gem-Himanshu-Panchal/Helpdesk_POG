@@ -86,16 +86,19 @@ public class GenericPageMethodGenerator {
 
         CompilationUnit c = UtilsFunctionsGenerator.createEnhancedCompilationUnit("implementation", "Method");
         UtilsFunctionsGenerator.setTypeDeclaration(c, "UtilFunctions");
-
         UtilsFunctionsGenerator.setLinkMethodsIsFileDownloaded(c);
         UtilsFunctionsGenerator.setLinkMethodsGetWindowFocus(c);
-        UtilsFunctionsGenerator.setLinkMethodsIsImage(c);
         UtilsFunctionsGenerator.setLinkMethodsCopy(c);
         UtilsFunctionsGenerator.setLinkMethodsAddCookies(c);
         UtilsFunctionsGenerator.setLinkMethodsDeleteCookies(c);
-
-
-
+        UtilsFunctionsGenerator.setLinkMethodsNoOfTabs(c);
+        UtilsFunctionsGenerator.setLinkMethodsSwitchToTab(c);
+        UtilsFunctionsGenerator.setLinkMethodsPressEnter(c);
+        UtilsFunctionsGenerator.setLinkMethodsPaste(c);
+        UtilsFunctionsGenerator.setLinkMethodsGetAllCookies(c);
+        UtilsFunctionsGenerator.setLinkMethodsDeleteAllCookies(c);
+        UtilsFunctionsGenerator.setLinkMethodsGetCookie(c);
+        UtilsFunctionsGenerator.setLinkMethodsSelectAll(c);
         UtilsMethodCodeGenerator.savePageObjectsOnFileSystem(Settings.IMPLEMENTATION_PO_DIR,
                 "UtilFunctions", c, false);
 

@@ -139,6 +139,7 @@ public class UtilsMethodCodeGenerator {
                 imports.add(new ImportDeclaration(new NameExpr("org.openqa.selenium.firefox.FirefoxDriver"), false, false));
                 imports.add(new ImportDeclaration(new NameExpr("com.gemini.generic.utils.GemJarGlobalVar"), false, false));
                 imports.add(new ImportDeclaration(new NameExpr("java.io.File"), false, false));
+                imports.add(new ImportDeclaration(new NameExpr("net.serenitybdd.core.pages.WebElementFacade"), false, false));
             } else {
                 imports.add(new ImportDeclaration(new NameExpr("net.serenitybdd.core.pages.WebElementFacade"), false, false));
                 imports.add(new ImportDeclaration(new NameExpr("net.serenitybdd.core.pages.PageObject"), false, false));
@@ -2238,9 +2239,9 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> listOfRows = new ArrayList<>()"));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement tableBody = getElement("+ Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
             ASTHelper.addStmt(block, new NameExpr("\tlistOfRows = tableBody.findElements(By.tagName(\"tr\"))"));
-            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get row count of " + field.getName() + " table\",\"Successful get row count of " + field.getName() + " table\", STATUS.PASS, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get row count of " + field.getName() + " table\",\"Successfully fetched row count of " + field.getName() + " table\", STATUS.PASS, takeSnapShot())"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Get row count of " + field.getName() + " table\");\n\t\t\t}\n\t\tcatch(Exception e){"));
-            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get row count of " + field.getName() + " table\",\"failed to get row count of " + field.getName() + " table\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to scroll to " + field.getName() + " element\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e)"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get row count of " + field.getName() + " table\",\"Failed to fetch row count of " + field.getName() + " table\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to fetch row count of " + field.getName() + " table\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e)"));
             ASTHelper.addStmt(block, new NameExpr("}"));
             ASTHelper.addStmt(block, new NameExpr("\treturn listOfRows.size()"));
         } else {
@@ -2271,25 +2272,25 @@ public class UtilsMethodCodeGenerator {
         //DriverAction.getAttributeName(element,"value") of Gemjar Framework to get the value attribute of an element
 
         if (readProperties("Framework").contains("GEMJAR")) {
-            ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> headers = new ArrayList<>()"));
+            ASTHelper.addStmt(block, new NameExpr("List<WebElement> headers = new ArrayList<>()"));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement tableBody = getElement("+ Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
             ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> listOfRows = tableBody.findElements(By.tagName(\"tr\"))"));
             ASTHelper.addStmt(block, new NameExpr("\theaders = listOfRows.get(0).findElements(By.tagName(\"td\"))"));
-            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get row count of " + field.getName() + " table\",\"Successful get row count of " + field.getName() + " table\", STATUS.PASS, takeSnapShot())"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Get row count of " + field.getName() + " table\");\n\t\t\t}\n\t\tcatch(Exception e){"));
-            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get row count of " + field.getName() + " table\",\"failed to get row count of " + field.getName() + " table\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to scroll to " + field.getName() + " element\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e)"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get column count of " + field.getName() + " table\",\"Successful fetched column count of " + field.getName() + " table\", STATUS.PASS, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Get column count of " + field.getName() + " table\");\n\t\t\t}\n\t\tcatch(Exception e){"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get column count of " + field.getName() + " table\",\"Failed to fetch column count of " + field.getName() + " table\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to fetch column count of " + field.getName() + "\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e)"));
             ASTHelper.addStmt(block, new NameExpr("}"));
             ASTHelper.addStmt(block, new NameExpr("\treturn headers.size()"));
         } else {
-            ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> listOfRows = new ArrayList<>()"));
+            ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> listOfRows = new ArrayList<>();\n\t\t\tList<WebElement> listOfCols = new ArrayList<>()"));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement tableBody = getDriver().findElement("+ Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
             ASTHelper.addStmt(block, new NameExpr("\tlistOfRows = tableBody.findElements(By.tagName(\"tr\"))"));
-            ASTHelper.addStmt(block, new NameExpr("\theaders = listOfRows.get(0).findElements(By.tagName(\"td\"))"));
+            ASTHelper.addStmt(block, new NameExpr("\tlistOfCols = listOfRows.get(0).findElements(By.tagName(\"td\"))"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Get column count of "  + field.getName() +  " table\");}\t\n\t\tcatch(Exception e){"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(\"failed to get column count of " + field.getName() + " table \")"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
-            ASTHelper.addStmt(block, new NameExpr("\treturn headers.size()"));
+            ASTHelper.addStmt(block, new NameExpr("\treturn listOfCols.size()"));
         }
 
         ASTHelper.addMember(c.getTypes().get(0), method);
@@ -2300,7 +2301,7 @@ public class UtilsMethodCodeGenerator {
         Settings.LOGGER.info("Name of field: " + meaningFulName);
 
         // Add the Getter method
-        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "ValidateRowCountOf" + meaningFulName + "Table");
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "validateRowCountOf" + meaningFulName + "Table");
         BlockStmt block = new BlockStmt();
         method.setBody(block);
 
@@ -2315,17 +2316,16 @@ public class UtilsMethodCodeGenerator {
         //DriverAction.getAttributeName(element,"value") of Gemjar Framework to get the value attribute of an element
         if (readProperties("Framework").contains("GEMJAR")) {
             ASTHelper.addStmt(block, new NameExpr("\tint actualRowCount = getRowCountOf"+ meaningFulName + "Table()"));
-            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tif(actualRowCount == (expectedRowCount)) {\n\t\t\t\t" + "GemTestReporter.addTestStep(\"Verify row count \",\" verified successfully. Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\", STATUS.PASS, takeSnapShot())"));
-            ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\" verified successfully. Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\" );" + "\n\t\t\t}\n\t\t\telse {\n\t\t\t\t" + "GemTestReporter.addTestStep(\"Verify  \",\"Unable to verify . Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\", STATUS.FAIL, takeSnapShot())"));
-            ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"Unable to verify . Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\" );" + "\n\t\t\t}\n\t\t\t}\n\t\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tGemTestReporter.addTestStep(\"Verify  \",\"Unable to verify . Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to verify title\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tif(actualRowCount == (expectedRowCount)) {\n\t\t\t\t" + "GemTestReporter.addTestStep(\"Verify row count\",\"Row count verified successfully. Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\", STATUS.PASS, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"Row count verified successfully. Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\" );" + "\n\t\t\t}\n\t\t\telse {\n\t\t\t\t" + "GemTestReporter.addTestStep(\"Verify row count\",\"Unable to verify row count. Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"Unable to verify row count. Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\" );" + "\n\t\t\t}\n\t\t\t}\n\t\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tGemTestReporter.addTestStep(\"Verify row count\",\"Unable to verify row count. Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to verify row count\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         } else {
             ASTHelper.addStmt(block, new NameExpr("\tint actualRowCount = getRowCountOf"+ meaningFulName + "Table()"));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tif(actualRowCount == (expectedRowCount))"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"verification of Row count is successful\");}\t\n\t\tcatch(Exception e){"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Actual: \"actualRowCount, \"Expected: \"expectedRowCount);"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Actual: \"+actualRowCount, \"Expected: \"+expectedRowCount);"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(\"failed to verify row count\")"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Actual: \"actualRowCount, \"Expected: \"expectedRowCount);"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
@@ -2339,7 +2339,7 @@ public class UtilsMethodCodeGenerator {
         Settings.LOGGER.info("Name of field: " + meaningFulName);
 
         // Add the Getter method
-        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "ValidateColumnCountOf" + meaningFulName + "Table");
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "validateColumnCountOf" + meaningFulName + "Table");
         BlockStmt block = new BlockStmt();
         method.setBody(block);
 
@@ -2353,18 +2353,17 @@ public class UtilsMethodCodeGenerator {
 
         //DriverAction.getAttributeName(element,"value") of Gemjar Framework to get the value attribute of an element
         if (readProperties("Framework").contains("GEMJAR")) {
-            ASTHelper.addStmt(block, new NameExpr("\tint actualColumnCount = getColumnCountOf"+ meaningFulName + "Table()"));
-            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tif(actualColumnCount == (expectedColumnCount)) {\n\t\t\t\t" + "GemTestReporter.addTestStep(\"Verify column count \",\" verified successfully. Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\", STATUS.PASS, takeSnapShot())"));
-            ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\" verified successfully. Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\" );" + "\n\t\t\t}\n\t\t\telse {\n\t\t\t\t" + "GemTestReporter.addTestStep(\"Verify  \",\"Unable to verify . Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\", STATUS.FAIL, takeSnapShot())"));
-            ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"Unable to verify . Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\" );" + "\n\t\t\t}\n\t\t\t}\n\t\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tGemTestReporter.addTestStep(\"Verify  \",\"Unable to verify . Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to verify title\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("int actualColumnCount = getColumnCountOf"+ meaningFulName + "Table()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tif(actualColumnCount == (expectedColumnCount)) {\n\t\t\t\t" + "GemTestReporter.addTestStep(\"Verify column count\",\"Count verified successfully. Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\", STATUS.PASS, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"Count verified successfully. Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\" );" + "\n\t\t\t}\n\t\t\telse {\n\t\t\t\t" + "GemTestReporter.addTestStep(\"Verify  \",\"Unable to verify count. Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"Unable to verify count. Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\" );" + "\n\t\t\t}\n\t\t\t}\n\t\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tGemTestReporter.addTestStep(\"Verify Column Count\",\"Unable to verify count. Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to verify column count\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         } else {
-            ASTHelper.addStmt(block, new NameExpr("\tint actualRowCount = getColumnCountOf"+ meaningFulName + "Table()"));
+            ASTHelper.addStmt(block, new NameExpr("\tint actualColumnCount = getColumnCountOf"+ meaningFulName + "Table()"));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tif(actualColumnCount == (expectedColumnCount))"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"verification of column count is successful\");}\t\n\t\tcatch(Exception e){"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Actual: \"actualColumnCount, \"Expected: \"expectedColumnCount);"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(\"failed to verify column count\")"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Actual: \"actualColumnCount, \"Expected: \"expectedColumnCount);"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Column count verified successfully\");}\t\n\t\tcatch(Exception e){"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Unable to verify column count. Actual: \"+actualColumnCount, \"Expected: \"+expectedColumnCount);"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(\"Failed to verify column count\")"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
@@ -2373,4 +2372,208 @@ public class UtilsMethodCodeGenerator {
     }
 
 
+    public static void setLinkMethodsRightClick(CompilationUnit c,Field field) throws IOException {
+
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "rightClickOn"+meaningFulName+"Element");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        List<Parameter> parameters = new LinkedList<>();
+        if (readProperties("Framework").contains("GEMJAR")) {
+            parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "element"));
+        }
+        method.setParameters(parameters);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\trightClick("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+",element)"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"Verify user is able to right click\"+element,\"Unable to right click element\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Unable to right click element\")"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\t$("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+").contextClick()"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Right clicked on element successfully\")"));
+            ASTHelper.addStmt(block, new NameExpr("\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Could not do right click on element \" + $("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+"));\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Could not do right click on element \" + $("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+"));\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodsRightClickWebElement(CompilationUnit c,Field field) throws IOException {
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "rightClickOn"+meaningFulName);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        List<Parameter> parameters = new LinkedList<>();
+        if (readProperties("Framework").contains("GEMJAR")) {
+            parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "elementName"));
+        }
+        method.setParameters(parameters);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement element = getElement("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+");\n\t\t\trightClick(element,elementName)"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"Verify user is able to right click\"+elementName,\"Unable to right click element\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Unable to right click element\")"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\t$("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+").contextClick()"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Right clicked on element successfully\")"));
+            ASTHelper.addStmt(block, new NameExpr("\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Could not do right click on element \" + $("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+"));\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Could not do right click on element \" + $("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+"));\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodsChangeFocus(CompilationUnit c,Field field) throws IOException {
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "changeFocusTo"+meaningFulName);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+                ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement element = getElement("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+");\n\t\t\tJavascriptExecutor executor = (JavascriptExecutor) DriverManager.getWebDriver();\n\t\t\texecutor.executeScript(\"arguments[0].focus();\", element)"));
+                ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"User changes focus to "+meaningFulName+"\",\"User is able to change focus to "+ meaningFulName+" successfully\", STATUS.PASS, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"User is able to change focus to "+ meaningFulName+" successfully\")"));
+                ASTHelper.addStmt(block, new NameExpr("\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"User changes focus to "+meaningFulName+"\",\"User is unable to change focus to "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"User is unable to change focus to "+ meaningFulName+"\")"));
+                ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tJavascriptExecutor executor = (JavascriptExecutor) DriverManager.getWebDriver();\n\t\t\texecutor.executeScript(\"arguments[0].focus();\", $("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+"))"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"User is able to change focus to "+ meaningFulName+" successfully\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings.LOGGER.info(\"User is unable to change focus to "+ meaningFulName+"\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Could not shift focus to " +meaningFulName+"\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodsIsDisabled(CompilationUnit c,Field field) throws IOException {
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "verify"+meaningFulName+"IsDisabled");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement element = getElement("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+");\n\t\t\tif(element.getAttribute(\"disabled\") != null)\n\t\t\t{"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tGemTestReporter.addTestStep(\"Verify "+meaningFulName+" is Disabled\",\""+ meaningFulName+" element is disabled\", STATUS.PASS, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\""+ meaningFulName+" element is disabled\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"Verify "+meaningFulName+" is Disabled\",\""+ meaningFulName+" element is not disabled\", STATUS.PASS, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\""+ meaningFulName+" element is not disabled\");\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"Verify "+meaningFulName+" is Disabled\",\""+ meaningFulName+" element is not disabled\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\""+ meaningFulName+" element is not disabled\")"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        else {
+            ASTHelper.addStmt(block, new NameExpr("Boolean isElementDisabled = false;\n\t\t\ttry{\n\t\t\tif($("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+").getAttribute(\"disabled\") != null)\n\t\t\t{"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\""+meaningFulName+" element is disabled\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings.LOGGER.info(\""+ meaningFulName+" is not disabled\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"" +meaningFulName+" is not Disabled\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodsIsImage(CompilationUnit c,Field field) throws IOException {
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "verify"+meaningFulName+"isImage");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement element = getElement("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+");\n\t\t\tif(element.getTagName().equals(\"img\"))\n\t\t\t{"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"User verifies "+meaningFulName+" is image\",\"User is able to verify "+ meaningFulName+" is image\", STATUS.PASS, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"User is able to verify "+ meaningFulName+" is image\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User verifies "+meaningFulName+" is image\",\"User is unable to verify "+ meaningFulName+" is image\", STATUS.FAIL, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"User is unable to verify "+ meaningFulName+" is image\");}\n\t\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"User verifies "+meaningFulName+" is image\",\"User is unable to verify "+ meaningFulName+" is image\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"User is unable to verify "+ meaningFulName+" is image\")"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tAssert.assertEquals(\"img\", $("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+").getTagName())"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings.LOGGER.info(\"User is unable to verify "+ meaningFulName+" is image\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"User is unable to verify " +meaningFulName+" is image\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodsGetColValue(CompilationUnit c,Field field) throws IOException {
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "getColValueFor"+meaningFulName);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement element = getElement("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+");\n\t\t\tString colText=element.getText()"));
+            ASTHelper.addStmt(block, new NameExpr("\tif(!colText.isEmpty())\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches column value for "+meaningFulName+"\",\"User successfully fetches column value for "+ meaningFulName+"\", STATUS.PASS, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"User successfully fetches column value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches column value for "+meaningFulName+"\",\"Unable to fetch column value for "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"Unable to fetch fetches column value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"User fetches column value for "+meaningFulName+"\",\"Unable to fetch column value for "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Unable to fetch column value for "+ meaningFulName+"\")"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tString colText=$("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+").getText()"));
+            ASTHelper.addStmt(block, new NameExpr("\tif(colText.isEmpty())\n\t\t\t{\n\t\t\t\tAssert.fail(\"Unable to fetch column value for "+meaningFulName+"\");\n\t\t\t\tSettings.LOGGER.info(\"Unable to fetch column value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings.LOGGER.info(\"Unable to fetch column value for "+ meaningFulName+"\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to fetch column value for " +meaningFulName+"\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodsGetRowValue(CompilationUnit c,Field field) throws IOException {
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "getRowValueFor"+meaningFulName);
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement element = getElement("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+");\n\t\t\tString rowText=element.getText()"));
+            ASTHelper.addStmt(block, new NameExpr("\tif(!rowText.isEmpty())\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches row value for "+meaningFulName+"\",\"User successfully fetches row value for "+ meaningFulName+"\", STATUS.PASS, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"User successfully fetches row value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches row value for "+meaningFulName+"\",\"Unable to fetch row value for "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"Unable to fetch fetches row value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"User fetches row value for "+meaningFulName+"\",\"Unable to fetch row value for "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Unable to fetch row value for "+ meaningFulName+"\")"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tString rowText=$("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+").getText()"));
+            ASTHelper.addStmt(block, new NameExpr("\tif(rowText.isEmpty())\n\t\t\t{\n\t\t\t\tAssert.fail(\"Unable to fetch row value for "+meaningFulName+"\");\n\t\t\t\tSettings.LOGGER.info(\"Unable to fetch row value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings.LOGGER.info(\"Unable to fetch row value for "+ meaningFulName+"\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to fetch row value for " +meaningFulName+"\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodsGetAllValuesFromTable(CompilationUnit c,Field field) throws IOException {
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "getAllCellValuesFor"+meaningFulName+"Table");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tBoolean flag=true;\n\t\t\tWebElement element = getElement("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+");\n\t\t\tList<WebElement>rowsTable = element.findElements(By.tagName(\"tr\"));\n\t\t\tint rowsCount = rowsTable.size();\n\t\t\tfor (int row = 0; row < rowsCount; row++) {\n\t\t\tList < WebElement > columnRows = rowsTable.get(row).findElements(By.tagName(\"td\"));\n\t\t\tint columnCount = columnRows.size();\n\t\t\tfor (int column = 0; column < columnCount; column++) {\n\t\t\tString cellText = columnRows.get(column).getText();\n\t\t\tif(cellText.isEmpty())\n\t\t\t{ \n\t\t\t\tflag=false;\n\t\t\t\tbreak"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t}\n\t\t}\n\t\t\tif(flag)\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches all cell values for "+meaningFulName+" table\",\"User successfully fetches all cell values for "+ meaningFulName+" table\", STATUS.PASS, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"User successfully fetches all cell values for "+ meaningFulName+" table\");\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches all cell values for "+meaningFulName+" table\",\"Unable to fetch all cell values for "+ meaningFulName+" table\", STATUS.FAIL, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"Unable to fetch all cell values for "+ meaningFulName+" table\");\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"User fetches all cell values for "+meaningFulName+" table\",\"Unable to fetch all values for "+ meaningFulName+" table\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Unable to fetch all values for "+ meaningFulName+" table\")"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tBoolean flag=true;\n\t\t\tWebElement element = $("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+");\n\t\t\tList<WebElement>rowsTable = element.findElements(By.tagName(\"tr\"));\n\t\t\tint rowsCount = rowsTable.size();\n\t\t\tfor (int row = 0; row < rowsCount; row++) {\n\t\t\tList < WebElement > columnRows = rowsTable.get(row).findElements(By.tagName(\"td\"));\n\t\t\tint columnCount = columnRows.size();\n\t\t\tfor (int column = 0; column < columnCount; column++) {\n\t\t\tString cellText = columnRows.get(column).getText();\n\t\t\tif(cellText.isEmpty())\n\t\t\t{ \n\t\t\t\tflag=false;\n\t\t\t\tbreak"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t}\n\t\t}\n\t\t\tif(flag)\n\t\t\t{\n\t\t\t\tSettings.LOGGER.info(\"User successfully fetches all cell values for "+ meaningFulName+" table\");\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tAssert.fail(\"Unable to fetch all cell values for "+ meaningFulName+" table\");\n\t\t\t\tSettings.LOGGER.info(\"Unable to fetch all cell values for "+ meaningFulName+" table\");\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings.LOGGER.info(\"Unable to fetch all values for "+ meaningFulName+" table\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to fetch all values for " +meaningFulName+" table\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
 }
