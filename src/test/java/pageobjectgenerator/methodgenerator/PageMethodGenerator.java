@@ -198,6 +198,10 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsGetRowValue(c, field);// Radio and CheckBox and Normal Click Operation
                 UtilsMethodCodeGenerator.setLinkMethodsGetColValue(c, field);// Radio and CheckBox and Normal Click Operation
                 UtilsMethodCodeGenerator.setLinkMethodsGetAllValuesFromTable(c, field);// Radio and CheckBox and Normal Click Operation
+                UtilsMethodCodeGenerator.setLinkMethodGetRowCount(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodGetColumnCount(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodValidateRowCount(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodValidateColumnCount(c, field);
             }
             if (StringUtils.equalsIgnoreCase(locatorType, "file"))
                 {
@@ -232,13 +236,6 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodForAttributeContains(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
             }
-            if (!StringUtils.equalsIgnoreCase(field.getName(), "table")) {
-                UtilsMethodCodeGenerator.setLinkMethodGetRowCount(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodGetColumnCount(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodValidateRowCount(c, field);
-                UtilsMethodCodeGenerator.setLinkMethodValidateColumnCount(c, field);
-            }
-
         }
         UtilsMethodCodeGenerator.savePageObjectsOnFileSystem(Settings.IMPLEMENTATION_PO_DIR,
                 aClass.getSimpleName() + "Implementation", c, false);

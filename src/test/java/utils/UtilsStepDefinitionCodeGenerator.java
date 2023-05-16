@@ -3252,7 +3252,7 @@ public class UtilsStepDefinitionCodeGenerator {
         String annotationType = "";
         meaningFulName = getMeaningFullName(field.getName());
         List<Parameter> parameters = new LinkedList<>();
-        functionName = "ValidateRowCountOf" + meaningFulName + "Table";
+        functionName = "validateRowCountOf" + meaningFulName + "Table";
         annotationType = "Then";
         annotationValue = "\""+Settings.VERIFY_ROW_COUNT+field.getName()+" table$"+"\"";
         MethodDeclaration method = null;
@@ -3295,7 +3295,7 @@ public class UtilsStepDefinitionCodeGenerator {
         String annotationType = "";
         List<Parameter> parameters = new LinkedList<>();
         meaningFulName = getMeaningFullName(field.getName());
-        functionName = "ValidateColumnCountOf" + meaningFulName + "Table";
+        functionName = "validateColumnCountOf" + meaningFulName + "Table";
         annotationType = "Then";
         annotationValue = "\""+Settings.VERIFY_COLUMN_COUNT+ field.getName()+" table$"+"\"";
         MethodDeclaration method = null;
