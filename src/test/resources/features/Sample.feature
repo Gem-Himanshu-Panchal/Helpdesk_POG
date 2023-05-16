@@ -3,12 +3,16 @@ Feature: Test
   Background:
     #This simply launches the URL, without any verification. Should the statement be modified?
     Given User is on homepage
-    Then User verifies "Sample HTML Page" is the title of the page
+    Then User verifies "Gemini Solutions | IT Consulting, Product Development" is the title of the page
 
 #    Scenario: type
 #      When For the Sample page, User enters "password" as input for PasswordNEW
 
   @reg
+  Scenario: Verify console error
+#    When User verifies there are no console error messages
+    And User clears the console
+
   Scenario: Verify value entered for Firstname
     When For the Sample page, User enters "fdsdf" as FirstName element and presses enter
     Then User waits for 5 seconds

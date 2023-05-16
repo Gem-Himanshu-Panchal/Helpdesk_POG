@@ -61,6 +61,10 @@ public class GenericPageMethodGenerator {
         UtilsMethodCodeGenerator.setLinkMethodScrollElementToPosition(c);
 //        UtilsMethodCodeGenerator.setLinkMethodNavigateToUrl(c);
         UtilsMethodCodeGenerator.setLinkMethodRefresh(c);
+        UtilsMethodCodeGenerator.setLinkMethodGetLogs(c);
+        UtilsMethodCodeGenerator.setLinkMethodNoErrorLogs(c);
+        UtilsMethodCodeGenerator.setLinkMethodNoLogs(c);
+        UtilsMethodCodeGenerator.setLinkMethodClearConsole(c);
         UtilsMethodCodeGenerator.setLinkMethodTakeSnapshot(c);
         UtilsMethodCodeGenerator.setLinkMethodGetLocatorWithName(c);
         UtilsMethodCodeGenerator.setLinkMethodClickUsingJS(c);

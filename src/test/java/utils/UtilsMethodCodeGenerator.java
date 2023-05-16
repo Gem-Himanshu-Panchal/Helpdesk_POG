@@ -161,6 +161,9 @@ public class UtilsMethodCodeGenerator {
             imports.add(new ImportDeclaration(new NameExpr("java.lang.reflect.Field"), false, false));
             imports.add(new ImportDeclaration(new NameExpr("java.util.List"), false, false));
             imports.add(new ImportDeclaration(new NameExpr("java.util.ArrayList"), false, false));
+            imports.add(new ImportDeclaration(new NameExpr("org.openqa.selenium.logging.LogEntries"), false, false));
+            imports.add(new ImportDeclaration(new NameExpr("org.openqa.selenium.logging.LogType"), false, false));
+            imports.add(new ImportDeclaration(new NameExpr("org.openqa.selenium.logging.LogEntry"), false, false));
             imports.add(new ImportDeclaration(new NameExpr("utils.UtilsMethodCodeGenerator"), false, false));
         }
 
@@ -1999,6 +2002,114 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tgetDriver().navigate().refresh()"));
             ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ");\n\t\t\tSettings.LOGGER.info(\"Unable to refresh page\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to refresh page\");\n\t\t\tAssert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+    public static void setLinkMethodGetLogs(CompilationUnit c) throws IOException {
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.createReferenceType("LogEntries", 0), "getLogs");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("LogEntries logs = null"));
+            ASTHelper.addStmt(block, new NameExpr("try {\n\t\t\twait(Integer.parseInt(UtilsMethodCodeGenerator.readProperties(\"timeOut\")));\n\t\t\tlogs = DriverManager.getWebDriver().manage().logs().get(LogType.BROWSER)"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get message in console log \", \"Log messages are present in console.- \", STATUS.PASS, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Log messages are present in console.\")"));
+            ASTHelper.addStmt(block, new NameExpr("} catch (Exception e) { \n\t\t\tGemTestReporter.addTestStep(\"Verify no message in console log \", \"Unable to get logs.\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Unable to get logs.\")"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"User gets an exception: \" + e) "));
+            ASTHelper.addStmt(block, new NameExpr(("} \n\t\treturn logs")));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("LogEntries logs = null"));
+            ASTHelper.addStmt(block, new NameExpr("try {\n\t\t\tnew WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties(\"timeOut\")))).until(driver -> ((JavascriptExecutor) driver).executeScript(\"return document.readyState\").equals(\"complete\"));\n\t\t\tlogs = getDriver().manage().logs().get(LogType.BROWSER)"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Log messages are present in console.\")"));
+            ASTHelper.addStmt(block, new NameExpr("} catch (Exception e) { \n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Unable to get logs.\")"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"User gets an exception: \" + e)"));
+            ASTHelper.addStmt(block, new NameExpr("\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to get logs.\")"));
+            ASTHelper.addStmt(block, new NameExpr(("} \n\t\treturn logs")));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+    public static void setLinkMethodNoErrorLogs(CompilationUnit c) throws IOException {
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "verifyNoErrorLogs");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("LogEntries logs = getLogs()"));
+            ASTHelper.addStmt(block, new NameExpr("boolean errorLogFound = false"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tfor (LogEntry log : logs\n\t\t\t) {\n\t\t\t\tif (StringUtils.equalsIgnoreCase(\"SEVERE\", log.getLevel().getName())) {\n\t\t\t\tGemTestReporter.addTestStep(\"Verify no error message in console log \", \"Error Log messages are present in console. \" + log.getMessage(), STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tSettings.LOGGER.info(\"Error Log messages are present in console.\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t\terrorLogFound = true"));
+            ASTHelper.addStmt(block, new NameExpr("\t\t} \n\t\t\t} \n\t\t\tif(!errorLogFound) {\n\t\t\t\tGemTestReporter.addTestStep(\"Verify no error message in console log \", \"No error message in console log verified successfully. \", STATUS.PASS, takeSnapShot());\n" +
+                    "\t\t\t\tSettings.LOGGER.info(\"No error message in console log verified successfully\"); \n\t\t\t} \n\t\t} catch (Exception e) { \n\t\t\tGemTestReporter.addTestStep(\"Verify no error message in console log \", \"Unable to get logs.\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Unable to get logs.\")"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"User gets an exception: \" + e) "));
+            ASTHelper.addStmt(block, new NameExpr(("\t}")));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("LogEntries logs = getLogs()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tfor (LogEntry log : logs\n\t\t\t) {\n\t\t\tassertFalse(\"Error Log messages are present in console.\" + log.getMessage(), StringUtils.equalsIgnoreCase(\"SEVERE\", log.getLevel().getName()))"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Error Log messages are present in console.\" + log.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t} catch (Exception e) { \n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Unable to get logs.\")"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"User gets an exception: \" + e) "));
+            ASTHelper.addStmt(block, new NameExpr("\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to get logs.\")"));
+            ASTHelper.addStmt(block, new NameExpr(("\t}")));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+    public static void setLinkMethodClearConsole(CompilationUnit c) throws IOException {
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "clearConsole");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tJavascriptExecutor executor = (JavascriptExecutor)DriverManager.getWebDriver();\n\t\t\texecutor.executeScript(\"console.clear();\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tGemTestReporter.addTestStep(\"Clear console. \", \"Console cleared successfully. \", STATUS.PASS, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tSettings.LOGGER.info(\"Cleared the console.\")"));
+            ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ");\n\t\t\tSettings.LOGGER.info(\"Unable to clear console.\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tGemTestReporter.addTestStep(\"Clear console. \", \"Could not clear console. \", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tJavascriptExecutor executor = (JavascriptExecutor)getDriver();\n\t\t\texecutor.executeScript(\"console.clear();\")"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Cleared the console.\")"));
+            ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ");\n\t\t\tSettings.LOGGER.info(\"Unable to clear console\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to clear console\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+        Settings.LOGGER.info(method.toString());
+        Settings.LOGGER.info(c.getTypes().get(0).toString());
+    }
+    public static void setLinkMethodNoLogs(CompilationUnit c) throws IOException {
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "verifyNoLogs");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("LogEntries logs = getLogs()"));
+            ASTHelper.addStmt(block, new NameExpr("try {\n\t\t\tif (logs.getAll().size() > 0) {\n\t\t\t\tGemTestReporter.addTestStep(\"Verify no message in console log \", \"Log messages are present in console.\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tSettings.LOGGER.info(\"Log messages are present in console.\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t} else {\n\t\t\t\tGemTestReporter.addTestStep(\"Verify no message in console log \", \"Log messages are present in console. \", STATUS.PASS, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tSettings.LOGGER.info(\"Log messages are not present in console\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t} catch (Exception e) { \n\t\t\tGemTestReporter.addTestStep(\"Verify no message in console log \", \"Unable to get logs.\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Unable to get logs.\")"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"User gets an exception: \" + e) "));
+            ASTHelper.addStmt(block, new NameExpr(("}")));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("LogEntries logs = getLogs()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tAssert.assertNotEquals(\"Log messages are present in console.\", 0, logs.getAll().size())"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Error Log messages are present in console.\")"));
+            ASTHelper.addStmt(block, new NameExpr("} catch (Exception e) { \n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Unable to get logs.\")"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"User gets an exception: \" + e) "));
+            ASTHelper.addStmt(block, new NameExpr(("\t}")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
         Settings.LOGGER.info(method.toString());

@@ -65,6 +65,10 @@ public class GenericStepDefinitionGenerator {
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSwitchFrame(c, true);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSwitchFrame(c, false);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSwitchWindow(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetLogs(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionNoErrorLogs(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionNoLogs(c);
+        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionClearConsole(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionWait(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionJSClick(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionClickAndHold(c);
