@@ -1,5 +1,6 @@
 package utils;
 
+import com.gemini.generic.ui.utils.DriverManager;
 import japa.parser.ASTHelper;
 import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.ImportDeclaration;
@@ -14,6 +15,8 @@ import japa.parser.ast.type.ClassOrInterfaceType;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pageobjectgenerator.Settings;
@@ -2214,5 +2217,156 @@ public class UtilsMethodCodeGenerator {
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
     }
+    public static void setLinkMethodGetRowCount(CompilationUnit c, Field field) throws IOException {
+
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.INT_TYPE, "getRowCountOf" + meaningFulName + "Table");
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+
+        ASTHelper.addStmt(block, new NameExpr("//This function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        //DriverAction.getAttributeName(element,"value") of Gemjar Framework to get the value attribute of an element
+
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> listOfRows = new ArrayList<>()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement tableBody = getElement("+ Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+            ASTHelper.addStmt(block, new NameExpr("\tlistOfRows = tableBody.findElements(By.tagName(\"tr\"))"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get row count of " + field.getName() + " table\",\"Successful get row count of " + field.getName() + " table\", STATUS.PASS, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Get row count of " + field.getName() + " table\");\n\t\t\t}\n\t\tcatch(Exception e){"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get row count of " + field.getName() + " table\",\"failed to get row count of " + field.getName() + " table\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to scroll to " + field.getName() + " element\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e)"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+            ASTHelper.addStmt(block, new NameExpr("\treturn listOfRows.size()"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> listOfRows = new ArrayList<>()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement tableBody = getDriver().findElement("+ Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+            ASTHelper.addStmt(block, new NameExpr("\tlistOfRows = tableBody.findElements(By.tagName(\"tr\"))"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Get row count of "  + field.getName() +  " table\");}\t\n\t\tcatch(Exception e){"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(\"failed to get row count of " + field.getName() + " table \")"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+            ASTHelper.addStmt(block, new NameExpr("\treturn listOfRows.size()"));
+        }
+
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodGetColumnCount(CompilationUnit c, Field field) throws IOException {
+
+
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.INT_TYPE, "getColumnCountOf" + meaningFulName + "Table");
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//This function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+        //DriverAction.getAttributeName(element,"value") of Gemjar Framework to get the value attribute of an element
+
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> headers = new ArrayList<>()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement tableBody = getElement("+ Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+            ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> listOfRows = tableBody.findElements(By.tagName(\"tr\"))"));
+            ASTHelper.addStmt(block, new NameExpr("\theaders = listOfRows.get(0).findElements(By.tagName(\"td\"))"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get row count of " + field.getName() + " table\",\"Successful get row count of " + field.getName() + " table\", STATUS.PASS, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Get row count of " + field.getName() + " table\");\n\t\t\t}\n\t\tcatch(Exception e){"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get row count of " + field.getName() + " table\",\"failed to get row count of " + field.getName() + " table\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to scroll to " + field.getName() + " element\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e)"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+            ASTHelper.addStmt(block, new NameExpr("\treturn headers.size()"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> listOfRows = new ArrayList<>()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement tableBody = getDriver().findElement("+ Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+            ASTHelper.addStmt(block, new NameExpr("\tlistOfRows = tableBody.findElements(By.tagName(\"tr\"))"));
+            ASTHelper.addStmt(block, new NameExpr("\theaders = listOfRows.get(0).findElements(By.tagName(\"td\"))"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Get column count of "  + field.getName() +  " table\");}\t\n\t\tcatch(Exception e){"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(\"failed to get column count of " + field.getName() + " table \")"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+            ASTHelper.addStmt(block, new NameExpr("\treturn headers.size()"));
+        }
+
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodValidateRowCount(CompilationUnit c, Field field) throws IOException {
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "ValidateRowCountOf" + meaningFulName + "Table");
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//This function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+
+        //Add Parameters
+        List<Parameter> parameters = new LinkedList<>();
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("int", 0), "expectedRowCount"));
+        method.setParameters(parameters);
+
+        //DriverAction.getAttributeName(element,"value") of Gemjar Framework to get the value attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("\tint actualRowCount = getRowCountOf"+ meaningFulName + "Table()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tif(actualRowCount == (expectedRowCount)) {\n\t\t\t\t" + "GemTestReporter.addTestStep(\"Verify row count \",\" verified successfully. Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\", STATUS.PASS, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\" verified successfully. Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\" );" + "\n\t\t\t}\n\t\t\telse {\n\t\t\t\t" + "GemTestReporter.addTestStep(\"Verify  \",\"Unable to verify . Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"Unable to verify . Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\" );" + "\n\t\t\t}\n\t\t\t}\n\t\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tGemTestReporter.addTestStep(\"Verify  \",\"Unable to verify . Expected: '\" +expectedRowCount+\"' Actual: '\" +actualRowCount+\"'\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to verify title\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("\tint actualRowCount = getRowCountOf"+ meaningFulName + "Table()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tif(actualRowCount == (expectedRowCount))"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"verification of Row count is successful\");}\t\n\t\tcatch(Exception e){"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Actual: \"actualRowCount, \"Expected: \"expectedRowCount);"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(\"failed to verify row count\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Actual: \"actualRowCount, \"Expected: \"expectedRowCount);"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+
+    public static void setLinkMethodValidateColumnCount(CompilationUnit c, Field field) throws IOException {
+        meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "ValidateColumnCountOf" + meaningFulName + "Table");
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//This function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
+
+        //Add Parameters
+        List<Parameter> parameters = new LinkedList<>();
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("int", 0), "expectedColumnCount"));
+        method.setParameters(parameters);
+
+        //DriverAction.getAttributeName(element,"value") of Gemjar Framework to get the value attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("\tint actualColumnCount = getColumnCountOf"+ meaningFulName + "Table()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tif(actualColumnCount == (expectedColumnCount)) {\n\t\t\t\t" + "GemTestReporter.addTestStep(\"Verify column count \",\" verified successfully. Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\", STATUS.PASS, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\" verified successfully. Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\" );" + "\n\t\t\t}\n\t\t\telse {\n\t\t\t\t" + "GemTestReporter.addTestStep(\"Verify  \",\"Unable to verify . Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"Unable to verify . Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\" );" + "\n\t\t\t}\n\t\t\t}\n\t\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tGemTestReporter.addTestStep(\"Verify  \",\"Unable to verify . Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to verify title\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("\tint actualRowCount = getColumnCountOf"+ meaningFulName + "Table()"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tif(actualColumnCount == (expectedColumnCount))"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"verification of column count is successful\");}\t\n\t\tcatch(Exception e){"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Actual: \"actualColumnCount, \"Expected: \"expectedColumnCount);"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(\"failed to verify column count\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Actual: \"actualColumnCount, \"Expected: \"expectedColumnCount);"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
 
 }

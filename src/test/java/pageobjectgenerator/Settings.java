@@ -61,6 +61,8 @@ public class Settings {
 	public static final String USER_UPLOAD_FILE="userUploadsFile";
 	public static final String USER_VERIFIES_CHECKED="verifyIsSelectedFor";
 	public static final String USER_VERIFIES_VALUE_ATTRIBUTE="userVerifyAttributeFor";
+	public static final String VERIFY_ROW_COUNT ="^User verifies row count is (.*) for ";
+	public static final String VERIFY_COLUMN_COUNT ="^User verifies column count is (.*) for ";
 	public static final String USER_CLEAR_ANNOTATION ="User clears";
 	public static final String USER_VERIFY_CLEAR_ANNOTATION ="User verifies";
 	public static final String USER_CLEAR_FUNCTION ="userClear";
