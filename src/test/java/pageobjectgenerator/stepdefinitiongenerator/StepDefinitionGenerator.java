@@ -229,6 +229,10 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeVerification(c, field, aClass.getSimpleName());
 
             }
+            if (StringUtils.equalsIgnoreCase(locatorType, "table")) {
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionValidateRowCountOfTable(c, field);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionValidateColumnCountOfTable(c, field);
+            }
 
             }
         UtilsStepDefinitionCodeGenerator.savePageObjectsOnFileSystem(Settings.STEP_DEFINITION_PO_DIR,

@@ -80,6 +80,14 @@ public class GenericPageMethodGenerator {
         UtilsFunctionsGenerator.setTypeDeclaration(c, "UtilFunctions");
 
         UtilsFunctionsGenerator.setLinkMethodsIsFileDownloaded(c);
+        UtilsFunctionsGenerator.setLinkMethodsGetWindowFocus(c);
+        UtilsFunctionsGenerator.setLinkMethodsIsImage(c);
+        UtilsFunctionsGenerator.setLinkMethodsCopy(c);
+        UtilsFunctionsGenerator.setLinkMethodsAddCookies(c);
+        UtilsFunctionsGenerator.setLinkMethodsDeleteCookies(c);
+
+
+
         UtilsMethodCodeGenerator.savePageObjectsOnFileSystem(Settings.IMPLEMENTATION_PO_DIR,
                 "UtilFunctions", c, false);
 

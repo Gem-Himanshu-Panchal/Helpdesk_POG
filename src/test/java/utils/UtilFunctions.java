@@ -17,7 +17,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 import pageobjectgenerator.Settings;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
