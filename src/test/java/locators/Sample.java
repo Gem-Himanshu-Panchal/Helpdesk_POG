@@ -15,10 +15,10 @@ public class Sample extends PageObject {
     @LocatorType(value = "input")
     public static By password = By.id("password");
 
-    @LocatorType(value = "input")
+    @LocatorType(value = "image")
     public static By lastName = By.id("lname");
 
-    @LocatorType(value = "input")
+    @LocatorType(value = "table")
     public static By heading = By.id("h1");
 
     @LocatorType(value = "input")

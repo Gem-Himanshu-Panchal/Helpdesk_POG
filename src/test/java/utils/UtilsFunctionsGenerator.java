@@ -143,11 +143,12 @@ public class UtilsFunctionsGenerator {
                 imports.add(new ImportDeclaration(new NameExpr("org.openqa.selenium.firefox.FirefoxDriver"), false, false));
                 imports.add(new ImportDeclaration(new NameExpr("com.gemini.generic.utils.GemJarGlobalVar"), false, false));
                 imports.add(new ImportDeclaration(new NameExpr("java.io.File"), false, false));
+                imports.add(new ImportDeclaration(new NameExpr("net.thucydides.core.webdriver.SerenityWebdriverManager"), false, false));
             } else {
                 imports.add(new ImportDeclaration(new NameExpr("net.serenitybdd.core.pages.WebElementFacade"), false, false));
                 imports.add(new ImportDeclaration(new NameExpr("net.serenitybdd.core.pages.PageObject"), false, false));
                 imports.add(new ImportDeclaration(new NameExpr("org.apache.commons.io.FileUtils"), false, false));
-                imports.add(new ImportDeclaration(new NameExpr("java.io.File"), false, false));
+                imports.add(new ImportDeclaration(new NameExpr("net.thucydides.core.webdriver.SerenityWebdriverManager"), false, false));
             }
             imports.add(new ImportDeclaration(new NameExpr("com.gemini.generic.ui.utils.DriverManager"), false, false));
             imports.add(new ImportDeclaration(new NameExpr("pageobjectgenerator.Settings"), false, false));
@@ -176,7 +177,7 @@ public class UtilsFunctionsGenerator {
             imports.add(new ImportDeclaration(new NameExpr("utils.UtilsMethodCodeGenerator"), false, false));
             imports.add(new ImportDeclaration(new NameExpr("java.io.File"), false, false));
             imports.add(new ImportDeclaration(new NameExpr("net.serenitybdd.core.pages.WebElementFacade"), false, false));
-
+            imports.add(new ImportDeclaration(new NameExpr("java.util.Set"), false, false));
         }
 
         return imports;
@@ -239,22 +240,43 @@ public class UtilsFunctionsGenerator {
             ASTHelper.addStmt(block, new NameExpr("\tJavascriptExecutor js = (JavascriptExecutor) DriverManager.getWebDriver()"));
             ASTHelper.addStmt(block, new NameExpr("\tjs.executeScript(\"window.focus();\");\n\t\t\t\tSettings.LOGGER.info(\"get window focus successfully\")"));
             ASTHelper.addStmt(block, new NameExpr("\t\t\t}\tcatch(" + "Exception e" + "){\n\t\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to get window in focus\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to get window in focus\");\n\t\t\tAssert.fail(e.getMessage())"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodsNoOfTabs(CompilationUnit c) throws IOException {
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "noOfTabs");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//This function is for getting no of tabs"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tArrayList<String> tabs = new ArrayList<String>(DriverManager.getWebDriver().getWindowHandles())"));
+            ASTHelper.addStmt(block, new NameExpr("\tif(tabs.size()>0)\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches no of tabs\",\"No of tabs fetched successfully\", STATUS.PASS, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"No. of tabs fetched successfully\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches no of tabs\",\"Unable to fetch no of tabs\", STATUS.FAIL, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"Unable to fetch no of tabs.\");}\n\t\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to fetch no of tabs\");\n\t\t\tGemTestReporter.addTestStep(\"User fetches no of tabs\",\"Unable to fetch no of tabs\", STATUS.FAIL, takeSnapShot());"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tArrayList<String> tabs = new ArrayList<String>(getDriver().getWindowHandles())"));
+            ASTHelper.addStmt(block, new NameExpr("\tif(tabs.size()>0)\n\t\t\t{\n\t\t\t\tSettings.LOGGER.info(\"No. of tabs fetched successfully\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t\telse{\n\t\t\tSettings.LOGGER.info(\"Unable to fetch no of tabs.\");\n\t\t\tAssert.fail(\"Unable to fetch no of tabs.\");\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to fetch no of tabs\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to fetch no of tabs\");\n\t\t\tAssert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
     }
+
     public static void setLinkMethodsIsImage(CompilationUnit c) throws IOException {
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         // Add the Getter method
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "isImage");
-        // add a body to the method
         BlockStmt block = new BlockStmt();
         method.setBody(block);
         List<Parameter> parameters = new LinkedList<>();
         parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("WebElementFacade", 0), "element"));
         method.setParameters(parameters);
-        Settings.LOGGER.info(parameters.toString());
-        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
         if (readProperties("Framework").contains("GEMJAR")) {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\t if((\"img\").equals(element.getTagName()));\n\t\t\t\t\tGemTestReporter.addTestStep(\"Enter text for alert\",\"Successfully entered text\", STATUS.PASS, takeSnapShot());"));
             ASTHelper.addStmt(block, new NameExpr("}catch(" + "Exception e" + "){\n\t\t\t Settings.LOGGER.info(\"Could not enter text for alert\");\n\t\t\t\t\tGemTestReporter.addTestStep(\"Could not enter text for alert\",\"Failed to enter\", STATUS.FAIL, takeSnapShot());"));
@@ -262,6 +284,31 @@ public class UtilsFunctionsGenerator {
         } else {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\t Assert.assertEquals(\"img\", element.getTagName())"));
             ASTHelper.addStmt(block, new NameExpr("}catch(" + "Exception e" + "){\n\t\t\tSettings.LOGGER.info(\"Could not enter text for alert\");\n\t\t\tAssert.fail(\"Could not enter text for alert\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Could not enter text for alert\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodsSwitchToTab(CompilationUnit c) throws IOException {
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "switchToTab");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        List<Parameter> parameters = new LinkedList<>();
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "tabName"));
+        method.setParameters(parameters);
+        Settings.LOGGER.info(parameters.toString());
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tBoolean flag = false;\n\t\t\tWebDriver driver = DriverManager.getWebDriver();\n\t\t\tString currentHandle = driver.getWindowHandle()"));
+            ASTHelper.addStmt(block, new NameExpr("\tfor(String handle : driver.getWindowHandles())\n\t\t\t\t{\n\t\t\t\t\tdriver.switchTo().window(handle);\n\t\t\t\t\tString title = driver.getTitle();\n\t\t\t\t\tif (title.contains(tabName)) {\n\t\t\t\t\t flag=true;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tif(flag){\n\t\t\t\t\tdriver.switchTo().window(currentHandle).close();\n\t\t\t\t\tdriver.switchTo().window(currentHandle);\n\t\t\t\t\tGemTestReporter.addTestStep(\"User switches to tab\"+tabName,\"Tab switched successfully\", STATUS.PASS, takeSnapShot());\n\t\t\t\t\tSettings.LOGGER.info(\"Tab switched successfully\");\n\t\t\t\t}\n\t\t\t\telse\n\t\t\t\t{"));
+            ASTHelper.addStmt(block, new NameExpr("\t\t\tGemTestReporter.addTestStep(\"User switches to tab\"+tabName,\"Unable to switch to tab\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to switch tab\");\n\t\t\t\t}\n\t\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to switch to tab\");\n\t\t\tGemTestReporter.addTestStep(\"User switches to tab\"+tabName,\"Unable to switch to Tab\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tBoolean flag = false;\n\t\t\tWebDriver driver = SerenityWebdriverManager.inThisTestThread().getCurrentDriver();\n\t\t\tString currentHandle = driver.getWindowHandle()"));
+            ASTHelper.addStmt(block, new NameExpr("\tfor(String handle : driver.getWindowHandles())\n\t\t\t\t{\n\t\t\t\t\tdriver.switchTo().window(handle);\n\t\t\t\t\tString title = driver.getTitle();\n\t\t\t\t\tif (title.contains(tabName)) {\n\t\t\t\t\t flag=true;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tif(flag){\n\t\t\t\t\tdriver.switchTo().window(currentHandle).close();\n\t\t\t\t\tdriver.switchTo().window(currentHandle);\n\t\t\t\t\tSettings.LOGGER.info(\"Tab switched successfully\");\n\t\t\t\t}\n\t\t\t\telse\n\t\t\t\t{"));
+            ASTHelper.addStmt(block, new NameExpr("\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to fetch no of tabs\");\n\t\t\t\t}\n\t\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to switch to tab\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to fetch no of tabs\");\n\t\t\tAssert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
@@ -283,6 +330,29 @@ public class UtilsFunctionsGenerator {
         } else {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\twithAction().keyDown(Keys.CONTROL).sendKeys(\"c\").keyUp(Keys.CONTROL).build().perform();\n\t\t\tSettings.LOGGER.info(\"Successfully copied\")"));
             ASTHelper.addStmt(block, new NameExpr("}catch(" + "Exception e" + "){\n\t\t\tSettings.LOGGER.info(\"Could not perform copy operation\");\n\t\t\tAssert.fail(\"Could not perform copy operation\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Could not perform copy operation\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+    public static void setLinkMethodsPressEnter(CompilationUnit c) throws IOException {
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "pressEnter");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//This function is for switching tabs"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tnew Actions(DriverManager.getWebDriver()).sendKeys(Keys.ENTER).build().perform()"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"User presses enter\",\"Enter pressed successfully\", STATUS.PASS, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Enter Pressed successfully\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to press enter\");\n\t\t\tGemTestReporter.addTestStep(\"User presses enter\",\"Unable to press enter\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\twithAction().sendKeys(Keys.ENTER).build().perform()"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Enter pressed successfully\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to press enter\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to press enter\");\n\t\t\tAssert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
@@ -313,6 +383,57 @@ public class UtilsFunctionsGenerator {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tdriver.get(url);\n\t\t\tdriver.manage().addCookie(new Cookie(key, value));\n\t\t\tSettings.LOGGER.info(\"Successfully added cookies\")"));
             ASTHelper.addStmt(block, new NameExpr("}catch(" + "Exception e" + "){\n\t\t\tSettings.LOGGER.info(\"Failed to add Cookies\");\n\t\t\tAssert.fail(\"Failed to add Cookies\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Failed to add Cookies\");\n\t\t\tAssert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+            ASTHelper.addMember(c.getTypes().get(0), method);
+        }
+
+    public static void setLinkMethodsPaste(CompilationUnit c) throws IOException {
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "paste");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//This function is for switching tabs"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tnew Actions(DriverManager.getWebDriver()).keyDown(Keys.CONTROL).sendKeys(\"v\").keyUp(Keys.CONTROL).build().perform()"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"User performs paste action\",\"Paste action performed successfully\", STATUS.PASS, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Paste action performed successfully\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to perform paste action\");\n\t\t\tGemTestReporter.addTestStep(\"User performs paste action\",\"Unable to perform paste action\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\twithAction().keyDown(Keys.CONTROL).sendKeys(\"v\").keyUp(Keys.CONTROL).build().perform()"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Paste Operation performed successfully\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Could not perform paste operation\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Could not perform paste operation\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodsGetAllCookies(CompilationUnit c) throws IOException {
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.createReferenceType("Object",0), "getAllCookies");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        List<Parameter> parameters = new LinkedList<>();
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "url"));
+        method.setParameters(parameters);
+        ASTHelper.addStmt(block, new NameExpr("//This function is to fetch all cookies"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("WebDriver driver = DriverManager.getWebDriver();\n\t\t\tObject browserCookies=null;\n\t\t\ttry{\n\t\t\tdriver.get(url);\n\t\t\tSet<Cookie> cookies = driver.manage().getCookies()"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get all cookies\",\"User is able to get all cookies\", STATUS.PASS, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"User is able to get all cookies\");\n\t\t\tbrowserCookies = cookies"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to get all cookies\");\n\t\t\tGemTestReporter.addTestStep(\"Get all cookies\",\"User is unable to get all cookies\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t}return browserCookies"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("WebDriver driver = SerenityWebdriverManager.inThisTestThread().getCurrentDriver();\n\t\t\tObject browserCookies=null;\n\t\t\ttry{\n\t\t\tdriver.get(url);\n\t\t\tSet<Cookie> cookies = driver.manage().getCookies()"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"User is able to get all cookies\");browserCookies = cookies"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to get all cookies\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"User is unable to get all cookies\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t\treturn browserCookies"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
     }
@@ -345,5 +466,83 @@ public class UtilsFunctionsGenerator {
         ASTHelper.addMember(c.getTypes().get(0), method);
     }
 
+    public static void setLinkMethodsDeleteAllCookies(CompilationUnit c) throws IOException {
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "deleteAllCookies");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        List<Parameter> parameters = new LinkedList<>();
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "url"));
+        method.setParameters(parameters);
+        ASTHelper.addStmt(block, new NameExpr("//This function is to fetch all cookies"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("WebDriver driver = DriverManager.getWebDriver();\n\t\t\ttry{\n\t\t\tdriver.get(url);\n\t\t\tdriver.manage().deleteAllCookies()"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Delete all cookies\",\"User is able to delete all cookies\", STATUS.PASS, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"User is able to delete all cookies\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to delete all cookies\");\n\t\t\tGemTestReporter.addTestStep(\"Delete all cookies\",\"User is unable to delete all cookies\", STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t}"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("WebDriver driver = SerenityWebdriverManager.inThisTestThread().getCurrentDriver();\n\t\t\ttry{\n\t\t\tdriver.get(url);\n\t\t\tdriver.manage().deleteAllCookies()"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"User is able to delete all cookies\")"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to delete all cookies\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"User is unable to delete all cookies\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("\t}"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodsGetCookie(CompilationUnit c) throws IOException {
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.createReferenceType("Object",0), "getCookie");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        List<Parameter> parameters = new LinkedList<>();
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "url"));
+        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "key"));
+        method.setParameters(parameters);
+        ASTHelper.addStmt(block, new NameExpr("//This function is to fetch all cookies"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+            ASTHelper.addStmt(block, new NameExpr("WebDriver driver = DriverManager.getWebDriver();\n\t\t\tObject browserCookie=null;\n\t\t\ttry{\n\t\t\tdriver.get(url);\n\t\t\tCookie cookie = driver.manage().getCookieNamed(key)"));
+            ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get cookie for: key \"+key,\"User is able to get cookie for: key \"+key, STATUS.PASS, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"User is able to get cookie for: key \"+key);\n\t\t\tbrowserCookie = cookie"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to get cookie for: key \"+key);\n\t\t\tGemTestReporter.addTestStep(\"Get cookie for: key \"+key,\"User is unable to get cookie for: key \"+key, STATUS.FAIL, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("\t}return browserCookie"));
+        } else {
+            ASTHelper.addStmt(block, new NameExpr("WebDriver driver = SerenityWebdriverManager.inThisTestThread().getCurrentDriver();\n\t\t\tObject browserCookie=null;\n\t\t\ttry{\n\t\t\tdriver.get(url);\n\t\t\tCookie cookie = driver.manage().getCookieNamed(key)"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"User is able to get cookie for: key \"+key);\n\t\t\tbrowserCookie = cookie"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to get cookie for: key \"+key);\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"User is unable to get cookie for: key \"+key);\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t\treturn browserCookie"));
+        }
+        ASTHelper.addMember(c.getTypes().get(0), method);
+    }
+
+    public static void setLinkMethodsSelectAll(CompilationUnit c) throws IOException {
+        Settings.LOGGER.info("Name of field: " + meaningFulName);
+        // Add the Getter method
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "selectAll");
+        // add a body to the method
+        BlockStmt block = new BlockStmt();
+        method.setBody(block);
+        // add a statement do the method body
+        ASTHelper.addStmt(block, new NameExpr("//This function is for select all"));
+        //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
+        if (readProperties("Framework").contains("GEMJAR")) {
+                ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tnew Actions(DriverManager.getWebDriver()).keyDown(Keys.CONTROL).sendKeys(\"a\").keyUp(Keys.CONTROL).build().perform()"));
+                ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"User performs select all action\",\"Select all action performed successfully\", STATUS.PASS, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Select all action performed successfully\")"));
+                ASTHelper.addStmt(block, new NameExpr("\t}\n\t\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to perform select all action\");\n\t\t\tGemTestReporter.addTestStep(\"User performs select all action\",\"Unable to perform select all action\", STATUS.FAIL, takeSnapShot())"));
+                ASTHelper.addStmt(block, new NameExpr("}"));
+            } else {
+                ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\twithAction().keyDown(Keys.CONTROL).sendKeys(\"a\").keyUp(Keys.CONTROL).build().perform()"));
+                ASTHelper.addStmt(block, new NameExpr("\tSettings.LOGGER.info(\"Select All Operation performed successfully\")"));
+                ASTHelper.addStmt(block, new NameExpr("\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Could not perform select all operation\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Could not perform select all operation\");\n\t\t\tAssert.fail(e.getMessage())"));
+                ASTHelper.addStmt(block, new NameExpr("}"));
+            }
+            ASTHelper.addMember(c.getTypes().get(0), method);
+    }
 
 }
