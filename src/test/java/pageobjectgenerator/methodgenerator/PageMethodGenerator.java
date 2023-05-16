@@ -203,7 +203,7 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodForAttributeContains(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForText(c, field);
             }
-            if (!StringUtils.equalsIgnoreCase(field.getName(), "table")) {
+            if (StringUtils.equalsIgnoreCase(field.getName(), "table")) {
                 UtilsMethodCodeGenerator.setLinkMethodGetRowCount(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodGetColumnCount(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodValidateRowCount(c, field);

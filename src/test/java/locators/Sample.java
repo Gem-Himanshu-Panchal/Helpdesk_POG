@@ -40,7 +40,7 @@ public class Sample extends PageObject {
     public static By car = By.id("cars");
 
     @LocatorType(value = "button")
-    public static By Submit = By.xpath("//input[@type='submit']");
+    public static By Submit = By.xpath("//input[@type='button']");
 
     @LocatorType(value = "a")
     public static By html = By.xpath("//a[contains(text(),'HTML')]");

@@ -24,7 +24,7 @@ public class Settings {
 	//public static final String URL = "http://www.google.com/";
 
 	//public static final String URL = "https://mymis.geminisolutions.com";
-	public static final String URL = "https://geminisolutions.com/";
+	public static final String URL = "D:\\v1-pog\\POG\\src\\test\\resources\\data\\index.html";
 
 	public static final String TITLE = "Sample HTML Page";
 	//Used For Logging the steps
