@@ -17,7 +17,11 @@ import java.lang.reflect.Field;
 
 public class PageMethodGenerator {
 
-    // Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
+    /**
+     * @author - Sajith, Hem, Ayush, Jasleen, Priyanshu, Rahul Tagra and Siddhanshi
+     * @version - 1.0
+     * @since - 5/16/2023
+     */
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PageMethodGenerator.class);
 

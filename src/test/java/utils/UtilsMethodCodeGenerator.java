@@ -26,7 +26,11 @@ import java.util.*;
 
 public class UtilsMethodCodeGenerator {
 
-    // Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
+    /**
+     * @author - Sajith, Hem, Ayush, Jasleen, Priyanshu, Rahul Tagra and Siddhanshi
+     * @version - 1.0
+     * @since - 5/16/2023
+     */
     private static String meaningFulName = "";
 
     /**
