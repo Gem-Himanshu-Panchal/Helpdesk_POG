@@ -39,7 +39,6 @@ public class PageMethodGenerator {
         boolean isByOrFindBy = false;
         CompilationUnit c = UtilsMethodCodeGenerator.createEnhancedCompilationUnit("implementation", "Method");
         UtilsMethodCodeGenerator.setTypeDeclaration(c, aClass.getSimpleName() + "Implementation");
-        UtilsMethodCodeGenerator.setWebDriverVariable(c);
 
 
         for (Field field : fields) {

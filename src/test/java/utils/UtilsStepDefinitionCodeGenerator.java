@@ -452,10 +452,9 @@ public class UtilsStepDefinitionCodeGenerator {
         MethodDeclaration method = null;
         List<Parameter> parameters = new LinkedList<>();
         functionName = "hoverOver" + meaningFulName;
-        annotationValue = "\"" + pageName.replace("<page>", className) + "User hovers over " + meaningFulName + " and checks \\\"(.*)\\\" label$" + "\""; //changed the step definition
-        blockToEnter = functionName + "(" + "label" + ")";
+        annotationValue = "\"" + pageName.replace("<page>", className) + "User hovers over " + meaningFulName + "$" + "\""; //changed the step definition
+        blockToEnter = functionName + "(" + "" + ")";
         method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, functionName);
-        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("String", 0), "label"));
         // add a body to the method
         method.setParameters(parameters);
         // add a body to the method

@@ -286,19 +286,19 @@ public class UtilFunctions extends PageObject {
     }
 
     public void deleteAllCookies(String url) {
-            WebDriver driver = DriverManager.getWebDriver();
-            try {
-                driver.get(url);
-                // deletes all cookies
-                driver.manage().deleteAllCookies();
-                GemTestReporter.addTestStep("Delete cookies", "User is able to delete cookies", STATUS.PASS);
-                Settings.LOGGER.info("User is able to delete cookie "+url);
-            } catch (Exception e) {
-                GemTestReporter.addTestStep("Delete cookies", "User is unable to delete cookies", STATUS.FAIL);
-                Settings.LOGGER.info("User is unable to delete cookies "+url);
-                Settings.LOGGER.info("User gets an exception: " + e);
-            }
+        WebDriver driver = DriverManager.getWebDriver();
+        try {
+            driver.get(url);
+            // deletes all cookies
+            driver.manage().deleteAllCookies();
+            GemTestReporter.addTestStep("Delete cookies", "User is able to delete cookies", STATUS.PASS);
+            Settings.LOGGER.info("User is able to delete cookie "+url);
+        } catch (Exception e) {
+            GemTestReporter.addTestStep("Delete cookies", "User is unable to delete cookies", STATUS.FAIL);
+            Settings.LOGGER.info("User is unable to delete cookies "+url);
+            Settings.LOGGER.info("User gets an exception: " + e);
         }
+    }
 
     public void clearConsole(){
         JavascriptExecutor js = (JavascriptExecutor)getDriver();
@@ -307,20 +307,20 @@ public class UtilFunctions extends PageObject {
     }
 
     public void table(By table,By row,By col){
-    WebDriver driver = DriverManager.getWebDriver();
-	WebElement baseTable = driver.findElement(table);
+        WebDriver driver = DriverManager.getWebDriver();
+        WebElement baseTable = driver.findElement(table);
 
-    //To find third row of table
-    WebElement tableRow = baseTable.findElement(row);
-    String rowtext = tableRow.getText();
-    if(!rowtext.isEmpty())
-		 System.out.println("Third row of table : "+rowtext);
+        //To find third row of table
+        WebElement tableRow = baseTable.findElement(row);
+        String rowtext = tableRow.getText();
+        if(!rowtext.isEmpty())
+            System.out.println("Third row of table : "+rowtext);
 
-    //to get 3rd row's 2nd column data
-    WebElement cellIneed = tableRow.findElement(col);
-    String valueIneed = cellIneed.getText();
-		    System.out.println("Cell value is : " + valueIneed);
-		    driver.close();
-}
+        //to get 3rd row's 2nd column data
+        WebElement cellIneed = tableRow.findElement(col);
+        String valueIneed = cellIneed.getText();
+        System.out.println("Cell value is : " + valueIneed);
+        driver.close();
+    }
 
 }
