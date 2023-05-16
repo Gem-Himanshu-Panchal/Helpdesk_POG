@@ -309,7 +309,7 @@ public class UtilsFunctionsGenerator {
         ASTHelper.addStmt(block, new NameExpr("//This function copy using keyboard actions (Ctrl+C)"));
         //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
         if (readProperties("Framework").contains("GEMJAR")) {
-            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tnew SerenityActions(DriverManager.getWebDriver()).keyDown(Keys.CONTROL).sendKeys(\"c\").keyUp(Keys.CONTROL).build().perform();\n\t\t\t\t\tGemTestReporter.addTestStep(\"Press Ctrl + C to copy the content\",\"Successfully copied\", STATUS.PASS, takeSnapShot());"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tnew Actions(DriverManager.getWebDriver()).keyDown(Keys.CONTROL).sendKeys(\"c\").keyUp(Keys.CONTROL).build().perform();\n\t\t\t\t\tGemTestReporter.addTestStep(\"Press Ctrl + C to copy the content\",\"Successfully copied\", STATUS.PASS, takeSnapShot());"));
             ASTHelper.addStmt(block, new NameExpr("}catch(" + "Exception e" + "){\n\t\t\t Settings.LOGGER.info(\"Failed to copy\");\n\t\t\t\t\tGemTestReporter.addTestStep(\"Press Ctrl + C to copy the content\",\"Failed to copy\", STATUS.FAIL, takeSnapShot());"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         } else {

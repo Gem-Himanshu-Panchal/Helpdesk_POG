@@ -113,15 +113,6 @@ public class UtilFunctions extends PageObject {
         }
     }
 
-    public void acceptAlert() {
-        try {
-            getDriver().switchTo().alert().accept();
-        } catch (Exception e) {
-            Assert.fail("Could not do accept alert");
-            Settings.LOGGER.info("Could not do accept alert");
-        }
-    }
-
     public void noOfTabs(String expectedTitle) {
         ArrayList<String> tabs = new ArrayList<String>(getDriver().getWindowHandles());
         Settings.LOGGER.info("No of tabs: " + tabs.size());
@@ -152,15 +143,6 @@ public class UtilFunctions extends PageObject {
         return isElementDisabled;
     }
 
-    public void pressEnter() {
-        try {
-            withAction().sendKeys(Keys.ENTER).build().perform();
-        } catch (Exception e) {
-            Settings.LOGGER.info("Could not press enter");
-            Assert.fail("Could not press enter");
-        }
-    }
-
     public void isImage(WebElementFacade element) {
         try {
             Assert.assertEquals("img", element.getTagName());
@@ -176,33 +158,6 @@ public class UtilFunctions extends PageObject {
         } catch (Exception e) {
             Settings.LOGGER.info("Could not enter text for alert");
             Assert.fail("Could not enter text for alert");
-        }
-    }
-
-    public void selectAll() {
-        try {
-            withAction().keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).build().perform();
-        } catch (Exception e) {
-            Settings.LOGGER.info("Could not perform select All operation");
-            Assert.fail("Could not perform select All operation");
-        }
-    }
-
-    public void copy() {
-        try {
-            withAction().keyDown(Keys.CONTROL).sendKeys("c").keyUp(Keys.CONTROL).build().perform();
-        } catch (Exception e) {
-            Settings.LOGGER.info("Could not perform copy operation");
-            Assert.fail("Could not perform copy operation");
-        }
-    }
-
-    public void paste() {
-        try {
-            withAction().keyDown(Keys.CONTROL).sendKeys("v").keyUp(Keys.CONTROL).build().perform();
-        } catch (Exception e) {
-            Settings.LOGGER.info("Could not perform paste operation");
-            Assert.fail("Could not perform paste operation");
         }
     }
 
@@ -298,12 +253,6 @@ public class UtilFunctions extends PageObject {
             Settings.LOGGER.info("User is unable to delete cookies "+url);
             Settings.LOGGER.info("User gets an exception: " + e);
         }
-    }
-
-    public void clearConsole(){
-        JavascriptExecutor js = (JavascriptExecutor)getDriver();
-        String script = "console.clear();";
-        js.executeScript(script);
     }
 
     public void table(By table,By row,By col){

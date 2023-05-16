@@ -30,13 +30,11 @@ public class GenericStepDefinitionGenerator {
         CompilationUnit c = UtilsStepDefinitionCodeGenerator.createEnhancedCompilationUnit("stepdefinition", "StepDefinition");
         UtilsStepDefinitionCodeGenerator.setTypeDeclaration(c,  "UtilsStepDefinition");
         UtilsStepDefinitionCodeGenerator.setStepDefinitionVariable(c, "UtilsImplementation");
-        UtilsStepDefinitionCodeGenerator.setStepDefinitionVariable(c, "UtilFunctions");
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetUrl(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionPressEnter(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSelectAll(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionCopy(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionPaste(c);
-        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetWindowFocus(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionVerifyUrl(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetTitle(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionVerifyTitle(c);
@@ -49,11 +47,8 @@ public class GenericStepDefinitionGenerator {
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSetBrowserSize(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSetBrowserPosition(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetBrowserLocation(c);
-        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetWindowHandle(c);
-        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetWindowHandles(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetPageSource(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionCloseCurrentTab(c);
-        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionCloseTabAndSwitch(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionSwitchToAlert(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAcceptAlert(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionDismissAlert(c);
@@ -62,7 +57,6 @@ public class GenericStepDefinitionGenerator {
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollToBottom(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionPageScroll(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionScrollElementToPosition(c);
-//        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionNavigateToUrl(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionRefresh(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionTakeSnapshot(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionActiveElement(c);
@@ -80,7 +74,6 @@ public class GenericStepDefinitionGenerator {
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionClickAndHold(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionDragAndDrop(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionFileUpload(c);
-//        UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionFileDownload(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionQuit(c);
         UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodGiven(c, "homePage");
         UtilsStepDefinitionCodeGenerator.savePageObjectsOnFileSystem(Settings.STEP_DEFINITION_PO_DIR,

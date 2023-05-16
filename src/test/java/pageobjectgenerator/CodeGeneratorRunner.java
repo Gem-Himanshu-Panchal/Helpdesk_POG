@@ -49,8 +49,8 @@ public class CodeGeneratorRunner {
         try {
             Class aClass = classLoader.loadClass("locators" + "." + Settings.LOCATOR_FILE_NAME);
             GenericPageMethodGenerator.generateGenericPageMethods();
-            File utilFile = new File("src/test/java/implementation/UtilFunctions.java");
-            if(!utilFile.exists()) GenericPageMethodGenerator.generateGenericUtilsMethods();
+//            File utilFile = new File("src/test/java/implementation/UtilFunctions.java");
+//            if(!utilFile.exists()) GenericPageMethodGenerator.generateGenericUtilsMethods();
             Thread.sleep(2000);
             GenericStepDefinitionGenerator.generateGenericStepMethods();
         } catch (ClassNotFoundException e) {

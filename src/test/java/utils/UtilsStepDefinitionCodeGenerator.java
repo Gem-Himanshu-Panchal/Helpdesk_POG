@@ -2388,7 +2388,7 @@ public class UtilsStepDefinitionCodeGenerator {
 
         method.setAnnotations(list_espr);
 
-        ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
+        ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
     }
 
@@ -2423,7 +2423,7 @@ public class UtilsStepDefinitionCodeGenerator {
 
         method.setAnnotations(list_espr);
 
-        ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
+        ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
     }
 
@@ -2458,7 +2458,7 @@ public class UtilsStepDefinitionCodeGenerator {
 
         method.setAnnotations(list_espr);
 
-        ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
+        ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
     }
 
@@ -2529,7 +2529,7 @@ public class UtilsStepDefinitionCodeGenerator {
 
         method.setAnnotations(list_espr);
 
-        ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
+        ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
     }
 
