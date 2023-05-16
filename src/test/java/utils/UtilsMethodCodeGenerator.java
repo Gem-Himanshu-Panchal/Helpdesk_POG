@@ -792,14 +792,14 @@ public class UtilsMethodCodeGenerator {
 
         if (readProperties("Framework").contains("GEMJAR")) {
             ASTHelper.addStmt(block, new NameExpr("String text = new String()"));
-            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tverify" + meaningFulName + "IsEnabled();\n\t\t\ttext = getElementText(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ");\n\t\t\tGemTestReporter.addTestStep(\"Get text of " + field.getName() + " element\",\"Successful able to fetch text of " + field.getName() + " element\", STATUS.PASS, takeSnapShot())"));
+            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tverify" + meaningFulName + "IsEnabled();\n\t\t\ttext = getElementText(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ");\n\t\t\tGemTestReporter.addTestStep(\"Get text of " + field.getName() + " element\",\"Successfully fetched text of " + field.getName() + " element\", STATUS.PASS, takeSnapShot())"));
             ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\tGemTestReporter.addTestStep(\"Get text of " + field.getName() + " element\",\"Unable to fetch text of " + field.getName() + " element\", STATUS.FAIL, takeSnapShot());\n\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(" + "\"Unable to fetch text of " + field.getName() + ", User gets an exception: \"" + "+" + "e" + ")"));
             ASTHelper.addStmt(block, new NameExpr("} \n\t\treturn text"));
         } else {
             ASTHelper.addStmt(block, new NameExpr("String text = \"\""));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Integer.parseInt(UtilsMethodCodeGenerator.readProperties(\"timeOut\"))))"));
             ASTHelper.addStmt(block, new NameExpr("\tWebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + "))"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "text = element" + "." + "getText" + "(" + ");\n\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(" + "\"User gets the text of " + field.getName() + " element\"" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "text = element" + "." + "getText" + "(" + ");\n\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(" + "\"Successfully fetched the text of " + field.getName() + " element\"" + ")"));
             ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Serenity" + "." + "recordReportData().withTitle(\"Failure\").andContents(\"Could not get text of " + meaningFulName + "\")"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e.getMessage()" + ")"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
@@ -1090,9 +1090,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("setImplicitTimeOut(Long.parseLong(GemJarGlobalVar.implicitTime))"));
             ASTHelper.addStmt(block, new NameExpr("setPageLoadTimeOut(Long.parseLong(GemJarGlobalVar.pageTimeout))"));
             ASTHelper.addStmt(block, new NameExpr("setScriptTimeOut(Long.parseLong(GemJarGlobalVar.scriptTimeout))"));
-//            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tDriverManager.setUpBrowser()"));
-//            ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
-//            ASTHelper.addStmt(block, new NameExpr("}"));
         } else {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tgetDriver(" + ")" + "." + "get" + "(" + "Settings.URL" + ")"));
             ASTHelper.addStmt(block, new NameExpr("Settings" + "." + "LOGGER" + "." + "info(" + "\"User launches the application\"" + ")"));

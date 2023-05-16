@@ -8,6 +8,8 @@ public class Google extends PageObject {
 
     @LocatorType(value="table")
     public static By firstName= By.xpath("//*[@id='fname']");
+    @LocatorType(value="input")
+    public static By ftName= By.xpath("//*[@id='fname']");
 
 
 

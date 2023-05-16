@@ -236,13 +236,13 @@ public class UtilsFunctionsGenerator {
         //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
         if (readProperties("Framework").contains("GEMJAR")) {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tDriverManager.getWebDriver().switchTo().window(windowHandle)"));
-            ASTHelper.addStmt(block, new NameExpr("\tJavascriptExecutor js = (JavascriptExecutor) DriverManager.getWebDriver();\n\t\t\tjs.executeScript(\"window.focus();\");\n\t\t\tSettings.LOGGER.info(\"get window focus successfully\");{\n\t\t\t\t\tGemTestReporter.addTestStep(\"Focus window for give window handle\",\"focused successfully \", STATUS.PASS, takeSnapShot());"));
+            ASTHelper.addStmt(block, new NameExpr("\tJavascriptExecutor js = (JavascriptExecutor) DriverManager.getWebDriver();\n\t\t\tjs.executeScript(\"window.focus();\");\n\t\t\tSettings.LOGGER.info(\"get window focus successfully with \"+windowHandle+\" window handle\");{\n\t\t\t\t\tGemTestReporter.addTestStep(\"Focus window for give window handle\",\"focused successfully \", STATUS.PASS, takeSnapShot());"));
             ASTHelper.addStmt(block, new NameExpr("\t\t\t}\n\t\t}catch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\t\t\tGemTestReporter.addTestStep(\"Focus window for give window handle\",\"Unable to focus o window\", STATUS.FAIL, takeSnapShot());"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         } else {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tDriverManager.getWebDriver().switchTo().window(windowHandle)"));
             ASTHelper.addStmt(block, new NameExpr("\tJavascriptExecutor js = (JavascriptExecutor) DriverManager.getWebDriver()"));
-            ASTHelper.addStmt(block, new NameExpr("\tjs.executeScript(\"window.focus();\");\n\t\t\tSettings.LOGGER.info(\"get window focus successfully\")"));
+            ASTHelper.addStmt(block, new NameExpr("\tjs.executeScript(\"window.focus();\");\n\t\t\tSettings.LOGGER.infoSettings.LOGGER.info(\"get window focus successfully with \"+windowHandle+\" window handle\")"));
             ASTHelper.addStmt(block, new NameExpr("}catch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to get window in focus\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to get window in focus\");\n\t\t\tAssert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
