@@ -20,7 +20,7 @@ public class Settings {
 	//public static final String URL = "http://www.google.com/";
 
 	//public static final String URL = "https://mymis.geminisolutions.com";
-	public static final String URL = "D:\\v1-pog\\POG\\src\\test\\resources\\data\\index.html";
+	public static final String URL = "https://geminisolutions.com/";
 
 	public static final String TITLE = "Sample HTML Page";
 	//Used For Logging the steps
@@ -100,6 +100,10 @@ public class Settings {
 	public static final String SWITCH_FRAME_STRING = "^User switches to \\\"(.*)\\\" frame";
 	public static final String SWITCH_FRAME_INT = "^User switches to (.*) frame";
 	public static final String SWITCH_WINDOW = "^User switches to \\\"(.*)\\\" window";
+	public static final String GET_LOGS = "^User gets console messages";
+	public static final String NO_LOGS = "^User verifies there are no console messages";
+	public static final String CLEAR_CONSOLE = "^User clears the console";
+	public static final String NO_ERROR_LOGS = "^User verifies there are no console error messages";
 	public static final String USER_CLICKS_JS = "^User clicks \\\"(.*?)\\\"";
 	public static final String USER_WAITS = "^User waits for (.*) seconds";
 	public static final String USER_CLOSES_BROWSER ="^User closes browser";

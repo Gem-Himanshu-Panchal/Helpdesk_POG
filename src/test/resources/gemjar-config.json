@@ -8,8 +8,8 @@
   "emailTO": "ayush.garg@geminisolutions.com",
   "reportName": "GembookTestReport",
   "gemjarSubID": "test_id",
-  "gemjarUserName": "rahultagra",
-  "gemjarToken": "68b9011b-8f70-41f2-9272-6c9c590e85941675852079436",
+  "gemjarUserName1": "rahultagra",
+  "gemjarToken1": "68b9011b-8f70-41f2-9272-6c9c590e85941675852079436",
   "jewelEntryUrl": "https://apis.gemecosystem.com/enter-point",
   "prod": {
     "browserName": "chrome",
