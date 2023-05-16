@@ -12,6 +12,8 @@ import java.io.IOException;
 
 public class GenericStepDefinitionGenerator {
 
+    // Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
+
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericStepDefinitionGenerator.class);
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {

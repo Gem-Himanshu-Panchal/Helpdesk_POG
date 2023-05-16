@@ -12,6 +12,8 @@ import java.io.IOException;
 
 public class CodeGeneratorRunner {
 
+    // Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
+
     private static final Logger LOGGER = LoggerFactory.getLogger(CodeGeneratorRunner.class);
 
     public static void main(String[] args) {
@@ -42,6 +44,7 @@ public class CodeGeneratorRunner {
         try {
             Class aClass = classLoader.loadClass("locators" + "." + Settings.LOCATOR_FILE_NAME);
             GenericPageMethodGenerator.generateGenericPageMethods();
+            GenericPageMethodGenerator.generateGenericUtilsMethods();
             Thread.sleep(2000);
             GenericStepDefinitionGenerator.generateGenericStepMethods();
         } catch (ClassNotFoundException e) {

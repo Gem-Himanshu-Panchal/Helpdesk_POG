@@ -5,11 +5,14 @@ import japa.parser.ast.CompilationUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pageobjectgenerator.Settings;
+import utils.UtilsFunctionsGenerator;
 import utils.UtilsMethodCodeGenerator;
 
 import java.io.IOException;
 
 public class GenericPageMethodGenerator {
+
+    // Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericPageMethodGenerator.class);
 
@@ -17,6 +20,7 @@ public class GenericPageMethodGenerator {
         ClassLoader classLoader = PageMethodGenerator.class.getClassLoader();
         Class aClass = classLoader.loadClass("locators" + "." + Settings.LOCATOR_FILE_NAME);
         generateGenericPageMethods();
+        generateGenericUtilsMethods();
     }
 
     public static void generateGenericPageMethods() throws IOException {
@@ -72,6 +76,16 @@ public class GenericPageMethodGenerator {
         UtilsMethodCodeGenerator.setLinkMethodFileUpload(c);
         UtilsMethodCodeGenerator.savePageObjectsOnFileSystem(Settings.IMPLEMENTATION_PO_DIR,
                 "UtilsImplementation", c, false);
+
+    }
+    public static void generateGenericUtilsMethods() throws IOException {
+
+        CompilationUnit c = UtilsFunctionsGenerator.createEnhancedCompilationUnit("implementation", "Method");
+        UtilsFunctionsGenerator.setTypeDeclaration(c, "UtilFunctions");
+
+        UtilsFunctionsGenerator.setLinkMethodsIsFileDownloaded(c);
+        UtilsMethodCodeGenerator.savePageObjectsOnFileSystem(Settings.IMPLEMENTATION_PO_DIR,
+                "UtilFunctions", c, false);
 
     }
 }

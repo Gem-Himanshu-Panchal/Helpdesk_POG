@@ -25,6 +25,7 @@ import java.util.Set;
 
 public class UtilsStepDefinitionCodeGenerator {
 
+    // Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
     private static String meaningFulName = "";
 
     private static final String pageName = "^For the <page> page, ";
@@ -135,9 +136,7 @@ public class UtilsStepDefinitionCodeGenerator {
             imports.add(new ImportDeclaration(new NameExpr("org.openqa.selenium.*"), false, false));
 
         }
-
-        Settings.LOGGER.info("Imports added are:" + imports);
-        return imports;
+     return imports;
     }
 
     // before class for driver initialisation
@@ -175,8 +174,6 @@ public class UtilsStepDefinitionCodeGenerator {
         ASTHelper.addStmt(block, new NameExpr(Settings.LOCATOR_FILE_NAME + "." + blockToEnter + "." + "manage(" + ")" + "." + "window(" + ")" + "." + "maximize(" + ")"));
         ASTHelper.addStmt(block, new NameExpr(Settings.LOCATOR_FILE_NAME + "." + blockToEnter + "." + "manage(" + ")" + "." + "timeouts(" + ")" + "." + "wait(" + "5000" + ")"));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionMethodValueThenVisibility(CompilationUnit c, Field field,
@@ -224,8 +221,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionMethod(CompilationUnit c, Field field, String type, String className) {
@@ -305,8 +300,6 @@ public class UtilsStepDefinitionCodeGenerator {
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         Settings.LOGGER.info(String.valueOf(new NameExpr(nameOfFile + "." + blockToEnter)));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionAndNavigateBack(CompilationUnit c, Field field, String type, String className) {
@@ -350,8 +343,6 @@ public class UtilsStepDefinitionCodeGenerator {
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         Settings.LOGGER.info(String.valueOf(new NameExpr(nameOfFile + "." + blockToEnter)));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     //is selected verification step
@@ -387,8 +378,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     //verification of attribute value
@@ -444,8 +433,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
 
@@ -484,8 +471,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionClickAndHold(CompilationUnit c) {
@@ -528,8 +513,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
     public static void setLinkStepDefinitionDragAndDrop(CompilationUnit c) {
@@ -573,8 +556,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
     public static void setLinkStepDefinitionFileUpload(CompilationUnit c) {
@@ -618,8 +599,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
     public static void setLinkStepDefinitionFileDownload(CompilationUnit c) {
@@ -661,8 +640,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
 
@@ -701,8 +678,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionElementPresence(CompilationUnit c, Field field, String className) {
@@ -735,8 +710,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
     public static void setLinkStepDefinitionAttributeContainsText(CompilationUnit c, Field field, String className) {
         String functionName = getMeaningFullName(field.getName());
@@ -772,8 +745,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionScrollToView(CompilationUnit c, Field field, String className) {
@@ -807,8 +778,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionChecked(CompilationUnit c, Field field, String className) {
@@ -842,8 +811,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionNotChecked(CompilationUnit c, Field field, String className) {
@@ -878,8 +845,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionAttributeVerification(CompilationUnit c, Field field, String className) {
@@ -924,8 +889,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
 
@@ -968,8 +931,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
 
@@ -1012,8 +973,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
 
@@ -1056,8 +1015,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
 
@@ -1103,8 +1060,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
 
@@ -1151,8 +1106,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
 
     }
 
@@ -1192,8 +1145,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionDoubleCLick(CompilationUnit c, Field field, String className) {
@@ -1235,8 +1186,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionMethodThenVisibility(CompilationUnit c, Field field,
@@ -1286,8 +1235,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionMethodThenClickable(CompilationUnit c, Field field, String className) {
@@ -1329,8 +1276,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
     public static void setLinkStepDefinitionMethodCountChildElements(CompilationUnit c, Field field, String className) {
 
@@ -1372,8 +1317,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
     public static void setLinkStepDefinitionMethodCountElements(CompilationUnit c, Field field, String className) {
 
@@ -1415,8 +1358,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionMethodContains(CompilationUnit c, Field field, String className) {
@@ -1458,8 +1399,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionMethodThenEnabled(CompilationUnit c, Field field, String
@@ -1504,8 +1443,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionMethodDeselects(CompilationUnit c, Field field, String
@@ -1548,8 +1485,6 @@ public class UtilsStepDefinitionCodeGenerator {
         String nameOfFile = firstLetter + Settings.LOCATOR_FILE_NAME.substring(1);
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     /**
@@ -1629,8 +1564,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionActiveElement(CompilationUnit c) {
@@ -1666,8 +1599,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionParentFrame(CompilationUnit c) {
@@ -1703,8 +1634,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionDefaultContent(CompilationUnit c) {
@@ -1740,8 +1669,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionSwitchWindow(CompilationUnit c) {
@@ -1778,8 +1705,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
     public static void setLinkStepDefinitionGetLogs(CompilationUnit c) {
         String functionName = "";
@@ -1960,8 +1885,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionWait(CompilationUnit c) {
@@ -1998,8 +1921,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionSwitchFrame(CompilationUnit c, boolean argumentType) {
@@ -2042,8 +1963,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionQuit(CompilationUnit c) {
@@ -2079,8 +1998,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionNavigateForward(CompilationUnit c) {
@@ -2116,8 +2033,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionNavigateTo(CompilationUnit c) {
@@ -2154,8 +2069,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setClickStepDefinitionMethod(CompilationUnit c, Field field, String type, String className) {
@@ -2202,8 +2115,6 @@ public class UtilsStepDefinitionCodeGenerator {
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         Settings.LOGGER.info(String.valueOf(new NameExpr(nameOfFile + "." + blockToEnter)));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionVerifyUrl(CompilationUnit c) {
@@ -2240,8 +2151,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionGetUrl(CompilationUnit c) {
@@ -2277,8 +2186,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionGetTitle(CompilationUnit c) {
@@ -2314,8 +2221,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionVerifyTitle(CompilationUnit c) {
@@ -2352,8 +2257,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionMethodForSelect(CompilationUnit c, Field field, String type, String
@@ -2399,8 +2302,6 @@ public class UtilsStepDefinitionCodeGenerator {
         ASTHelper.addStmt(block, new NameExpr(nameOfFile + "." + blockToEnter));
         Settings.LOGGER.info(String.valueOf(new NameExpr(nameOfFile + "." + blockToEnter)));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionPressEnter(CompilationUnit c) {
@@ -2436,8 +2337,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionCopy(CompilationUnit c) {
@@ -2473,8 +2372,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionPaste(CompilationUnit c) {
@@ -2510,8 +2407,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionGetWindowFocus(CompilationUnit c) {
@@ -2548,8 +2443,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionSelectAll(CompilationUnit c) {
@@ -2585,8 +2478,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionMaximizeBrowserToDefault(CompilationUnit c) {
@@ -2621,8 +2512,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionMinimizeBrowser(CompilationUnit c) {
@@ -2657,8 +2546,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionGetBrowserSize(CompilationUnit c) {
@@ -2692,8 +2579,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionSetBrowserSize(CompilationUnit c) {
@@ -2731,8 +2616,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionSetBrowserPosition(CompilationUnit c) {
@@ -2769,8 +2652,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionGetBrowserLocation(CompilationUnit c) {
@@ -2805,8 +2686,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionGetWindowHandle(CompilationUnit c) {
@@ -2840,8 +2719,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionGetWindowHandles(CompilationUnit c) {
@@ -2876,8 +2753,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionGetPageSource(CompilationUnit c) {
@@ -2912,8 +2787,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionCloseCurrentTab(CompilationUnit c) {
@@ -2948,8 +2821,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionCloseTabAndSwitch(CompilationUnit c) {
@@ -2984,8 +2855,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utilFunctions." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionSwitchToAlert(CompilationUnit c) {
@@ -3020,8 +2889,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionAcceptAlert(CompilationUnit c) {
@@ -3055,8 +2922,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionDismissAlert(CompilationUnit c) {
@@ -3091,8 +2956,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionAlertInput(CompilationUnit c) {
@@ -3128,8 +2991,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionScrollToTop(CompilationUnit c) {
@@ -3164,8 +3025,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionScrollToBottom(CompilationUnit c) {
@@ -3200,8 +3059,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionPageScroll(CompilationUnit c) {
@@ -3238,8 +3095,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionScrollElementToPosition(CompilationUnit c) {
@@ -3277,8 +3132,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionNavigateToUrl(CompilationUnit c) {
@@ -3314,8 +3167,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionRefresh(CompilationUnit c) {
@@ -3350,8 +3201,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkStepDefinitionTakeSnapshot(CompilationUnit c) throws IOException {
@@ -3393,8 +3242,6 @@ public class UtilsStepDefinitionCodeGenerator {
 
         ASTHelper.addStmt(block, new NameExpr("utils." + blockToEnter));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
 }

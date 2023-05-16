@@ -26,6 +26,7 @@ import java.util.*;
 
 public class UtilsMethodCodeGenerator {
 
+    // Page Object Generator 1.0 (Contributors -> Ayush, Hem, Jasleen, Priyanshu, Rahul Tagra, Sajith and Siddanshi)
     private static String meaningFulName = "";
 
     /**
@@ -88,7 +89,6 @@ public class UtilsMethodCodeGenerator {
             v.setId(new VariableDeclaratorId("driver =" + "getDriver(" + ")"));
 //        v.setInit(new ObjectCreationExpr(null, new ClassOrInterfaceType(null, classname), null));
             FieldDeclaration f = ASTHelper.createFieldDeclaration(ModifierSet.PRIVATE, ASTHelper.createReferenceType("WebDriver", 0), v);
-
             ASTHelper.addMember(c.getTypes().get(0), f);
         }
     }
@@ -131,6 +131,7 @@ public class UtilsMethodCodeGenerator {
                 imports.add(new ImportDeclaration(new NameExpr("io.github.bonigarcia.wdm.WebDriverManager"), false, false));
                 imports.add(new ImportDeclaration(new NameExpr("org.openqa.selenium.firefox.FirefoxDriver"), false, false));
                 imports.add(new ImportDeclaration(new NameExpr("com.gemini.generic.utils.GemJarGlobalVar"), false, false));
+                imports.add(new ImportDeclaration(new NameExpr("java.io.File"), false, false));
             } else {
                 imports.add(new ImportDeclaration(new NameExpr("net.serenitybdd.core.pages.WebElementFacade"), false, false));
                 imports.add(new ImportDeclaration(new NameExpr("net.serenitybdd.core.pages.PageObject"), false, false));
@@ -167,7 +168,6 @@ public class UtilsMethodCodeGenerator {
             imports.add(new ImportDeclaration(new NameExpr("utils.UtilsMethodCodeGenerator"), false, false));
         }
 
-        Settings.LOGGER.info("Imports added are:" + imports);
         return imports;
     }
 
@@ -212,9 +212,7 @@ public class UtilsMethodCodeGenerator {
         Settings.LOGGER.info(String.valueOf(new NameExpr(field.getName() + "." + "getAttribute(" + "attributeValue" + ")")));
         Settings.LOGGER.info(String.valueOf(new NameExpr("return " + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ".getAttribute(" + "attributeValue" + ")")));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
-    }
+     }
 
     public static void setLinkMethodsIsSelected(CompilationUnit c, Field field) throws IOException {
 
@@ -251,9 +249,7 @@ public class UtilsMethodCodeGenerator {
         Settings.LOGGER.info(String.valueOf(new NameExpr(field.getName() + "." + "getAttribute(" + "attributeValue" + ")")));
         Settings.LOGGER.info(String.valueOf(new NameExpr("return " + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ".getAttribute(" + "attributeValue" + ")")));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
-    }
+     }
 
     public static void setLinkMethodsIsNotSelected(CompilationUnit c, Field field) throws IOException {
 
@@ -290,8 +286,6 @@ public class UtilsMethodCodeGenerator {
         Settings.LOGGER.info(String.valueOf(new NameExpr(field.getName() + "." + "getAttribute(" + "attributeValue" + ")")));
         Settings.LOGGER.info(String.valueOf(new NameExpr("return " + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ".getAttribute(" + "attributeValue" + ")")));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     //navigate back to the tab method
@@ -320,8 +314,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("Settings" + "." + "LOGGER" + "." + "info(" + "\"User navigates back  to previous page\")"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     // get value assertion
@@ -363,8 +355,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsAttributeValueVerification(CompilationUnit c, Field field) throws IOException {
@@ -404,8 +394,7 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("return " + "$(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")" + ".getAttribute(attributeName)")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
+
     }
 
     //isSelect Method verification
@@ -433,10 +422,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"Unable to select " + field.getName() + " checkbox\" );" + "\n\t\t}"));
         }
         Settings.LOGGER.info(String.valueOf(new NameExpr("assertTrue(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + "." + "isSelected" + "(" + "))")));
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsTypeSetter(CompilationUnit c, Field field) throws IOException {
@@ -471,11 +457,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
             Settings.LOGGER.info(String.valueOf(new NameExpr(field.getName() + "Element" + "." + "type" + "(" + "typeText" + ")")));
         }
-
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
 
@@ -508,8 +490,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
 
@@ -547,10 +527,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
             Settings.LOGGER.info(String.valueOf(new NameExpr(field.getName() + "Element" + "." + "type" + "(" + "typeText" + ")")));
         }
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsTypeAndTab(CompilationUnit c, Field field) throws IOException {
@@ -587,11 +564,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
             Settings.LOGGER.info(String.valueOf(new NameExpr(field.getName() + "Element" + "." + "type" + "(" + "typeText" + ")")));
         }
-
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsVerifyClear(CompilationUnit c, Field field) throws IOException {
@@ -626,8 +599,6 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("return " + "$(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")" + ".getAttribute(\"value\")")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsHoverOver(CompilationUnit c, Field field) throws IOException {
@@ -661,11 +632,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
             Settings.LOGGER.info(String.valueOf(new NameExpr("serenityActions" + "." + "moveToElement($(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + "))" + "." + "build().perform()")));
         }
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsElementPresence(CompilationUnit c, Field field) throws IOException {
@@ -696,10 +663,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\t\t" + "Settings" + "." + "LOGGER" + "." + "info(\"" + field.getName() + " element is not present on Screen\");}\t\n\t\t}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Assert.fail(\"" + field.getName() + " element is not present on Screen\")"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsVerifyCountChildElements(CompilationUnit c, Field field) throws IOException {
@@ -733,10 +697,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(\"" + field.getName() + " has\" + allChildElements.size() + \"child elements\");\t\n\t\t}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Assert.fail(\"Actual child count - \" + allChildElements.size())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsVerifyCountElements(CompilationUnit c, Field field) throws IOException {
@@ -770,10 +731,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(\"" + field.getName() + " count is \" + allElements.size());\t\n\t\t}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Assert.fail(\"Actual count - \" + allElements.size())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsScrollToView(CompilationUnit c, Field field) throws IOException {
@@ -805,10 +763,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\t\t" + "Assert.fail(\" Unable to scroll to " + field.getName() + " element \")"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsTypeGetter(CompilationUnit c, Field field) throws IOException {
@@ -842,10 +797,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t" + "return " + "text"));
             Settings.LOGGER.info(String.valueOf(new NameExpr("return " + Settings.LOCATOR_FILE_NAME + "." + field.getName() + "." + "getText" + "(" + ")")));
         }
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setMethodScrollClick(CompilationUnit c, Field field) throws IOException {
@@ -855,8 +807,7 @@ public class UtilsMethodCodeGenerator {
         // add a body to the method
         BlockStmt block = new BlockStmt();
         method.setBody(block);
-
-// add a statement do the method body
+        // add a statement do the method body
         ASTHelper.addStmt(block, new NameExpr("//The below function is for web element @FindBy(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
 
         if (readProperties("Framework").contains("GEMJAR")) {
@@ -869,15 +820,9 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\t$(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")" + "." + "click" + "(" + ")"));
             ASTHelper.addStmt(block, new NameExpr("}" + "\n\t\tcatch(" + "Exception e" + "){\n\t\t\t" + "Settings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t" + "Settings" + "." + "LOGGER" + "." + "info(" + "\"User is able to scroll and click on the " + field.getName() + " element\"" + ")"));
-
         }
         Settings.LOGGER.info(String.valueOf(new NameExpr("js" + "." + "executeScript(\"arguments[0].scrollIntoView()\"" + "," + field.getName() + "Element" + ")")));
-
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
-
     }
 
     public static void setLinkMethodsDropDown(CompilationUnit c, Field field) throws IOException {
@@ -905,11 +850,8 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
-
         Settings.LOGGER.info(String.valueOf(new NameExpr("new Select (" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")" + "." + "selectByVisibleText" + "(" + "typeText" + ")")));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsDeselects(CompilationUnit c, Field field) throws IOException {
@@ -938,11 +880,8 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
-
         Settings.LOGGER.info(String.valueOf(new NameExpr("new Select (" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")" + "." + "deselectByVisibleText" + "(" + "typeText" + ")")));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setMethodClickable(CompilationUnit c, Field field) throws IOException {
@@ -969,11 +908,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         Settings.LOGGER.info(String.valueOf(new NameExpr("assertTrue(" + field.getName() + "Element" + "." + field.getName() + "." + "isClickable" + "(" + "))")));
-
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodForEnabled(CompilationUnit c, Field field) throws IOException {
@@ -1002,10 +937,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e.getMessage()" + ")"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
 
@@ -1028,8 +960,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("Settings" + "." + "LOGGER" + "." + "info(" + "\"User verifies " + field.getName() + " element is displayed\"" + ")"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
 
@@ -1059,10 +989,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         Settings.LOGGER.info(String.valueOf(new NameExpr("assertTrue(" + "StringUtils.equalsIgnoreCase(" + "typeText" + "," + field.getName() + "Element" + "." + "getText" + "(" + ")))")));
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodForContains(CompilationUnit c, Field field) throws IOException {
@@ -1091,10 +1018,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         Settings.LOGGER.info(String.valueOf(new NameExpr("assertTrue(" + "StringUtils.containsIgnoreCase(" + field.getName() + "." + "getText" + "(" + "))), " + "typeText")));
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodForAttributeContains(CompilationUnit c, Field field) throws IOException {
@@ -1124,10 +1048,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         Settings.LOGGER.info(String.valueOf(new NameExpr("try{\n\t\t\t" + "assertTrue(\"Actual value: \" + $(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")" + "." + "getAttribute(attribute), " + "StringUtils.contains(" + "$(" + Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")" + "." + "getAttribute(attribute)" + ", typeText" + "))")));
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static String readProperties(String property) throws IOException { // Function to read Data from Properties File
@@ -1171,8 +1092,7 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver()" + "." + "get" + "(" + "Settings.URL" + ")")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
+
     }
 
     public static void setLinkMethodsClick(CompilationUnit c, Field field) throws IOException {
@@ -1199,8 +1119,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
 
@@ -1228,9 +1146,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
-
     }
 
     public static void setLinkMethodForUpload(CompilationUnit c, Field field) throws IOException {
@@ -1261,11 +1176,8 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         Settings.LOGGER.info(String.valueOf(new NameExpr(field.getName() + "Element" + "." + "sendKeys" + "(" + '"' + filePath + '"' + "+" + "fileName" + ")")));
-
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
+
     }
 
     /**
@@ -1306,7 +1218,6 @@ public class UtilsMethodCodeGenerator {
             data = c.toString();
         }
         FileUtils.writeStringToFile(f, data);
-
     }
 
     public static void setLinkMethodsNavigateBack(CompilationUnit c) throws IOException {
@@ -1326,8 +1237,6 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver().navigate().back())")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsSwitchToActiveElement(CompilationUnit c) throws IOException {
@@ -1348,8 +1257,6 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver().switchTo().activeElement()")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsSwitchToParentFrame(CompilationUnit c) throws IOException {
@@ -1370,8 +1277,6 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver().switchTo().parentFrame()")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsSwitchToFrame(CompilationUnit c, boolean argumentType) throws IOException {
@@ -1409,12 +1314,8 @@ public class UtilsMethodCodeGenerator {
                 Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver().switchTo().frame(index)")));
             }
         }
-
         method.setParameters(parameters);
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsSwitchWindow(CompilationUnit c) throws IOException {
@@ -1436,12 +1337,8 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver().switchTo().window(nameOrHandle)")));
         }
-
         method.setParameters(parameters);
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsWait(CompilationUnit c) throws IOException {
@@ -1462,12 +1359,9 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
             Settings.LOGGER.info(String.valueOf(new NameExpr("waitABit(duration)")));
         }
-
         method.setParameters(parameters);
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
+
     }
 
     public static void setLinkMethodsClickAndHold(CompilationUnit c) throws IOException {
@@ -1490,12 +1384,8 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
             Settings.LOGGER.info(String.valueOf(new NameExpr("new SerenityActions(getDriver()).moveToElement(locator).clickAndHold().build().perform()")));
         }
-
         method.setParameters(parameters);
-
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setMethodRightClick(CompilationUnit c, Field field) throws IOException {
@@ -1519,8 +1409,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsSwitchToDefaultContent(CompilationUnit c) throws IOException {
@@ -1541,8 +1429,6 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver().switchTo().defaultContent()")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsQuit(CompilationUnit c) throws IOException {
@@ -1564,8 +1450,6 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver()" + "." + "quit()")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsNavigateForward(CompilationUnit c) throws IOException {
@@ -1585,8 +1469,6 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver()" + "." + "get" + "(" + "Settings.URL" + ")")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsNavigateTo(CompilationUnit c) throws IOException {
@@ -1611,8 +1493,6 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver().navigate().to(url)")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsVerifyUrl(CompilationUnit c) throws IOException {
@@ -1632,14 +1512,12 @@ public class UtilsMethodCodeGenerator {
         } else {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tString actualURL = getURL()"));
             ASTHelper.addStmt(block, new NameExpr("\tassertTrue(\"Actual URL: \" + getURL(), actualURL.equals(expectedURL))"));
-            ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User successfully navigated back\"" + ")"));
+            ASTHelper.addStmt(block, new NameExpr("\tSettings" + "." + "LOGGER" + "." + "info(" + "\"URL verified successfully\"" + ")"));
             ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ");\n\t\t\tSettings.LOGGER.info(\"Actual URL: \" + getURL());\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Actual URL: \" + getURL());\n\t\t\tAssert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver()" + "." + "get" + "(" + "Settings.URL" + ")")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsGetUrl(CompilationUnit c) throws IOException {
@@ -1660,8 +1538,6 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver()" + "." + "get" + "(" + "Settings.URL" + ")")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsGetBrowserSize(CompilationUnit c) throws IOException {
@@ -1685,8 +1561,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("return sizeOfBrowser"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsGetBrowserLocation(CompilationUnit c) throws IOException {
@@ -1711,8 +1585,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\treturn positionOfBrowser"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsGetWindowHandle(CompilationUnit c) throws IOException {
@@ -1734,8 +1606,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("return windowHandle"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsGetWindowHandles(CompilationUnit c) throws IOException {
@@ -1757,8 +1627,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("return windowHandles"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsGetPageSource(CompilationUnit c) throws IOException {
@@ -1780,8 +1648,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("return pageSource"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsCloseCurrentTab(CompilationUnit c) throws IOException {
@@ -1800,8 +1666,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodSwitchToAlert(CompilationUnit c) throws IOException {
@@ -1819,8 +1683,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodAcceptAlert(CompilationUnit c) throws IOException {
@@ -1838,8 +1700,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodDismissAlert(CompilationUnit c) throws IOException {
@@ -1857,8 +1717,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodAlertInput(CompilationUnit c) throws IOException {
@@ -1879,8 +1737,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodScrollToTop(CompilationUnit c) throws IOException {
@@ -1898,8 +1754,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodScrollToBottom(CompilationUnit c) throws IOException {
@@ -1917,8 +1771,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodPageScroll(CompilationUnit c) throws IOException {
@@ -1940,8 +1792,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodScrollElementToPosition(CompilationUnit c) throws IOException {
@@ -1963,8 +1813,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodNavigateToUrl(CompilationUnit c) throws IOException {
@@ -1985,8 +1833,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodRefresh(CompilationUnit c) throws IOException {
@@ -2004,8 +1850,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
     public static void setLinkMethodGetLogs(CompilationUnit c) throws IOException {
         MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.createReferenceType("LogEntries", 0), "getLogs");
@@ -2134,8 +1978,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodGetLocatorWithName(CompilationUnit c) throws IOException {
@@ -2151,8 +1993,6 @@ public class UtilsMethodCodeGenerator {
         ASTHelper.addStmt(block, new NameExpr("} \n\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ");\n\t\t\tSettings.LOGGER.info(\"Unable to get locator\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to get locator\");\n\t\t\tAssert.fail(e.getMessage())"));
         ASTHelper.addStmt(block, new NameExpr("} \n\t\treturn locator"));
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodClickUsingJS(CompilationUnit c) throws IOException {
@@ -2173,8 +2013,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodDragAndDrop(CompilationUnit c) throws IOException {
@@ -2196,8 +2034,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodFileUpload(CompilationUnit c) throws IOException {
@@ -2219,8 +2055,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}\n\t\t"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsMinimizeBrowser(CompilationUnit c) throws IOException {
@@ -2240,8 +2074,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsMaximizeBrowserToDefault(CompilationUnit c) throws IOException {
@@ -2264,8 +2096,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsSetBrowserPosition(CompilationUnit c) throws IOException {
@@ -2287,8 +2117,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("} \n\t\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ");\n\t\t\tSettings.LOGGER.info(\"Could not set position of browser\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Could not set position of browser\");\n\t\t\tAssert.fail(e.getMessage());\n\t\t}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsSetBrowserSize(CompilationUnit c) throws IOException {
@@ -2310,8 +2138,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("} \n\t\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ");\n\t\t\tSettings.LOGGER.info(\"Could not set size of browser\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Could not set size of browser\");\n\t\t\tAssert.fail(e.getMessage());\n\t\t}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsVerifyTitle(CompilationUnit c) throws IOException {
@@ -2338,8 +2164,6 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver()" + "." + "get" + "(" + "Settings.TITLE" + ")")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsGetTitle(CompilationUnit c) throws IOException {
@@ -2360,8 +2184,6 @@ public class UtilsMethodCodeGenerator {
             Settings.LOGGER.info(String.valueOf(new NameExpr("getDriver()" + "." + "getTitle()")));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
     public static void setLinkMethodsSelect(CompilationUnit c, Field field) throws IOException {
@@ -2387,8 +2209,6 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
-        Settings.LOGGER.info(method.toString());
-        Settings.LOGGER.info(c.getTypes().get(0).toString());
     }
 
 }
