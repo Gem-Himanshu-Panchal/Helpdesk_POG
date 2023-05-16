@@ -837,7 +837,7 @@ public class UtilsMethodCodeGenerator {
     public static void setLinkMethodsDropDown(CompilationUnit c, Field field) throws IOException {
         meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
         Settings.LOGGER.info("Name of field: " + meaningFulName);
-        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "select" + meaningFulName);
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "select" + meaningFulName+"Element");
         // add a body to the method
         BlockStmt block = new BlockStmt();
         method.setBody(block);
@@ -867,7 +867,7 @@ public class UtilsMethodCodeGenerator {
 
         meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
         Settings.LOGGER.info("Name of field: " + meaningFulName);
-        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "deselect" + meaningFulName);
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "deselect" + meaningFulName+"Element");
         // add a body to the method
         BlockStmt block = new BlockStmt();
         method.setBody(block);
@@ -2241,7 +2241,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement tableBody = getElement("+ Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
             ASTHelper.addStmt(block, new NameExpr("\tlistOfRows = tableBody.findElements(By.tagName(\"tr\"))"));
             ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get row count of " + field.getName() + " table\",\"Successfully fetched row count of " + field.getName() + " table\", STATUS.PASS, takeSnapShot())"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Get row count of " + field.getName() + " table\");\n\t\t\t}\n\t\tcatch(Exception e){"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Fetched row count of " + field.getName() + " table\");\n\t\t\t}\n\t\tcatch(Exception e){"));
             ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get row count of " + field.getName() + " table\",\"Failed to fetch row count of " + field.getName() + " table\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to fetch row count of " + field.getName() + " table\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e)"));
             ASTHelper.addStmt(block, new NameExpr("}"));
             ASTHelper.addStmt(block, new NameExpr("\treturn listOfRows.size()"));
@@ -2278,7 +2278,7 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> listOfRows = tableBody.findElements(By.tagName(\"tr\"))"));
             ASTHelper.addStmt(block, new NameExpr("\theaders = listOfRows.get(0).findElements(By.tagName(\"td\"))"));
             ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get column count of " + field.getName() + " table\",\"Successful fetched column count of " + field.getName() + " table\", STATUS.PASS, takeSnapShot())"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Get column count of " + field.getName() + " table\");\n\t\t\t}\n\t\tcatch(Exception e){"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Fetched column count of " + field.getName() + " table\");\n\t\t\t}\n\t\tcatch(Exception e){"));
             ASTHelper.addStmt(block, new NameExpr("\tGemTestReporter.addTestStep(\"Get column count of " + field.getName() + " table\",\"Failed to fetch column count of " + field.getName() + " table\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to fetch column count of " + field.getName() + "\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e)"));
             ASTHelper.addStmt(block, new NameExpr("}"));
             ASTHelper.addStmt(block, new NameExpr("\treturn headers.size()"));
@@ -2534,7 +2534,7 @@ public static void setLinkMethodIsColumnNamePresent(CompilationUnit c, Field fie
         meaningFulName = UtilsMethodCodeGenerator.getMeaningFullName(field.getName(), false);
         Settings.LOGGER.info("Name of field: " + meaningFulName);
         // Add the Getter method
-        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "verify"+meaningFulName+"isImage");
+        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "verify"+meaningFulName+"IsImage");
         // add a body to the method
         BlockStmt block = new BlockStmt();
         method.setBody(block);
@@ -2568,7 +2568,7 @@ public static void setLinkMethodIsColumnNamePresent(CompilationUnit c, Field fie
         //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
         if (readProperties("Framework").contains("GEMJAR")) {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement element = getElement("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+");\n\t\t\tString colText=element.getText()"));
-            ASTHelper.addStmt(block, new NameExpr("\tif(!colText.isEmpty())\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches column value for "+meaningFulName+"\",\"User successfully fetches column value for "+ meaningFulName+"\", STATUS.PASS, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"User successfully fetches column value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches column value for "+meaningFulName+"\",\"Unable to fetch column value for "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"Unable to fetch fetches column value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"User fetches column value for "+meaningFulName+"\",\"Unable to fetch column value for "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Unable to fetch column value for "+ meaningFulName+"\")"));
+            ASTHelper.addStmt(block, new NameExpr("\tif(!colText.isEmpty())\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches column value for "+meaningFulName+"\",\"User successfully fetches column value for "+ meaningFulName+"\", STATUS.PASS, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"User successfully fetches column value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches column value for "+meaningFulName+"\",\"Unable to fetch column value for "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"Unable to fetch column value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"User fetches column value for "+meaningFulName+"\",\"Unable to fetch column value for "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Unable to fetch column value for "+ meaningFulName+"\")"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         } else {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tString colText=$("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+").getText()"));
@@ -2591,7 +2591,7 @@ public static void setLinkMethodIsColumnNamePresent(CompilationUnit c, Field fie
         //DriverAction.getAttributeName() of Gemjar Framework to get the specific attribute of an element
         if (readProperties("Framework").contains("GEMJAR")) {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement element = getElement("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+");\n\t\t\tString rowText=element.getText()"));
-            ASTHelper.addStmt(block, new NameExpr("\tif(!rowText.isEmpty())\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches row value for "+meaningFulName+"\",\"User successfully fetches row value for "+ meaningFulName+"\", STATUS.PASS, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"User successfully fetches row value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches row value for "+meaningFulName+"\",\"Unable to fetch row value for "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"Unable to fetch fetches row value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"User fetches row value for "+meaningFulName+"\",\"Unable to fetch row value for "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Unable to fetch row value for "+ meaningFulName+"\")"));
+            ASTHelper.addStmt(block, new NameExpr("\tif(!rowText.isEmpty())\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches row value for "+meaningFulName+"\",\"User successfully fetches row value for "+ meaningFulName+"\", STATUS.PASS, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"User successfully fetches row value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tGemTestReporter.addTestStep(\"User fetches row value for "+meaningFulName+"\",\"Unable to fetch row value for "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\t\tSettings.LOGGER.info(\"Unable to fetch row value for "+ meaningFulName+"\");\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"User fetches row value for "+meaningFulName+"\",\"Unable to fetch row value for "+ meaningFulName+"\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Unable to fetch row value for "+ meaningFulName+"\")"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         } else {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tString rowText=$("+Settings.LOCATOR_FILE_NAME + "." + field.getName()+").getText()"));

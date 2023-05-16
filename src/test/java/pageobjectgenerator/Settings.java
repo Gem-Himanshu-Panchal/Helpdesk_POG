@@ -61,8 +61,10 @@ public class Settings {
 	public static final String USER_UPLOAD_FILE="userUploadsFile";
 	public static final String USER_VERIFIES_CHECKED="verifyIsSelectedFor";
 	public static final String USER_VERIFIES_VALUE_ATTRIBUTE="userVerifyAttributeFor";
-	public static final String VERIFY_ROW_COUNT ="^User verifies row count is (.*) for ";
-	public static final String VERIFY_COLUMN_COUNT ="^User verifies column count is (.*) for ";
+	public static final String VERIFY_ROW_COUNT ="User verifies row count is (.*) for ";
+	public static final String VERIFY_COLUMN_COUNT ="User verifies column count is (.*) for ";
+	public static final String CHANGE_FOCUS ="User changes focus to ";
+	public static final String CONTAINS_TEXT ="User verifies \\\"(.*)\\\" is the text value for ";
 	public static final String USER_CLEAR_ANNOTATION ="User clears";
 	public static final String VERIFY_COLUMN_NAME ="^User verifies " +"\\\"(.*)\\\""+ " column is present in ";
 	public static final String USER_VERIFY_CLEAR_ANNOTATION ="User verifies";
@@ -162,7 +164,7 @@ public class Settings {
 	public static final String USER_SELECTS_FUNCTION ="userSelects";
 	public static final String USER_SELECTS_ANNOTATION ="User selects";
 	public static final String USER_RIGHT_CLICK_FUNCTION ="rightClickOn";
-	public static final String USER_RIGHT_CLICK_ANNOTATION ="User right clicks on";
+	public static final String USER_RIGHT_CLICK_ANNOTATION ="User right clicks on \\\"(.*)\\\"";
 
 
 
