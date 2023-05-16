@@ -240,6 +240,7 @@ public class UtilsFunctionsGenerator {
             ASTHelper.addStmt(block, new NameExpr("\tJavascriptExecutor js = (JavascriptExecutor) DriverManager.getWebDriver()"));
             ASTHelper.addStmt(block, new NameExpr("\tjs.executeScript(\"window.focus();\");\n\t\t\t\tSettings.LOGGER.info(\"get window focus successfully\")"));
             ASTHelper.addStmt(block, new NameExpr("\t\t\t}\tcatch(" + "Exception e" + "){\n\t\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to get window in focus\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to get window in focus\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
     }
@@ -268,26 +269,6 @@ public class UtilsFunctionsGenerator {
         ASTHelper.addMember(c.getTypes().get(0), method);
     }
 
-    public static void setLinkMethodsIsImage(CompilationUnit c) throws IOException {
-        Settings.LOGGER.info("Name of field: " + meaningFulName);
-        // Add the Getter method
-        MethodDeclaration method = new MethodDeclaration(ModifierSet.PUBLIC, ASTHelper.VOID_TYPE, "isImage");
-        BlockStmt block = new BlockStmt();
-        method.setBody(block);
-        List<Parameter> parameters = new LinkedList<>();
-        parameters.add(ASTHelper.createParameter(ASTHelper.createReferenceType("WebElementFacade", 0), "element"));
-        method.setParameters(parameters);
-        if (readProperties("Framework").contains("GEMJAR")) {
-            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\t if((\"img\").equals(element.getTagName()));\n\t\t\t\t\tGemTestReporter.addTestStep(\"Enter text for alert\",\"Successfully entered text\", STATUS.PASS, takeSnapShot());"));
-            ASTHelper.addStmt(block, new NameExpr("}catch(" + "Exception e" + "){\n\t\t\t Settings.LOGGER.info(\"Could not enter text for alert\");\n\t\t\t\t\tGemTestReporter.addTestStep(\"Could not enter text for alert\",\"Failed to enter\", STATUS.FAIL, takeSnapShot());"));
-            ASTHelper.addStmt(block, new NameExpr("}"));
-        } else {
-            ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\t Assert.assertEquals(\"img\", element.getTagName())"));
-            ASTHelper.addStmt(block, new NameExpr("}catch(" + "Exception e" + "){\n\t\t\tSettings.LOGGER.info(\"Could not enter text for alert\");\n\t\t\tAssert.fail(\"Could not enter text for alert\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Could not enter text for alert\");\n\t\t\tAssert.fail(e.getMessage())"));
-            ASTHelper.addStmt(block, new NameExpr("}"));
-        }
-        ASTHelper.addMember(c.getTypes().get(0), method);
-    }
 
     public static void setLinkMethodsSwitchToTab(CompilationUnit c) throws IOException {
         Settings.LOGGER.info("Name of field: " + meaningFulName);

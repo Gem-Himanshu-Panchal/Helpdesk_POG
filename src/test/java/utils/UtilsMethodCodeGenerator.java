@@ -2274,15 +2274,15 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
             ASTHelper.addStmt(block, new NameExpr("\treturn headers.size()"));
         } else {
-            ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> listOfRows = new ArrayList<>()"));
+            ASTHelper.addStmt(block, new NameExpr("\tList<WebElement> listOfRows = new ArrayList<>();\n\t\t\tList<WebElement> listOfCols = new ArrayList<>()"));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tWebElement tableBody = getDriver().findElement("+ Settings.LOCATOR_FILE_NAME + "." + field.getName() + ")"));
             ASTHelper.addStmt(block, new NameExpr("\tlistOfRows = tableBody.findElements(By.tagName(\"tr\"))"));
-            ASTHelper.addStmt(block, new NameExpr("\theaders = listOfRows.get(0).findElements(By.tagName(\"td\"))"));
+            ASTHelper.addStmt(block, new NameExpr("\tlistOfCols = listOfRows.get(0).findElements(By.tagName(\"td\"))"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Get column count of "  + field.getName() +  " table\");}\t\n\t\tcatch(Exception e){"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(\"failed to get column count of " + field.getName() + " table \")"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
-            ASTHelper.addStmt(block, new NameExpr("\treturn headers.size()"));
+            ASTHelper.addStmt(block, new NameExpr("\treturn listOfCols.size()"));
         }
 
         ASTHelper.addMember(c.getTypes().get(0), method);
@@ -2316,9 +2316,8 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\tint actualRowCount = getRowCountOf"+ meaningFulName + "Table()"));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tif(actualRowCount == (expectedRowCount))"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"verification of Row count is successful\");}\t\n\t\tcatch(Exception e){"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Actual: \"actualRowCount, \"Expected: \"expectedRowCount);"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Actual: \"+actualRowCount, \"Expected: \"+expectedRowCount);"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(\"failed to verify row count\")"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Actual: \"actualRowCount, \"Expected: \"expectedRowCount);"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
@@ -2352,12 +2351,11 @@ public class UtilsMethodCodeGenerator {
             ASTHelper.addStmt(block, new NameExpr("\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"Unable to verify count. Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\" );" + "\n\t\t\t}\n\t\t\t}\n\t\t\tcatch(" + "Exception e" + "){" + "\n\t\t\tGemTestReporter.addTestStep(\"Verify Column Count\",\"Unable to verify count. Expected: '\" +expectedColumnCount+\"' Actual: '\" +actualColumnCount+\"'\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User is unable to verify column count\");\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(" + "\"User gets an exception: \"" + "+" + "e" + ")"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         } else {
-            ASTHelper.addStmt(block, new NameExpr("\tint actualRowCount = getColumnCountOf"+ meaningFulName + "Table()"));
+            ASTHelper.addStmt(block, new NameExpr("\tint actualColumnCount = getColumnCountOf"+ meaningFulName + "Table()"));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tif(actualColumnCount == (expectedColumnCount))"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Column count verified successfully\");}\t\n\t\tcatch(Exception e){"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Unable to verify column count. Actual: \"actualColumnCount, \"Expected: \"expectedColumnCount);"));
+            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Unable to verify column count. Actual: \"+actualColumnCount, \"Expected: \"+expectedColumnCount);"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(\"Failed to verify column count\")"));
-            ASTHelper.addStmt(block, new NameExpr("\t" + "Settings" + "." + "LOGGER" + "." + "info(\"Unable to verify column count. Actual: \"actualColumnCount, \"Expected: \"expectedColumnCount);"));
             ASTHelper.addStmt(block, new NameExpr("\t" + "Assert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
