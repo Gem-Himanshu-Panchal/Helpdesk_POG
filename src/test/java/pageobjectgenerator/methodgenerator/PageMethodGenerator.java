@@ -204,6 +204,8 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodGetColumnCount(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodValidateRowCount(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodValidateColumnCount(c, field);
+                UtilsMethodCodeGenerator.setLinkMethodIsColumnNamePresent(c, field);
+
             }
 
         }

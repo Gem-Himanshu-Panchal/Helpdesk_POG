@@ -201,15 +201,14 @@ public class UtilsFunctionsGenerator {
             ASTHelper.addStmt(block, new NameExpr("String text = new String()"));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tFile dir = new File(System.getProperty(\"user.home\") + \"/Downloads\");\n\t\t\tFile[] files = dir.listFiles()"));
             ASTHelper.addStmt(block, new NameExpr("\tlong startTime = System.currentTimeMillis();\n\t\t\twhile ((System.currentTimeMillis() - startTime) < Long.parseLong(UtilsMethodCodeGenerator.readProperties(\"timeOut\"))){\n\t\t\t\t" + "for (File file : files) {\n\t\t\t\t\tif (file.getName().equalsIgnoreCase(fileName)) {\n\t\t\t\t\tGemTestReporter.addTestStep(\"Verify if file is downloaded\",\"File downloaded successfully\", STATUS.PASS, takeSnapShot());\n\t\t\t\t\tSettings.LOGGER.info(\"File downloaded successfully\");\n\t\t\t\t\treturn true"));
-            ASTHelper.addStmt(block, new NameExpr("\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"Verify if file is downloaded\",\"Unable to verify if file is downloaded\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Unable to verify if file is downloaded\")"));
+            ASTHelper.addStmt(block, new NameExpr("}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tGemTestReporter.addTestStep(\"Verify if file is downloaded\",\"Unable to verify if file is downloaded\", STATUS.FAIL, takeSnapShot());\n\t\t\tSettings.LOGGER.info(\"Unable to verify if file is downloaded\")"));
             ASTHelper.addStmt(block, new NameExpr("}"));
             ASTHelper.addStmt(block, new NameExpr("return false"));
         } else {
             ASTHelper.addStmt(block, new NameExpr("String text = new String()"));
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tFile dir = new File(System.getProperty(\"user.home\") + \"/Downloads\");\n\t\t\tFile[] files = dir.listFiles()"));
             ASTHelper.addStmt(block, new NameExpr("\tlong startTime = System.currentTimeMillis();\n\t\t\twhile ((System.currentTimeMillis() - startTime) < Long.parseLong(UtilsMethodCodeGenerator.readProperties(\"timeOut\"))){\n\t\t\t\t" + "for (File file : files) {\n\t\t\t\t\tif (file.getName().equalsIgnoreCase(fileName)) {;\n\t\t\t\t\tSettings.LOGGER.info(\"File downloaded successfully\");\n\t\t\t\t\treturn true"));
-            ASTHelper.addStmt(block, new NameExpr("\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to verify if file is downloaded\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to verify is file is downloaded\");\n\t\t\tAssert.fail(e.getMessage())"));
-            ASTHelper.addStmt(block, new NameExpr("}"));
+            ASTHelper.addStmt(block, new NameExpr("}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\tcatch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to verify if file is downloaded\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to verify is file is downloaded\");\n\t\t\tAssert.fail(e.getMessage());\n\t\t\t}"));
             ASTHelper.addStmt(block, new NameExpr("return false"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
@@ -237,8 +236,8 @@ public class UtilsFunctionsGenerator {
         } else {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\tDriverManager.getWebDriver().switchTo().window(windowHandle)"));
             ASTHelper.addStmt(block, new NameExpr("\tJavascriptExecutor js = (JavascriptExecutor) DriverManager.getWebDriver()"));
-            ASTHelper.addStmt(block, new NameExpr("\tjs.executeScript(\"window.focus();\");\n\t\t\t\tSettings.LOGGER.info(\"get window focus successfully\")"));
-            ASTHelper.addStmt(block, new NameExpr("\t\t\t}\tcatch(" + "Exception e" + "){\n\t\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to get window in focus\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to get window in focus\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("\tjs.executeScript(\"window.focus();\");\n\t\t\tSettings.LOGGER.info(\"get window focus successfully\")"));
+            ASTHelper.addStmt(block, new NameExpr("}catch(" + "Exception e" + "){\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"User gets an exception: \"+e);\n\t\t\tSettings" + "." + "LOGGER" + "." + "info(\"Unable to get window in focus\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Unable to get window in focus\");\n\t\t\tAssert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);
@@ -261,7 +260,7 @@ public class UtilsFunctionsGenerator {
             ASTHelper.addStmt(block, new NameExpr("}"));
         } else {
             ASTHelper.addStmt(block, new NameExpr("try{\n\t\t\t Assert.assertEquals(\"img\", element.getTagName())"));
-            ASTHelper.addStmt(block, new NameExpr("}catch(" + "Exception e" + "){\n\t\t\tSettings.LOGGER.info(\"Could not enter text for alert\");\n\t\t\tAssert.fail(\"Could not enter text for alert\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Could not enter text for alert\");\n\t\t\tAssert.fail(e.getMessage())"));
+            ASTHelper.addStmt(block, new NameExpr("}catch(" + "Exception e" + "){\n\t\tSettings.LOGGER.info(\"Could not enter text for alert\");\n\t\t\tAssert.fail(\"Could not enter text for alert\");\n\t\t\tSerenity.recordReportData().withTitle(\"Failure\").andContents(\"Could not enter text for alert\");\n\t\t\tAssert.fail(e.getMessage())"));
             ASTHelper.addStmt(block, new NameExpr("}"));
         }
         ASTHelper.addMember(c.getTypes().get(0), method);

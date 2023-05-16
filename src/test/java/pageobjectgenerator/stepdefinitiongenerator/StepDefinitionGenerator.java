@@ -232,6 +232,8 @@ public class StepDefinitionGenerator {
             if (StringUtils.equalsIgnoreCase(locatorType, "table")) {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionValidateRowCountOfTable(c, field);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionValidateColumnCountOfTable(c, field);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionValidateColumnNameOfTable(c, field);
+
             }
 
             }
