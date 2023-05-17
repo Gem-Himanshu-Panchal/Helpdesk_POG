@@ -1,23 +1,18 @@
 Feature: Test
 
   Background:
-    #This simply launches the URL, without any verification. Should the statement be modified?
     Given User is on homepage
     Then User verifies "Sample HTML Page" is the title of the page
 
-#    Scenario: type
-#      When For the Sample page, User enters "password" as input for PasswordNEW
-
-  @reg
-  Scenario: Verify console error
+  Scenario: Verify refresh page
 #    When User verifies there are no console error messages
     When For the Sample page, User enters "Ayush" as input for FirstName
     Then User refreshes page
 
+  @reg
   Scenario: Verify value entered for Firstname
-    When For the Sample page, User enters "fdsdf" as FirstName element and presses enter
-    Then User waits for 5 seconds
-#    Then For the Sample page, User verifies "Jasleen" is the value for FirstName
+    When For the Sample page, User enters "Jasleen" as input for FirstName
+    Then For the Sample page, User verifies "Jasleen" is the value for FirstName
 
   Scenario: Verify First Name field is enabled
     When For the Sample page, User verifies FirstName input is enabled
@@ -36,11 +31,7 @@ Feature: Test
   Scenario: Get name attribute for First Name
     When For the Sample page, User enters "Jasleen" as input for FirstName
     Then For the Sample page, User gets "name" attribute of FirstName element
-
-#  Scenario: Verify Birthday value
-#    When For the Sample page, User enters "15-07-2000" as input for Birthday
-#    Then For the Sample page, User verifies "2000-07-15" is the value for Birthday
-
+    
   Scenario: Verify Birthday field is enabled
     When For the Sample page, User verifies Birthday input is enabled
     Then For the Sample page, User enters "15-07-2000" as input for Birthday
@@ -99,22 +90,22 @@ Feature: Test
 
   Scenario: User selects Audi Car
     When For the Sample page, User verifies Car dropdown is visible
-    Then For the Sample page, User selects "Audi" from  Car dropdown
+    Then For the Sample page, User selects "Audi" from Car dropdown
 
   Scenario: User verifies Car is clickable
     When For the Sample page, User is able to click Car element
-    Then For the Sample page, User selects "Saab" from  Car dropdown
+    Then For the Sample page, User selects "Saab" from Car dropdown
 
   Scenario: User verifies Car is visible
     When For the Sample page, User verifies Car dropdown is visible
-    Then For the Sample page, User selects "Mercedes" from  Car dropdown
+    Then For the Sample page, User selects "Mercedes" from Car dropdown
 
   Scenario: User verifies Car is enabled
     When For the Sample page, User verifies Car dropdown is enabled
-    Then For the Sample page, User selects "Mercedes" from  Car dropdown
+    Then For the Sample page, User selects "Mercedes" from Car dropdown
 
   Scenario: Get name attribute of Car
-    Then For the Sample page, User selects "Mercedes" from  Car dropdown
+    Then For the Sample page, User selects "Mercedes" from Car dropdown
     Then For the Sample page, User gets "name" attribute of Car element
 
   Scenario: Verify HTML Link is clickable

@@ -101,7 +101,6 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodContains(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, false, aClass.getSimpleName(), locatorType);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionMethodThenVisibility(c, field, true, aClass.getSimpleName(), locatorType);
-                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionRightClick(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionRightClickElement(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, false, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionAttributeGetter(c, field, true, aClass.getSimpleName());

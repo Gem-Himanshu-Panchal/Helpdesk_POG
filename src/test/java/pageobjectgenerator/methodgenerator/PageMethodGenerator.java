@@ -137,7 +137,6 @@ public class PageMethodGenerator {
                 UtilsMethodCodeGenerator.setLinkMethodsScrollToView(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodForEnabled(c, field);
                 UtilsMethodCodeGenerator.setLinkMethodsRightClick(c,field);
-                UtilsMethodCodeGenerator.setLinkMethodsRightClickWebElement(c,field);
                 UtilsMethodCodeGenerator.setLinkMethodsChangeFocus(c,field);
                 UtilsMethodCodeGenerator.setLinkMethodsIsDisabled(c,field);
                 UtilsMethodCodeGenerator.setLinkMethodForContains(c, field);
