@@ -230,6 +230,8 @@ public class StepDefinitionGenerator {
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionValidateRowCountOfTable(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionValidateColumnCountOfTable(c, field, aClass.getSimpleName());
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionValidateColumnNameOfTable(c, field);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetColumnValue(c, field);
+                UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionGetAllCellsValue(c, field);
                 UtilsStepDefinitionCodeGenerator.setLinkStepDefinitionChangeFocus(c, field, aClass.getSimpleName());
             }
             UtilsStepDefinitionCodeGenerator.savePageObjectsOnFileSystem(Settings.STEP_DEFINITION_PO_DIR,
