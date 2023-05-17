@@ -67,6 +67,8 @@ public class Settings {
 	public static final String CONTAINS_TEXT ="User verifies \\\"(.*)\\\" is the text value for ";
 	public static final String USER_CLEAR_ANNOTATION ="User clears";
 	public static final String VERIFY_COLUMN_NAME ="^User verifies " +"\\\"(.*)\\\""+ " column is present in ";
+	public static final String GET_COLUMN_VALUE ="^User gets column value for";
+	public static final String GET_ALL_CELLS_VALUE ="^User gets all cell values for";
 	public static final String USER_VERIFY_CLEAR_ANNOTATION ="User verifies";
 	public static final String USER_CLEAR_FUNCTION ="userClear";
 	public static final String USER_VERIFY_CLEAR_FUNCTION ="verifyValueClearedFor";
